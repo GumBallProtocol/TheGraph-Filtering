@@ -1,0 +1,61 @@
+type Collection @entity {
+  id: ID!
+  tokenLibrary: Bytes!
+  gumballLibrary: Bytes!
+  tokenProxy: Bytes!
+  gumballProxy: Bytes!
+  name: String
+  price: BigInt!
+  index: BigInt!
+}
+
+type Trade @entity {
+  id: ID!
+  amount: BigInt!
+  currentPrice: BigInt!
+  timestamp: BigInt
+  eventType: String!
+  collection: Bytes!
+  name: String!
+}
+
+type Swap @entity {
+  id: ID!
+  sender: Bytes! # address
+  amount: BigInt!
+  eventType: String!
+}
+
+type Token @entity{
+  id: ID!
+  tokenId: BigInt!
+  tokenURI: String!
+  collection: Bytes!
+  imageURI:String!
+  name:String!
+  available: Boolean!
+  owner:Bytes!
+  attributes:[Attribute!]!
+}
+
+type Attribute @entity {
+  id: ID!
+  trait_type: String!
+  value: String!
+  tokens: [Token!]! @derivedFrom(field: "attributes")
+  collection: Bytes!
+}
+
+
+type _Schema_
+  @fulltext(
+    name: "collectionSearch"
+    language: en
+    algorithm: proximityRank
+    include: [
+      {
+        entity: "Collection"
+        fields: [{ name: "name" }]
+      }
+    ]
+  )
