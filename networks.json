@@ -1,7 +1,24 @@
 {
+  "arbitrum-goerli": {
+    "GumballFactory": {
+      "address": "0xDF588e07C056f04a9c3aB0D2df4F27c66E49B822"
+    }
+  },
+  "goerli": {
+    "GumballFactory": {
+      "address": "0xd1841d128088940C012489C740aAE2d6BbEFDF98"
+    }
+  },
   "rinkeby": {
     "GumballFactory": {
-      "address": "0xF206A4d9b6de0783F12831Adb1bdD76910C008F9"
+      "address": "0x1d3928feB43B8CC0AFEa41DB1aE59315F232Ba8B",
+      "startBlock": 11346926
+    }
+  },
+  "arbitrum-rinkeby":{
+    "GumballFactory":{
+      "address":"0x42eEe1E69DeA98dB10e36F01E07cD26778669BF6",
+      "startBlock": 15297682
     }
   }
 }

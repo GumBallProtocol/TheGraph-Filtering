@@ -78,6 +78,15 @@ export class Collection extends Entity {
     this.set("gumballProxy", Value.fromBytes(value));
   }
 
+  get tokenDeployed(): Bytes {
+    let value = this.get("tokenDeployed");
+    return value!.toBytes();
+  }
+
+  set tokenDeployed(value: Bytes) {
+    this.set("tokenDeployed", Value.fromBytes(value));
+  }
+
   get name(): string | null {
     let value = this.get("name");
     if (!value || value.kind == ValueKind.NULL) {
@@ -92,6 +101,23 @@ export class Collection extends Entity {
       this.unset("name");
     } else {
       this.set("name", Value.fromString(<string>value));
+    }
+  }
+
+  get symbol(): string | null {
+    let value = this.get("symbol");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set symbol(value: string | null) {
+    if (!value) {
+      this.unset("symbol");
+    } else {
+      this.set("symbol", Value.fromString(<string>value));
     }
   }
 
@@ -111,6 +137,69 @@ export class Collection extends Entity {
 
   set index(value: BigInt) {
     this.set("index", Value.fromBigInt(value));
+  }
+
+  get totalSupply(): BigInt {
+    let value = this.get("totalSupply");
+    return value!.toBigInt();
+  }
+
+  set totalSupply(value: BigInt) {
+    this.set("totalSupply", Value.fromBigInt(value));
+  }
+
+  get supplyCap(): BigInt {
+    let value = this.get("supplyCap");
+    return value!.toBigInt();
+  }
+
+  set supplyCap(value: BigInt) {
+    this.set("supplyCap", Value.fromBigInt(value));
+  }
+
+  get reserveGBT(): BigInt {
+    let value = this.get("reserveGBT");
+    return value!.toBigInt();
+  }
+
+  set reserveGBT(value: BigInt) {
+    this.set("reserveGBT", Value.fromBigInt(value));
+  }
+
+  get gumbar(): Bytes {
+    let value = this.get("gumbar");
+    return value!.toBytes();
+  }
+
+  set gumbar(value: Bytes) {
+    this.set("gumbar", Value.fromBytes(value));
+  }
+
+  get image(): string {
+    let value = this.get("image");
+    return value!.toString();
+  }
+
+  set image(value: string) {
+    this.set("image", Value.fromString(value));
+  }
+
+  get factory(): Bytes {
+    let value = this.get("factory");
+    return value!.toBytes();
+  }
+
+  set factory(value: Bytes) {
+    this.set("factory", Value.fromBytes(value));
+  }
+
+  get address(): Bytes {
+    let value = this.get("address");
+    return value!.toBytes();
+  }
+
+  set address(value: Bytes) {
+    this.set("address", Value.fromBytes(value));
   }
 }
 

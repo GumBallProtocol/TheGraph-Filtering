@@ -1,4 +1,7 @@
-import { BigInt } from '@graphprotocol/graph-ts';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
+import {
+  GumballFactory
+} from "../generated/GumballFactory/GumballFactory"
 import {
   GumballBondingCurve,
   Buy as BuyEvent,
@@ -21,8 +24,12 @@ export function handleBuy(event: BuyEvent): void {
 
   let collection = Collection.load(event.address.toHexString());
   if (collection) {
+    let factory = GumballFactory.bind(Address.fromBytes(collection.factory));
     collection.name = name;
     collection.price = currentPrice;
+    collection.totalSupply = factory.totalDeployed();
+    collection.reserveGBT = contract.reserveGBT();
+    collection.supplyCap = contract.totalSupply();
     collection.save();
   }
 }
@@ -43,8 +50,12 @@ export function handleSell(event: SellEvent): void {
   //load collection
   let collection = Collection.load(event.address.toHexString());
   if (collection) {
+    let factory = GumballFactory.bind(Address.fromBytes(collection.factory));
     collection.name = name;
     collection.price = currentPrice;
+    collection.totalSupply = factory.totalDeployed();
+    collection.reserveGBT = contract.reserveGBT();
+    collection.supplyCap = contract.totalSupply();
     collection.save();
   }
 }

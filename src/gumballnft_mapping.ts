@@ -7,7 +7,6 @@ import {
   Approval,
   ApprovalForAll,
   ExactSwap as ExactSwapEvent,
-  Initialized,
   Redeem,
   Swap as SwapEvent,
   Transfer,
@@ -22,14 +21,6 @@ export function handleExactSwap(event: ExactSwapEvent): void {
   swap.save();
 }
 
-export function handleInitialized(event: Initialized): void {
-  let contract = GumballNft.bind(event.address);
-  let collection = Collection.load(contract.tokenContract().toHexString());
-  if (collection) {
-    collection.name = contract.name();
-    collection.save();
-  }
-}
 
 export function handleRedeem(event: Redeem): void {
   let swap = new Swap(event.block.hash.toHexString());
@@ -59,7 +50,7 @@ export function handleTransfer(event: Transfer): void {
     token.available = false;
     token.owner = event.params.to;
     token.collection = event.address;
-    token.tokenURI = "/" + event.params.tokenId.toString();
+    token.tokenURI = "/" + token.tokenId.toString();
     token.attributes = []
     token.imageURI = "N/A/N";
     token.name = "N/A/N";
@@ -94,8 +85,7 @@ export function handleTransfer(event: Transfer): void {
             let item = atts_array[i].toObject();
             const value = item.get('value');
             const trait = item.get('trait_type');
-
-            if (trait && value) {
+            if (trait && value && trait.toString() != "Rarity Rank") {
               let attribute = Attribute.load(symbol + trait.toString() + value.toString())
               if (!attribute) {
                 attribute = new Attribute(symbol + trait.toString() + value.toString())

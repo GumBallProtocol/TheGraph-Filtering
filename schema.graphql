@@ -3,10 +3,19 @@ type Collection @entity {
   tokenLibrary: Bytes!
   gumballLibrary: Bytes!
   tokenProxy: Bytes!
-  gumballProxy: Bytes!
-  name: String
+  gumballProxy: Bytes!,
+  tokenDeployed: Bytes!,
+  name: String,
+  symbol: String,
   price: BigInt!
-  index: BigInt!
+  index: BigInt!,
+  totalSupply: BigInt!,
+  supplyCap: BigInt!,
+  reserveGBT:BigInt!,
+  gumbar: Bytes!,
+  image: String!,
+  factory: Bytes!,
+  address:Bytes!
 }
 
 type Trade @entity {

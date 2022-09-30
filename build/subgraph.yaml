@@ -7,34 +7,33 @@ schema:
 dataSources:
   - kind: ethereum
     name: GumballFactory
-    network: rinkeby
+    network: arbitrum-goerli
     source:
-      address: "0x6967b50ae279c0E8605322f2F3dCf89Bf88cC18A"
       abi: GumballFactory
-      startBlock: 11059115
+      address: "0xDF588e07C056f04a9c3aB0D2df4F27c66E49B822"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Initialized
         - OwnershipTransferred
         - proxiesDeployed
       abis:
         - name: GumballFactory
-          file: GumballFactory/abis/GumballFactory.json
+          file: GumballFactory\abis\GumballFactory.json
+        - name: GumballBondingCurve
+          file: GumballFactory\abis\GumballBondingCurve.json
+        - name: GumballNft
+          file: GumballFactory\abis\gumballnft.json
       eventHandlers:
-        - event: Initialized(uint8)
-          handler: handleInitialized
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
         - event: ProxiesDeployed(address,address,address,address,address)
           handler: handleproxiesDeployed
-      file: GumballFactory/GumballFactory.wasm
+      file: GumballFactory\GumballFactory.wasm
 templates:
   - kind: ethereum
     name: GumballBondingCurve
-    network: rinkeby
     source:
       abi: GumballBondingCurve
     mapping:
@@ -45,16 +44,18 @@ templates:
         - Trade
       abis:
         - name: GumballBondingCurve
-          file: GumballBondingCurve/abis/GumballBondingCurve.json
+          file: GumballBondingCurve\abis\GumballBondingCurve.json
+        - name: GumballFactory
+          file: GumballBondingCurve\abis\GumballFactory.json
       eventHandlers:
         - event: Buy(indexed address,uint256)
           handler: handleBuy
         - event: Sell(indexed address,uint256)
           handler: handleSell
-      file: templates/GumballBondingCurve/GumballBondingCurve.wasm
+      file: templates\GumballBondingCurve\GumballBondingCurve.wasm
+    network: arbitrum-goerli
   - kind: ethereum
     name: GumballNft
-    network: rinkeby
     source:
       abi: GumballNft
     mapping:
@@ -63,22 +64,20 @@ templates:
       language: wasm/assemblyscript
       entities:
         - ExactSwap
-        - Initialized
         - Redeem
         - Swap
         - Transfer
       abis:
         - name: GumballNft
-          file: GumballNft/abis/GumballNft.json
+          file: GumballNft\abis\GumballNft.json
       eventHandlers:
         - event: ExactSwap(indexed address,uint256[])
           handler: handleExactSwap
-        - event: Initialized(uint8)
-          handler: handleInitialized
-        - event: Redeem(indexed address,uint256)
+        - event: Redeem(indexed address,uint256[])
           handler: handleRedeem
         - event: Swap(indexed address,uint256)
           handler: handleSwap
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: templates/GumballNft/GumballNft.wasm
+      file: templates\GumballNft\GumballNft.wasm
+    network: arbitrum-goerli
