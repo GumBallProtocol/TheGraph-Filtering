@@ -458,6 +458,23 @@ export class Token extends Entity {
   set attributes(value: Array<string>) {
     this.set("attributes", Value.fromStringArray(value));
   }
+
+  get baseURI(): string | null {
+    let value = this.get("baseURI");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set baseURI(value: string | null) {
+    if (!value) {
+      this.unset("baseURI");
+    } else {
+      this.set("baseURI", Value.fromString(<string>value));
+    }
+  }
 }
 
 export class Attribute extends Entity {

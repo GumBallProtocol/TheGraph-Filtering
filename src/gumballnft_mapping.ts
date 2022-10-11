@@ -47,6 +47,7 @@ export function handleTransfer(event: Transfer): void {
     token = new Token(event.address.toHexString() + event.params.tokenId.toString());
     token.tokenId = event.params.tokenId;
     let baseURI = contract.tokenURI(token.tokenId);
+    token.baseURI = baseURI;
     token.available = false;
     token.owner = event.params.to;
     token.collection = event.address;
@@ -58,7 +59,7 @@ export function handleTransfer(event: Transfer): void {
       ipfsHash = baseURI.split("//ipfs.io/ipfs/")[1];
     }
     if (baseURI.includes("ipfs://")) {
-      ipfsHash = baseURI.split("pfs://")[1];
+      ipfsHash = baseURI.split("ipfs://")[1];
     }
     let metadata = ipfs.cat(ipfsHash);
 

@@ -1,12 +1,14 @@
 {
   "arbitrum-goerli": {
     "GumballFactory": {
-      "address": "0xDF588e07C056f04a9c3aB0D2df4F27c66E49B822"
+      "address": "0xee4AA45b2e82dBAEfb69632C6CFf3F1ffE39f24F",
+      "startBlock": 396069
     }
   },
   "goerli": {
     "GumballFactory": {
-      "address": "0xd1841d128088940C012489C740aAE2d6BbEFDF98"
+      "address": "0xdC86C4cF1A3Bf3B9A91762E22CC1A538F1F1Ae32",
+      "startBlock": 7646528
     }
   },
   "rinkeby": {

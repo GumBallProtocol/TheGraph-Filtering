@@ -138,18 +138,6 @@ export class GumballFactory__deployInfoResult {
     map.set("value2", ethereum.Value.fromBoolean(this.value2));
     return map;
   }
-
-  getToken(): Address {
-    return this.value0;
-  }
-
-  getNft(): Address {
-    return this.value1;
-  }
-
-  get_whitelist(): boolean {
-    return this.value2;
-  }
 }
 
 export class GumballFactory extends ethereum.SmartContract {

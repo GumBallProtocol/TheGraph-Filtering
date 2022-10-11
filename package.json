@@ -7,7 +7,9 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --product hosted-service gumballprotocol/gumballgraph",
     "create-local": "graph create --node http://localhost:8020/ gorayaa66/Gumballfiltering",
     "remove-local": "graph remove --node http://localhost:8020/ gorayaa66/Gumballfiltering",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gorayaa66/Gumballfiltering"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gorayaa66/Gumballfiltering",
+    "arslan-goerli-deploy": "graph deploy --product hosted-service gorayaa66/gumballgeorli",
+    "arslan-arbitrumgoerli-deploy": "graph deploy --product hosted-service gorayaa66/gumballarbitrumgoerli"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.29.2",
