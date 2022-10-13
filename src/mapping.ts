@@ -3,7 +3,8 @@ import {
   GumballFactory,
   Initialized,
   OwnershipTransferred,
-  ProxiesDeployed
+  ProxiesDeployed,
+  WhitelistExistingCall
 } from "../generated/GumballFactory/GumballFactory"
 import { GumballBondingCurve } from '../generated/templates';
 import { GumballNft } from '../generated/templates';
@@ -18,9 +19,22 @@ import { GumballNft as NFT } from "../generated/templates/GumballNft/GumballNft"
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
+export function handleWhitelistExisting(call: WhitelistExistingCall): void {
+  let factory = GumballFactory.bind(call.to);
+  let index = call.inputs._index;
+
+  let deployInfo = factory.deployInfo(index);
+  
+  let col = Collection.load(deployInfo.value0.toHexString());
+  if(col) {
+    col.whitelist = call.inputs._bool;
+    col.save();
+  }
+}
+
 export function handleproxiesDeployed(event: ProxiesDeployed): void {
   let factory = GumballFactory.bind(event.address);
-  let totalDeployed = factory.totalDeployed();
+  
   GumballBondingCurve.create(event.params.tokenProxy);
   GumballNft.create(event.params.gumballProxy);
   // let contract = BondingCurve.bind(event.params.tokenProxy);
@@ -31,6 +45,12 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
   
   let bondingCurve = BondingCurve.bind(event.params.tokenProxy);
   let nft = NFT.bind(event.params.gumballProxy);
+  let totalDeployed = factory.totalDeployed();
+  log.error('INDEX = {}', [BigInt.fromI32(totalDeployed.toI32() - 1).toString()]);
+
+  let deployInfo = factory.deployInfo(
+    BigInt.fromI32(totalDeployed.toI32() - 1)
+  );
 
   let collection = new Collection(event.params.tokenProxy.toHexString());
   collection.tokenLibrary = event.params.tokenLibrary;
@@ -49,6 +69,9 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
   collection.supplyCap = bondingCurve.totalSupply();
   collection.name = bondingCurve.name();
   collection.symbol = bondingCurve.symbol();
+  collection.whitelist = deployInfo.value2;
+  log.error("DEPLOY INFO {} , {} , {}", [deployInfo.value0.toHexString(), deployInfo.value1.toHexString(), deployInfo.value2 ? 'true' : 'false']);
+  // collection.whitelist = true;
 
   collection.image = "N/A";
   let baseURI = nft.baseTokenURI();

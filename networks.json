@@ -2,7 +2,7 @@
   "arbitrum-goerli": {
     "GumballFactory": {
       "address": "0xee4AA45b2e82dBAEfb69632C6CFf3F1ffE39f24F",
-      "startBlock": 396069
+      "startBlock": 577811
     }
   },
   "goerli": {

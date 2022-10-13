@@ -201,6 +201,15 @@ export class Collection extends Entity {
   set address(value: Bytes) {
     this.set("address", Value.fromBytes(value));
   }
+
+  get whitelist(): boolean {
+    let value = this.get("whitelist");
+    return value!.toBoolean();
+  }
+
+  set whitelist(value: boolean) {
+    this.set("whitelist", Value.fromBoolean(value));
+  }
 }
 
 export class Trade extends Entity {

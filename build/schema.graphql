@@ -15,7 +15,8 @@ type Collection @entity {
   gumbar: Bytes!,
   image: String!,
   factory: Bytes!,
-  address:Bytes!
+  address:Bytes!,
+  whitelist: Boolean!,
 }
 
 type Trade @entity {
