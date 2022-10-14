@@ -202,6 +202,15 @@ export class Collection extends Entity {
     this.set("address", Value.fromBytes(value));
   }
 
+  get description(): string {
+    let value = this.get("description");
+    return value!.toString();
+  }
+
+  set description(value: string) {
+    this.set("description", Value.fromString(value));
+  }
+
   get whitelist(): boolean {
     let value = this.get("whitelist");
     return value!.toBoolean();

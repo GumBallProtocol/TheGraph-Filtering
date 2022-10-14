@@ -70,6 +70,7 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
   collection.name = bondingCurve.name();
   collection.symbol = bondingCurve.symbol();
   collection.whitelist = deployInfo.value2;
+  collection.description = "";
   log.error("DEPLOY INFO {} , {} , {}", [deployInfo.value0.toHexString(), deployInfo.value1.toHexString(), deployInfo.value2 ? 'true' : 'false']);
   // collection.whitelist = true;
 
@@ -94,8 +95,11 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
       const value = json.fromBytes(metadata).toObject()
       if (value){
         const image = value.get('image')
+        const description = value.get('description')
         if(image)
           collection.image = image.toString();
+        if(description)
+          collection.description = description.toString();
       }
     }
   }

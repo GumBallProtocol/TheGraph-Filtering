@@ -16,6 +16,7 @@ type Collection @entity {
   image: String!,
   factory: Bytes!,
   address:Bytes!,
+  description:String!,
   whitelist: Boolean!,
 }
 

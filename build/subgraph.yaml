@@ -21,11 +21,11 @@ dataSources:
         - proxiesDeployed
       abis:
         - name: GumballFactory
-          file: GumballFactory/abis/GumballFactory.json
+          file: GumballFactory\abis\GumballFactory.json
         - name: GumballBondingCurve
-          file: GumballFactory/abis/GumballBondingCurve.json
+          file: GumballFactory\abis\GumballBondingCurve.json
         - name: GumballNft
-          file: GumballFactory/abis/gumballnft.json
+          file: GumballFactory\abis\gumballnft.json
       eventHandlers:
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
@@ -34,7 +34,7 @@ dataSources:
       callHandlers:
         - function: whitelistExisting(uint256,bool)
           handler: handleWhitelistExisting
-      file: GumballFactory/GumballFactory.wasm
+      file: GumballFactory\GumballFactory.wasm
 templates:
   - kind: ethereum
     name: GumballBondingCurve
@@ -48,15 +48,15 @@ templates:
         - Trade
       abis:
         - name: GumballBondingCurve
-          file: GumballBondingCurve/abis/GumballBondingCurve.json
+          file: GumballBondingCurve\abis\GumballBondingCurve.json
         - name: GumballFactory
-          file: GumballBondingCurve/abis/GumballFactory.json
+          file: GumballBondingCurve\abis\GumballFactory.json
       eventHandlers:
         - event: Buy(indexed address,uint256)
           handler: handleBuy
         - event: Sell(indexed address,uint256)
           handler: handleSell
-      file: templates/GumballBondingCurve/GumballBondingCurve.wasm
+      file: templates\GumballBondingCurve\GumballBondingCurve.wasm
     network: arbitrum-goerli
   - kind: ethereum
     name: GumballNft
@@ -73,7 +73,7 @@ templates:
         - Transfer
       abis:
         - name: GumballNft
-          file: GumballNft/abis/GumballNft.json
+          file: GumballNft\abis\GumballNft.json
       eventHandlers:
         - event: ExactSwap(indexed address,uint256[])
           handler: handleExactSwap
@@ -83,5 +83,5 @@ templates:
           handler: handleSwap
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: templates/GumballNft/GumballNft.wasm
+      file: templates\GumballNft\GumballNft.wasm
     network: arbitrum-goerli
