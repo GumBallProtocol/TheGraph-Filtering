@@ -1,13 +1,13 @@
 {
   "arbitrum-goerli": {
     "GumballFactory": {
-      "address": "0xee4AA45b2e82dBAEfb69632C6CFf3F1ffE39f24F",
+      "address": "0xFe7eC2a26D11453cf5a86b0dEB2d0f20636405f6",
       "startBlock": 577811
     }
   },
   "goerli": {
     "GumballFactory": {
-      "address": "0xdC86C4cF1A3Bf3B9A91762E22CC1A538F1F1Ae32",
+      "address": "0xb1Eb071E087fea2de1774D7F6B04c2d4FD24e660",
       "startBlock": 7646528
     }
   },

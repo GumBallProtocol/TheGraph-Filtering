@@ -1,5 +1,7 @@
 import { BigInt, json, ipfs, log } from "@graphprotocol/graph-ts"
 import {
+  ArtistWhitelistUpdated,
+  CollectionWhitelistUpdated,
   GumballFactory,
   Initialized,
   OwnershipTransferred,
@@ -19,18 +21,29 @@ import { GumballNft as NFT } from "../generated/templates/GumballNft/GumballNft"
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
-export function handleWhitelistExisting(call: WhitelistExistingCall): void {
-  let factory = GumballFactory.bind(call.to);
-  let index = call.inputs._index;
 
-  let deployInfo = factory.deployInfo(index);
+export function handleCollectionWhitelistUpdated(event: CollectionWhitelistUpdated): void {
+  let factory = GumballFactory.bind(event.address);
+  let deployInfo = factory.deployInfo(event.params._index);
   
   let col = Collection.load(deployInfo.value0.toHexString());
   if(col) {
-    col.whitelist = call.inputs._bool;
+    col.whitelist = event.params._bool;
     col.save();
   }
 }
+// export function handleWhitelistExisting(call: WhitelistExistingCall): void {
+//   let factory = GumballFactory.bind(call.to);
+//   let index = call.inputs._index;
+
+//   let deployInfo = factory.deployInfo(index);
+  
+//   let col = Collection.load(deployInfo.value0.toHexString());
+//   if(col) {
+//     col.whitelist = call.inputs._bool;
+//     col.save();
+//   }
+// }
 
 export function handleproxiesDeployed(event: ProxiesDeployed): void {
   let factory = GumballFactory.bind(event.address);
@@ -64,7 +77,7 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
   collection.tokenDeployed = event.params.tokenProxy;
   collection.factory = event.address;
   collection.address = event.params.gumballProxy;
-
+  
   collection.reserveGBT = bondingCurve.reserveGBT();
   collection.supplyCap = bondingCurve.totalSupply();
   collection.name = bondingCurve.name();

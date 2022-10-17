@@ -10,7 +10,7 @@ dataSources:
     network: arbitrum-goerli
     source:
       abi: GumballFactory
-      address: "0xee4AA45b2e82dBAEfb69632C6CFf3F1ffE39f24F"
+      address: "0xFe7eC2a26D11453cf5a86b0dEB2d0f20636405f6"
       startBlock: 577811
     mapping:
       kind: ethereum/events
@@ -31,9 +31,8 @@ dataSources:
           handler: handleOwnershipTransferred
         - event: ProxiesDeployed(address,address,address,address,address)
           handler: handleproxiesDeployed
-      callHandlers:
-        - function: whitelistExisting(uint256,bool)
-          handler: handleWhitelistExisting
+        - event: CollectionWhitelistUpdated(indexed uint256,bool)
+          handler: handleCollectionWhitelistUpdated
       file: GumballFactory\GumballFactory.wasm
 templates:
   - kind: ethereum

@@ -104,25 +104,6 @@
         "type": "uint256"
       }
     ],
-    "name": "Lock",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
     "name": "Repay",
     "type": "event"
   },
@@ -187,19 +168,13 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    "name": "Unlock",
+    "name": "UpdateOwnership",
     "type": "event"
   },
   {
@@ -229,23 +204,10 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "XGBT",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address[]",
-        "name": "user",
+        "name": "accounts",
         "type": "address[]"
       },
       {
@@ -356,7 +318,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "user",
+        "name": "account",
         "type": "address"
       }
     ],
@@ -476,7 +438,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "user",
+        "name": "account",
         "type": "address"
       }
     ],
@@ -645,6 +607,19 @@
   },
   {
     "inputs": [],
+    "name": "initSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "initial_totalSupply",
     "outputs": [
       {
@@ -712,19 +687,12 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_amountXGBT",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    "name": "lockXGBT",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lockedTotalXGBT",
+    "name": "limit",
     "outputs": [
       {
         "internalType": "uint256",
@@ -739,11 +707,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "account",
         "type": "address"
       }
     ],
-    "name": "lockedXGBT",
+    "name": "mustStayGBT",
     "outputs": [
       {
         "internalType": "uint256",
@@ -864,6 +832,19 @@
   },
   {
     "inputs": [],
+    "name": "skimReward",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "symbol",
     "outputs": [
       {
@@ -970,19 +951,6 @@
   {
     "inputs": [],
     "name": "treasurySkim",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "unlockXGBT",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

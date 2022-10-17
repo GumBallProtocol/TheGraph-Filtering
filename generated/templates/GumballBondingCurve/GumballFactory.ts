@@ -10,6 +10,50 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
+export class ArtistWhitelistUpdated extends ethereum.Event {
+  get params(): ArtistWhitelistUpdated__Params {
+    return new ArtistWhitelistUpdated__Params(this);
+  }
+}
+
+export class ArtistWhitelistUpdated__Params {
+  _event: ArtistWhitelistUpdated;
+
+  constructor(event: ArtistWhitelistUpdated) {
+    this._event = event;
+  }
+
+  get artist(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get _bool(): boolean {
+    return this._event.parameters[1].value.toBoolean();
+  }
+}
+
+export class CollectionWhitelistUpdated extends ethereum.Event {
+  get params(): CollectionWhitelistUpdated__Params {
+    return new CollectionWhitelistUpdated__Params(this);
+  }
+}
+
+export class CollectionWhitelistUpdated__Params {
+  _event: CollectionWhitelistUpdated;
+
+  constructor(event: CollectionWhitelistUpdated) {
+    this._event = event;
+  }
+
+  get _index(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get _bool(): boolean {
+    return this._event.parameters[1].value.toBoolean();
+  }
+}
+
 export class Initialized extends ethereum.Event {
   get params(): Initialized__Params {
     return new Initialized__Params(this);

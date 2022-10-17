@@ -116,28 +116,6 @@ export class Initialized__Params {
   }
 }
 
-export class Lock extends ethereum.Event {
-  get params(): Lock__Params {
-    return new Lock__Params(this);
-  }
-}
-
-export class Lock__Params {
-  _event: Lock;
-
-  constructor(event: Lock) {
-    this._event = event;
-  }
-
-  get user(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get amount(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
 export class Repay extends ethereum.Event {
   get params(): Repay__Params {
     return new Repay__Params(this);
@@ -226,25 +204,21 @@ export class Transfer__Params {
   }
 }
 
-export class Unlock extends ethereum.Event {
-  get params(): Unlock__Params {
-    return new Unlock__Params(this);
+export class UpdateOwnership extends ethereum.Event {
+  get params(): UpdateOwnership__Params {
+    return new UpdateOwnership__Params(this);
   }
 }
 
-export class Unlock__Params {
-  _event: Unlock;
+export class UpdateOwnership__Params {
+  _event: UpdateOwnership;
 
-  constructor(event: Unlock) {
+  constructor(event: UpdateOwnership) {
     this._event = event;
   }
 
-  get user(): Address {
+  get newOwner(): Address {
     return this._event.parameters[0].value.toAddress();
-  }
-
-  get amount(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
   }
 }
 
@@ -289,21 +263,6 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  XGBT(): Address {
-    let result = super.call("XGBT", "XGBT():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_XGBT(): ethereum.CallResult<Address> {
-    let result = super.tryCall("XGBT", "XGBT():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   allowance(owner: Address, spender: Address): BigInt {
@@ -399,19 +358,19 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  borrowCredit(user: Address): BigInt {
+  borrowCredit(account: Address): BigInt {
     let result = super.call("borrowCredit", "borrowCredit(address):(uint256)", [
-      ethereum.Value.fromAddress(user)
+      ethereum.Value.fromAddress(account)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_borrowCredit(user: Address): ethereum.CallResult<BigInt> {
+  try_borrowCredit(account: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "borrowCredit",
       "borrowCredit(address):(uint256)",
-      [ethereum.Value.fromAddress(user)]
+      [ethereum.Value.fromAddress(account)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -479,17 +438,17 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  debt(user: Address): BigInt {
+  debt(account: Address): BigInt {
     let result = super.call("debt", "debt(address):(uint256)", [
-      ethereum.Value.fromAddress(user)
+      ethereum.Value.fromAddress(account)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_debt(user: Address): ethereum.CallResult<BigInt> {
+  try_debt(account: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("debt", "debt(address):(uint256)", [
-      ethereum.Value.fromAddress(user)
+      ethereum.Value.fromAddress(account)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -682,6 +641,21 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
+  initSupply(): BigInt {
+    let result = super.call("initSupply", "initSupply():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_initSupply(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("initSupply", "initSupply():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   initial_totalSupply(): BigInt {
     let result = super.call(
       "initial_totalSupply",
@@ -705,22 +679,18 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  lockedTotalXGBT(): BigInt {
-    let result = super.call(
-      "lockedTotalXGBT",
-      "lockedTotalXGBT():(uint256)",
-      []
-    );
+  limit(param0: Address): BigInt {
+    let result = super.call("limit", "limit(address):(uint256)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
 
     return result[0].toBigInt();
   }
 
-  try_lockedTotalXGBT(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "lockedTotalXGBT",
-      "lockedTotalXGBT():(uint256)",
-      []
-    );
+  try_limit(param0: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("limit", "limit(address):(uint256)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -728,18 +698,20 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  lockedXGBT(param0: Address): BigInt {
-    let result = super.call("lockedXGBT", "lockedXGBT(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+  mustStayGBT(account: Address): BigInt {
+    let result = super.call("mustStayGBT", "mustStayGBT(address):(uint256)", [
+      ethereum.Value.fromAddress(account)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_lockedXGBT(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("lockedXGBT", "lockedXGBT(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
+  try_mustStayGBT(account: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "mustStayGBT",
+      "mustStayGBT(address):(uint256)",
+      [ethereum.Value.fromAddress(account)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -831,6 +803,21 @@ export class GumballBondingCurve extends ethereum.SmartContract {
       "reserveVirtualBASE():(uint256)",
       []
     );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  skimReward(): BigInt {
+    let result = super.call("skimReward", "skimReward():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_skimReward(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("skimReward", "skimReward():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -991,7 +978,7 @@ export class _whitelistCall__Inputs {
     this._call = call;
   }
 
-  get user(): Array<Address> {
+  get accounts(): Array<Address> {
     return this._call.inputValues[0].value.toAddressArray();
   }
 
@@ -1308,36 +1295,6 @@ export class InitializeCall__Outputs {
   }
 }
 
-export class LockXGBTCall extends ethereum.Call {
-  get inputs(): LockXGBTCall__Inputs {
-    return new LockXGBTCall__Inputs(this);
-  }
-
-  get outputs(): LockXGBTCall__Outputs {
-    return new LockXGBTCall__Outputs(this);
-  }
-}
-
-export class LockXGBTCall__Inputs {
-  _call: LockXGBTCall;
-
-  constructor(call: LockXGBTCall) {
-    this._call = call;
-  }
-
-  get _amountXGBT(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class LockXGBTCall__Outputs {
-  _call: LockXGBTCall;
-
-  constructor(call: LockXGBTCall) {
-    this._call = call;
-  }
-}
-
 export class RepayMaxCall extends ethereum.Call {
   get inputs(): RepayMaxCall__Inputs {
     return new RepayMaxCall__Inputs(this);
@@ -1534,36 +1491,6 @@ export class TreasurySkimCall__Outputs {
   _call: TreasurySkimCall;
 
   constructor(call: TreasurySkimCall) {
-    this._call = call;
-  }
-}
-
-export class UnlockXGBTCall extends ethereum.Call {
-  get inputs(): UnlockXGBTCall__Inputs {
-    return new UnlockXGBTCall__Inputs(this);
-  }
-
-  get outputs(): UnlockXGBTCall__Outputs {
-    return new UnlockXGBTCall__Outputs(this);
-  }
-}
-
-export class UnlockXGBTCall__Inputs {
-  _call: UnlockXGBTCall;
-
-  constructor(call: UnlockXGBTCall) {
-    this._call = call;
-  }
-
-  get _amount(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class UnlockXGBTCall__Outputs {
-  _call: UnlockXGBTCall;
-
-  constructor(call: UnlockXGBTCall) {
     this._call = call;
   }
 }
