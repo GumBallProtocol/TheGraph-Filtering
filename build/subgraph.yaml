@@ -31,8 +31,8 @@ dataSources:
           handler: handleOwnershipTransferred
         - event: ProxiesDeployed(address,address,address,address,address)
           handler: handleproxiesDeployed
-        - event: CollectionWhitelistUpdated(indexed uint256,bool)
-          handler: handleCollectionWhitelistUpdated
+        - event: WhitelistExisting(uint256,bool)
+          handler: handleWhitelistExisting
       file: GumballFactory\GumballFactory.wasm
 templates:
   - kind: ethereum

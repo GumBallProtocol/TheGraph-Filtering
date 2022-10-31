@@ -1,12 +1,10 @@
 import { BigInt, json, ipfs, log } from "@graphprotocol/graph-ts"
 import {
-  ArtistWhitelistUpdated,
-  CollectionWhitelistUpdated,
   GumballFactory,
   Initialized,
   OwnershipTransferred,
   ProxiesDeployed,
-  WhitelistExistingCall
+  WhitelistExisting
 } from "../generated/GumballFactory/GumballFactory"
 import { GumballBondingCurve } from '../generated/templates';
 import { GumballNft } from '../generated/templates';
@@ -22,9 +20,9 @@ import { GumballNft as NFT } from "../generated/templates/GumballNft/GumballNft"
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
 
-export function handleCollectionWhitelistUpdated(event: CollectionWhitelistUpdated): void {
+export function handleWhitelistExisting(event: WhitelistExisting): void {
   let factory = GumballFactory.bind(event.address);
-  let deployInfo = factory.deployInfo(event.params._index);
+  let deployInfo = factory.deployInfo(event.params.index);
   
   let col = Collection.load(deployInfo.value0.toHexString());
   if(col) {

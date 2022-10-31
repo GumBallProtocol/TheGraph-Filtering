@@ -19,44 +19,6 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "artist",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "bool",
-				"name": "_bool",
-				"type": "bool"
-			}
-		],
-		"name": "ArtistWhitelistUpdated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "bool",
-				"name": "_bool",
-				"type": "bool"
-			}
-		],
-		"name": "CollectionWhitelistUpdated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
 				"indexed": false,
 				"internalType": "uint8",
 				"name": "version",
@@ -146,6 +108,25 @@
 			}
 		],
 		"name": "UpdateTokenLibrary",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "_bool",
+				"type": "bool"
+			}
+		],
+		"name": "WhitelistExisting",
 		"type": "event"
 	},
 	{
