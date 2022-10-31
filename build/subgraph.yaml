@@ -10,8 +10,8 @@ dataSources:
     network: arbitrum-goerli
     source:
       abi: GumballFactory
-      address: "0xFe7eC2a26D11453cf5a86b0dEB2d0f20636405f6"
-      startBlock: 577811
+      address: "0x0041AAab80E39A2B4E5eE48726A5681e12e3E2b5"
+      startBlock: 721958
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -83,4 +83,25 @@ templates:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: templates\GumballNft\GumballNft.wasm
+    network: arbitrum-goerli
+  - kind: ethereum
+    name: Gumbar
+    source:
+      abi: Gumbar
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - DepositNFT
+        - WithdrawNFT
+      abis:
+        - name: Gumbar
+          file: Gumbar\abis\Gumbar.json
+      eventHandlers:
+        - event: DepositNFT(indexed address,address,uint256[])
+          handler: handleDepositNFT
+        - event: WithdrawNFT(indexed address,address,uint256[])
+          handler: handleWithdrawNFT
+      file: templates\Gumbar\Gumbar.wasm
     network: arbitrum-goerli

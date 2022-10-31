@@ -48,6 +48,7 @@ type Token @entity{
   owner:Bytes!
   attributes:[Attribute!]!
   baseURI: String
+  staked: Boolean!
 }
 
 type Attribute @entity {

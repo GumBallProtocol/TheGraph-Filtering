@@ -493,6 +493,15 @@ export class Token extends Entity {
       this.set("baseURI", Value.fromString(<string>value));
     }
   }
+
+  get staked(): boolean {
+    let value = this.get("staked");
+    return value!.toBoolean();
+  }
+
+  set staked(value: boolean) {
+    this.set("staked", Value.fromBoolean(value));
+  }
 }
 
 export class Attribute extends Entity {

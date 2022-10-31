@@ -33,3 +33,13 @@ export class GumballNft extends DataSourceTemplate {
     );
   }
 }
+
+export class Gumbar extends DataSourceTemplate {
+  static create(address: Address): void {
+    DataSourceTemplate.create("Gumbar", [address.toHex()]);
+  }
+
+  static createWithContext(address: Address, context: DataSourceContext): void {
+    DataSourceTemplate.createWithContext("Gumbar", [address.toHex()], context);
+  }
+}

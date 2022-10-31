@@ -55,6 +55,7 @@ export function handleTransfer(event: Transfer): void {
     token.attributes = []
     token.imageURI = "N/A/N";
     token.name = "N/A/N";
+    token.staked = false;
     if (baseURI.includes("https://ipfs.io/ipfs/")) {
       ipfsHash = baseURI.split("//ipfs.io/ipfs/")[1];
     }
@@ -118,5 +119,9 @@ export function handleTransfer(event: Transfer): void {
     token.owner = event.params.to;
     token.save();
   }
-
+  else if(token){
+    token.available = false;
+    token.owner = event.params.to;
+    token.save();
+  }
 }
