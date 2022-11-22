@@ -56,10 +56,13 @@ export function handleTransfer(event: Transfer): void {
     token.imageURI = "N/A/N";
     token.name = "N/A/N";
     token.staked = false;
-    if (baseURI.includes("https://ipfs.io/ipfs/")) {
+    if(baseURI.includes("mypinata.cloud/ipfs/")){
+      ipfsHash = baseURI.split("mypinata.cloud/ipfs/")[1];
+    }
+    else if (baseURI.includes("https://ipfs.io/ipfs/")) {
       ipfsHash = baseURI.split("//ipfs.io/ipfs/")[1];
     }
-    if (baseURI.includes("ipfs://")) {
+    else if (baseURI.includes("ipfs://")) {
       ipfsHash = baseURI.split("ipfs://")[1];
     }
     let metadata = ipfs.cat(ipfsHash);
@@ -74,8 +77,11 @@ export function handleTransfer(event: Transfer): void {
           token.name = name.toString()
         }
         if (image) {
-          token.imageURI = image.toString()
-          // token.imageURI = ipfsHash;
+          if(image.toString().includes('https'))
+            token.imageURI = image.toString()
+          else
+            token.imageURI = token.baseURI + image.toString()
+            // token.imageURI = ipfsHash;
         }
 
         let atts = value.get('attributes')

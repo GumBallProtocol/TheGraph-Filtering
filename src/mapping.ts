@@ -90,12 +90,17 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
 
   let ipfsHash = "";
   if(baseURI){
-      if (baseURI.includes("https://ipfs.io/ipfs/")) {
+      if(baseURI.includes("mypinata.cloud/ipfs/")){
+        ipfsHash = baseURI.split("mypinata.cloud/ipfs/")[1];
+        if(ipfsHash.includes("/"))
+          ipfsHash = ipfsHash.split("/")[0];
+      }
+      else if (baseURI.includes("https://ipfs.io/ipfs/")) {
         ipfsHash = baseURI.split("//ipfs.io/ipfs/")[1];
         if(ipfsHash.includes("/"))
           ipfsHash = ipfsHash.split("/")[0];
       }
-      if (baseURI.includes("ipfs://")) {
+      else if (baseURI.includes("ipfs://")) {
         ipfsHash = baseURI.split("pfs://")[1];
         if(ipfsHash.includes("/"))
           ipfsHash = ipfsHash.split("/")[0];
@@ -107,10 +112,14 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
       if (value){
         const image = value.get('image')
         const description = value.get('description')
-        if(image)
-          collection.image = image.toString();
-        if(description)
-          collection.description = description.toString();
+        if(image){
+          if(image.toString().includes("https"))
+            collection.image = image.toString();
+          else
+            collection.image = baseURI.toString() + image.toString();
+        }
+          if(description)
+            collection.description = description.toString();
       }
     }
   }
