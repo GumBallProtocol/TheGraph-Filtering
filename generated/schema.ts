@@ -219,6 +219,15 @@ export class Collection extends Entity {
   set whitelist(value: boolean) {
     this.set("whitelist", Value.fromBoolean(value));
   }
+
+  get baseURI(): string {
+    let value = this.get("baseURI");
+    return value!.toString();
+  }
+
+  set baseURI(value: string) {
+    this.set("baseURI", Value.fromString(value));
+  }
 }
 
 export class Trade extends Entity {

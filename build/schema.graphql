@@ -18,6 +18,7 @@ type Collection @entity {
   address:Bytes!,
   description:String!,
   whitelist: Boolean!,
+  baseURI:String!,
 }
 
 type Trade @entity {

@@ -85,9 +85,9 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
   log.error("DEPLOY INFO {} , {} , {}", [deployInfo.value0.toHexString(), deployInfo.value1.toHexString(), deployInfo.value2 ? 'true' : 'false']);
   // collection.whitelist = true;
 
-  collection.image = "N/A";
+  collection.image = "N/A/N/A";
   let baseURI = nft.baseTokenURI();
-
+  collection.baseURI = baseURI;
   let ipfsHash = "";
   if(baseURI){
       if(baseURI.includes("mypinata.cloud/ipfs/")){

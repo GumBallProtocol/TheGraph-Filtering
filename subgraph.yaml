@@ -10,8 +10,8 @@ dataSources:
     network: arbitrum-goerli
     source:
       abi: GumballFactory
-      address: "0x2Bb6365dC8138d01eed7Cb2E5Bd5d816ACF20567"
-      startBlock: 721958
+      address: "0x8AB239e07275D13bF20168100418425affe345aA"
+      startBlock: 1535193
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -74,6 +74,8 @@ templates:
         - name: GumballNft
           file: ./abis/GumballNft.json
       eventHandlers:
+        - event: SetBaseURI(string)
+          handler: handleSetBaseURI
         - event: ExactSwap(indexed address,uint256[])
           handler: handleExactSwap
         - event: Redeem(indexed address,uint256[])
