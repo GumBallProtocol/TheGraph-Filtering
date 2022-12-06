@@ -61,16 +61,22 @@ export function handleSetBaseURI(event: SetBaseURI): void{
             ipfsHash = ipfsHash.split("/")[0];
       ipfsHash = ipfsHash +"/1"
       let metadata = ipfs.cat(ipfsHash);
+      if(!metadata){
+        metadata = ipfs.cat(ipfsHash);
+      }
       if(metadata){
         const value = json.fromBytes(metadata).toObject()
         if (value){
           const image = value.get('image')
           const description = value.get('description')
           if(image){
-            if(image.toString().includes("https"))
-              collection.image = image.toString();
-            else
-              collection.image = baseURI.toString() + image.toString();
+            // if(image.toString().includes("https"))
+            //   collection.image = image.toString();
+            // else
+            //   collection.image = baseURI.toString() + image.toString();
+            let temp_image = image.toString()
+            temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
+            collection.image = temp_image
           }
             if(description)
               collection.description = description.toString();
@@ -97,7 +103,9 @@ export function handleSetBaseURI(event: SetBaseURI): void{
             ipfsHash2 = ipfsHash2.split("/")[0];
           ipfsHash2 = ipfsHash2+"/"+i.toString()
           let metadata = ipfs.cat(ipfsHash2);
-      
+          if(!metadata){
+            metadata = ipfs.cat(ipfsHash);
+          }
           if (metadata) {
             const value = json.fromBytes(metadata).toObject()
             if (value) {
@@ -109,11 +117,14 @@ export function handleSetBaseURI(event: SetBaseURI): void{
               }
               if (image) {
                 log.error("IMAGEEE: {}, ID: {}", [image.toString(), event.address.toHexString() + i.toString()] )
-                if(image.toString().includes('https'))
-                  token.imageURI = image.toString()
-                else
-                  token.imageURI = baseURI + image.toString()
+                // if(image.toString().includes('https'))
+                //   token.imageURI = image.toString()
+                // else
+                //   token.imageURI = baseURI + image.toString()
                   // token.imageURI = ipfsHash;
+                  let temp_image = image.toString()
+                  temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
+                  token.imageURI = temp_image
               }
       
               let atts = value.get('attributes')
@@ -137,8 +148,6 @@ export function handleSetBaseURI(event: SetBaseURI): void{
                     attribute.save();
                     s.push(attribute.id);
       
-                  } else {
-                    return
                   }
                 }
                 token.attributes = s;
@@ -173,8 +182,8 @@ export function handleTransfer(event: Transfer): void {
     token.collection = event.address;
     token.tokenURI = "/" + token.tokenId.toString();
     token.attributes = []
-    token.imageURI = "N/A/N";
-    token.name = "N/A/N";
+    token.imageURI = "N/A/NA";
+    token.name = "N/A/NA";
     token.staked = false;
     if(baseURI.includes("mypinata.cloud/ipfs/")){
       ipfsHash = baseURI.split("mypinata.cloud/ipfs/")[1];
@@ -186,7 +195,9 @@ export function handleTransfer(event: Transfer): void {
       ipfsHash = baseURI.split("ipfs://")[1];
     }
     let metadata = ipfs.cat(ipfsHash);
-
+    if(!metadata){
+      metadata = ipfs.cat(ipfsHash);
+    }
     if (metadata) {
       const value = json.fromBytes(metadata).toObject()
       if (value) {
@@ -197,11 +208,14 @@ export function handleTransfer(event: Transfer): void {
           token.name = name.toString()
         }
         if (image) {
-          if(image.toString().includes('https'))
-            token.imageURI = image.toString()
-          else
-            token.imageURI = token.baseURI + image.toString()
+          // if(image.toString().includes('https'))
+          //   token.imageURI = image.toString()
+          // else
+          //   token.imageURI = token.baseURI + image.toString()
             // token.imageURI = ipfsHash;
+            let temp_image = image.toString()
+            temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
+            token.imageURI = temp_image
         }
 
         let atts = value.get('attributes')

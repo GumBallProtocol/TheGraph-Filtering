@@ -85,7 +85,7 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
   log.error("DEPLOY INFO {} , {} , {}", [deployInfo.value0.toHexString(), deployInfo.value1.toHexString(), deployInfo.value2 ? 'true' : 'false']);
   // collection.whitelist = true;
 
-  collection.image = "N/A/N/A";
+  collection.image = "N/A";
   let baseURI = nft.baseTokenURI();
   collection.baseURI = baseURI;
   let ipfsHash = "";
@@ -113,10 +113,13 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
         const image = value.get('image')
         const description = value.get('description')
         if(image){
-          if(image.toString().includes("https"))
-            collection.image = image.toString();
-          else
-            collection.image = baseURI.toString() + image.toString();
+          // if(image.toString().includes("https"))
+          //   collection.image = image.toString();
+          // else
+          //   collection.image = baseURI.toString() + image.toString();
+          let temp_image = image.toString()
+          temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
+          collection.image = temp_image
         }
           if(description)
             collection.description = description.toString();
