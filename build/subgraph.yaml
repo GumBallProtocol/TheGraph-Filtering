@@ -10,8 +10,8 @@ dataSources:
     network: arbitrum-goerli
     source:
       abi: GumballFactory
-      address: "0x5F8190149364375aF74331e4cC0Ef3ff6E51cAb5"
-      startBlock: 1535193
+      address: "0xd7dD6A54BC6c0021e629EdbD31E6F0c28e6302ad"
+      startBlock: 2502188
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -29,7 +29,7 @@ dataSources:
       eventHandlers:
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: ProxiesDeployed(address,address,address,address,address)
+        - event: ProxiesDeployed(address,address,address,address)
           handler: handleproxiesDeployed
         - event: WhitelistExisting(uint256,bool)
           handler: handleWhitelistExisting

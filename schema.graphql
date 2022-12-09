@@ -1,7 +1,6 @@
 type Collection @entity {
   id: ID!
   tokenLibrary: Bytes!
-  gumballLibrary: Bytes!
   tokenProxy: Bytes!
   gumballProxy: Bytes!,
   tokenDeployed: Bytes!,

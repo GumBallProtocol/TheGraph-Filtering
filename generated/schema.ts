@@ -51,15 +51,6 @@ export class Collection extends Entity {
     this.set("tokenLibrary", Value.fromBytes(value));
   }
 
-  get gumballLibrary(): Bytes {
-    let value = this.get("gumballLibrary");
-    return value!.toBytes();
-  }
-
-  set gumballLibrary(value: Bytes) {
-    this.set("gumballLibrary", Value.fromBytes(value));
-  }
-
   get tokenProxy(): Bytes {
     let value = this.get("tokenProxy");
     return value!.toBytes();

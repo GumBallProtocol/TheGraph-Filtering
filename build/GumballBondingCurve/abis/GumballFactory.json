@@ -8,12 +8,31 @@
       },
       {
         "internalType": "address",
-        "name": "_gumballLibraryAddress",
+        "name": "_gumbarFactory",
         "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "factory",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
+    ],
+    "name": "FactoryWhitelistUpdate",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -73,28 +92,9 @@
         "internalType": "address",
         "name": "tokenLibrary",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "gumballLibrary",
-        "type": "address"
       }
     ],
     "name": "ProxiesDeployed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "newLibraryAddress",
-        "type": "address"
-      }
-    ],
-    "name": "UpdateNftLibrary",
     "type": "event"
   },
   {
@@ -238,8 +238,14 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "gumballLibraryAddress",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "gumballsDeployed",
     "outputs": [
       {
         "internalType": "address",
@@ -251,14 +257,8 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "gumballsDeployed",
+    "inputs": [],
+    "name": "gumbarFactory",
     "outputs": [
       {
         "internalType": "address",
@@ -343,19 +343,6 @@
       }
     ],
     "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_gumballLibraryAddress",
-        "type": "address"
-      }
-    ],
-    "name": "updateNFTLibrary",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

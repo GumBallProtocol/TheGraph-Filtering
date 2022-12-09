@@ -65,7 +65,7 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
 
   let collection = new Collection(event.params.tokenProxy.toHexString());
   collection.tokenLibrary = event.params.tokenLibrary;
-  collection.gumballLibrary = event.params.gumballLibrary;
+  // collection.gumballLibrary = event.params.gumballLibrary;
   collection.tokenProxy = event.params.tokenProxy;
   collection.gumballProxy = event.params.gumballProxy;
   collection.gumbar = event.params.gumbar;

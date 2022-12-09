@@ -10,6 +10,28 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
+export class FactoryWhitelistUpdate extends ethereum.Event {
+  get params(): FactoryWhitelistUpdate__Params {
+    return new FactoryWhitelistUpdate__Params(this);
+  }
+}
+
+export class FactoryWhitelistUpdate__Params {
+  _event: FactoryWhitelistUpdate;
+
+  constructor(event: FactoryWhitelistUpdate) {
+    this._event = event;
+  }
+
+  get factory(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get flag(): boolean {
+    return this._event.parameters[1].value.toBoolean();
+  }
+}
+
 export class Initialized extends ethereum.Event {
   get params(): Initialized__Params {
     return new Initialized__Params(this);
@@ -77,28 +99,6 @@ export class ProxiesDeployed__Params {
 
   get tokenLibrary(): Address {
     return this._event.parameters[3].value.toAddress();
-  }
-
-  get gumballLibrary(): Address {
-    return this._event.parameters[4].value.toAddress();
-  }
-}
-
-export class UpdateNftLibrary extends ethereum.Event {
-  get params(): UpdateNftLibrary__Params {
-    return new UpdateNftLibrary__Params(this);
-  }
-}
-
-export class UpdateNftLibrary__Params {
-  _event: UpdateNftLibrary;
-
-  constructor(event: UpdateNftLibrary) {
-    this._event = event;
-  }
-
-  get newLibraryAddress(): Address {
-    return this._event.parameters[0].value.toAddress();
   }
 }
 
@@ -229,29 +229,6 @@ export class GumballFactory extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  gumballLibraryAddress(): Address {
-    let result = super.call(
-      "gumballLibraryAddress",
-      "gumballLibraryAddress():(address)",
-      []
-    );
-
-    return result[0].toAddress();
-  }
-
-  try_gumballLibraryAddress(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "gumballLibraryAddress",
-      "gumballLibraryAddress():(address)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
   gumballsDeployed(param0: BigInt): Address {
     let result = super.call(
       "gumballsDeployed",
@@ -267,6 +244,25 @@ export class GumballFactory extends ethereum.SmartContract {
       "gumballsDeployed",
       "gumballsDeployed(uint256):(address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  gumbarFactory(): Address {
+    let result = super.call("gumbarFactory", "gumbarFactory():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_gumbarFactory(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "gumbarFactory",
+      "gumbarFactory():(address)",
+      []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -396,7 +392,7 @@ export class ConstructorCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _gumballLibraryAddress(): Address {
+  get _gumbarFactory(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 }
@@ -553,36 +549,6 @@ export class TransferOwnershipCall__Outputs {
   _call: TransferOwnershipCall;
 
   constructor(call: TransferOwnershipCall) {
-    this._call = call;
-  }
-}
-
-export class UpdateNFTLibraryCall extends ethereum.Call {
-  get inputs(): UpdateNFTLibraryCall__Inputs {
-    return new UpdateNFTLibraryCall__Inputs(this);
-  }
-
-  get outputs(): UpdateNFTLibraryCall__Outputs {
-    return new UpdateNFTLibraryCall__Outputs(this);
-  }
-}
-
-export class UpdateNFTLibraryCall__Inputs {
-  _call: UpdateNFTLibraryCall;
-
-  constructor(call: UpdateNFTLibraryCall) {
-    this._call = call;
-  }
-
-  get _gumballLibraryAddress(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class UpdateNFTLibraryCall__Outputs {
-  _call: UpdateNFTLibraryCall;
-
-  constructor(call: UpdateNFTLibraryCall) {
     this._call = call;
   }
 }
