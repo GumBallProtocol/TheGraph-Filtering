@@ -10,7 +10,7 @@ dataSources:
     network: arbitrum-goerli
     source:
       abi: GumballFactory
-      address: "0xd7dD6A54BC6c0021e629EdbD31E6F0c28e6302ad"
+      address: "0x03eb3C51800E5eA62b367FacC4B3C940E28A051a"
       startBlock: 2502188
     mapping:
       kind: ethereum/events
@@ -18,7 +18,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - OwnershipTransferred
-        - proxiesDeployed
+        - GumBallDeployed
       abis:
         - name: GumballFactory
           file: GumballFactory\abis\GumballFactory.json
@@ -29,10 +29,10 @@ dataSources:
       eventHandlers:
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: ProxiesDeployed(address,address,address,address)
-          handler: handleproxiesDeployed
-        - event: WhitelistExisting(uint256,bool)
-          handler: handleWhitelistExisting
+        - event: GumBallDeployed(address,address,address)
+          handler: handleGumBallDeployed
+        - event: AllowExisting(uint256,bool)
+          handler: handleAllowExisting
       file: GumballFactory\GumballFactory.wasm
 templates:
   - kind: ethereum

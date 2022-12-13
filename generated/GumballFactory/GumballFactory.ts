@@ -10,20 +10,42 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class FactoryWhitelistUpdate extends ethereum.Event {
-  get params(): FactoryWhitelistUpdate__Params {
-    return new FactoryWhitelistUpdate__Params(this);
+export class AllowExisting extends ethereum.Event {
+  get params(): AllowExisting__Params {
+    return new AllowExisting__Params(this);
   }
 }
 
-export class FactoryWhitelistUpdate__Params {
-  _event: FactoryWhitelistUpdate;
+export class AllowExisting__Params {
+  _event: AllowExisting;
 
-  constructor(event: FactoryWhitelistUpdate) {
+  constructor(event: AllowExisting) {
     this._event = event;
   }
 
-  get factory(): Address {
+  get index(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get _bool(): boolean {
+    return this._event.parameters[1].value.toBoolean();
+  }
+}
+
+export class FactoryAllowlistUpdate extends ethereum.Event {
+  get params(): FactoryAllowlistUpdate__Params {
+    return new FactoryAllowlistUpdate__Params(this);
+  }
+}
+
+export class FactoryAllowlistUpdate__Params {
+  _event: FactoryAllowlistUpdate;
+
+  constructor(event: FactoryAllowlistUpdate) {
+    this._event = event;
+  }
+
+  get _factory(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 
@@ -32,21 +54,65 @@ export class FactoryWhitelistUpdate__Params {
   }
 }
 
-export class Initialized extends ethereum.Event {
-  get params(): Initialized__Params {
-    return new Initialized__Params(this);
+export class GBTFactorySet extends ethereum.Event {
+  get params(): GBTFactorySet__Params {
+    return new GBTFactorySet__Params(this);
   }
 }
 
-export class Initialized__Params {
-  _event: Initialized;
+export class GBTFactorySet__Params {
+  _event: GBTFactorySet;
 
-  constructor(event: Initialized) {
+  constructor(event: GBTFactorySet) {
     this._event = event;
   }
 
-  get version(): i32 {
-    return this._event.parameters[0].value.toI32();
+  get gbtFactory(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class GNFTFactorySet extends ethereum.Event {
+  get params(): GNFTFactorySet__Params {
+    return new GNFTFactorySet__Params(this);
+  }
+}
+
+export class GNFTFactorySet__Params {
+  _event: GNFTFactorySet;
+
+  constructor(event: GNFTFactorySet) {
+    this._event = event;
+  }
+
+  get gnftFactory(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class GumBallDeployed extends ethereum.Event {
+  get params(): GumBallDeployed__Params {
+    return new GumBallDeployed__Params(this);
+  }
+}
+
+export class GumBallDeployed__Params {
+  _event: GumBallDeployed;
+
+  constructor(event: GumBallDeployed) {
+    this._event = event;
+  }
+
+  get gbt(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get gnft(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get xgbt(): Address {
+    return this._event.parameters[2].value.toAddress();
   }
 }
 
@@ -72,92 +138,66 @@ export class OwnershipTransferred__Params {
   }
 }
 
-export class ProxiesDeployed extends ethereum.Event {
-  get params(): ProxiesDeployed__Params {
-    return new ProxiesDeployed__Params(this);
+export class TreasurySet extends ethereum.Event {
+  get params(): TreasurySet__Params {
+    return new TreasurySet__Params(this);
   }
 }
 
-export class ProxiesDeployed__Params {
-  _event: ProxiesDeployed;
+export class TreasurySet__Params {
+  _event: TreasurySet;
 
-  constructor(event: ProxiesDeployed) {
+  constructor(event: TreasurySet) {
     this._event = event;
   }
 
-  get tokenProxy(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get gumballProxy(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get gumbar(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
-  get tokenLibrary(): Address {
-    return this._event.parameters[3].value.toAddress();
-  }
-}
-
-export class UpdateTokenLibrary extends ethereum.Event {
-  get params(): UpdateTokenLibrary__Params {
-    return new UpdateTokenLibrary__Params(this);
-  }
-}
-
-export class UpdateTokenLibrary__Params {
-  _event: UpdateTokenLibrary;
-
-  constructor(event: UpdateTokenLibrary) {
-    this._event = event;
-  }
-
-  get newLibraryAddress(): Address {
+  get _treasury(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 }
 
-export class WhitelistExisting extends ethereum.Event {
-  get params(): WhitelistExisting__Params {
-    return new WhitelistExisting__Params(this);
+export class XGBTFactorySet extends ethereum.Event {
+  get params(): XGBTFactorySet__Params {
+    return new XGBTFactorySet__Params(this);
   }
 }
 
-export class WhitelistExisting__Params {
-  _event: WhitelistExisting;
+export class XGBTFactorySet__Params {
+  _event: XGBTFactorySet;
 
-  constructor(event: WhitelistExisting) {
+  constructor(event: XGBTFactorySet) {
     this._event = event;
   }
 
-  get index(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get _bool(): boolean {
-    return this._event.parameters[1].value.toBoolean();
+  get xgbtFactory(): Address {
+    return this._event.parameters[0].value.toAddress();
   }
 }
 
 export class GumballFactory__deployInfoResult {
   value0: Address;
   value1: Address;
-  value2: boolean;
+  value2: Address;
+  value3: boolean;
 
-  constructor(value0: Address, value1: Address, value2: boolean) {
+  constructor(
+    value0: Address,
+    value1: Address,
+    value2: Address,
+    value3: boolean
+  ) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
+    this.value3 = value3;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
     map.set("value0", ethereum.Value.fromAddress(this.value0));
     map.set("value1", ethereum.Value.fromAddress(this.value1));
-    map.set("value2", ethereum.Value.fromBoolean(this.value2));
+    map.set("value2", ethereum.Value.fromAddress(this.value2));
+    map.set("value3", ethereum.Value.fromBoolean(this.value3));
     return map;
   }
 
@@ -169,8 +209,56 @@ export class GumballFactory__deployInfoResult {
     return this.value1;
   }
 
-  get_whitelist(): boolean {
+  getGumbar(): Address {
     return this.value2;
+  }
+
+  get_allowed(): boolean {
+    return this.value3;
+  }
+}
+
+export class GumballFactory__gumballsResult {
+  value0: Address;
+  value1: Address;
+  value2: Address;
+  value3: boolean;
+
+  constructor(
+    value0: Address,
+    value1: Address,
+    value2: Address,
+    value3: boolean
+  ) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+    this.value3 = value3;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromAddress(this.value0));
+    map.set("value1", ethereum.Value.fromAddress(this.value1));
+    map.set("value2", ethereum.Value.fromAddress(this.value2));
+    map.set("value3", ethereum.Value.fromBoolean(this.value3));
+    return map;
+  }
+
+  getGBT(): Address {
+    return this.value0;
+  }
+
+  getGNFT(): Address {
+    return this.value1;
+  }
+
+  getXGBT(): Address {
+    return this.value2;
+  }
+
+  getAllowed(): boolean {
+    return this.value3;
   }
 }
 
@@ -179,17 +267,82 @@ export class GumballFactory extends ethereum.SmartContract {
     return new GumballFactory("GumballFactory", address);
   }
 
+  GBTFactory(): Address {
+    let result = super.call("GBTFactory", "GBTFactory():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_GBTFactory(): ethereum.CallResult<Address> {
+    let result = super.tryCall("GBTFactory", "GBTFactory():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  GNFTFactory(): Address {
+    let result = super.call("GNFTFactory", "GNFTFactory():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_GNFTFactory(): ethereum.CallResult<Address> {
+    let result = super.tryCall("GNFTFactory", "GNFTFactory():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  XGBTFactory(): Address {
+    let result = super.call("XGBTFactory", "XGBTFactory():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_XGBTFactory(): ethereum.CallResult<Address> {
+    let result = super.tryCall("XGBTFactory", "XGBTFactory():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  allowlist(param0: Address): boolean {
+    let result = super.call("allowlist", "allowlist(address):(bool)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
+
+    return result[0].toBoolean();
+  }
+
+  try_allowlist(param0: Address): ethereum.CallResult<boolean> {
+    let result = super.tryCall("allowlist", "allowlist(address):(bool)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
   deployInfo(id: BigInt): GumballFactory__deployInfoResult {
     let result = super.call(
       "deployInfo",
-      "deployInfo(uint256):(address,address,bool)",
+      "deployInfo(uint256):(address,address,address,bool)",
       [ethereum.Value.fromUnsignedBigInt(id)]
     );
 
     return new GumballFactory__deployInfoResult(
       result[0].toAddress(),
       result[1].toAddress(),
-      result[2].toBoolean()
+      result[2].toAddress(),
+      result[3].toBoolean()
     );
   }
 
@@ -198,7 +351,7 @@ export class GumballFactory extends ethereum.SmartContract {
   ): ethereum.CallResult<GumballFactory__deployInfoResult> {
     let result = super.tryCall(
       "deployInfo",
-      "deployInfo(uint256):(address,address,bool)",
+      "deployInfo(uint256):(address,address,address,bool)",
       [ethereum.Value.fromUnsignedBigInt(id)]
     );
     if (result.reverted) {
@@ -209,19 +362,20 @@ export class GumballFactory extends ethereum.SmartContract {
       new GumballFactory__deployInfoResult(
         value[0].toAddress(),
         value[1].toAddress(),
-        value[2].toBoolean()
+        value[2].toAddress(),
+        value[3].toBoolean()
       )
     );
   }
 
-  getOwner(): Address {
-    let result = super.call("getOwner", "getOwner():(address)", []);
+  getTreasury(): Address {
+    let result = super.call("getTreasury", "getTreasury():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_getOwner(): ethereum.CallResult<Address> {
-    let result = super.tryCall("getOwner", "getOwner():(address)", []);
+  try_getTreasury(): ethereum.CallResult<Address> {
+    let result = super.tryCall("getTreasury", "getTreasury():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -229,46 +383,41 @@ export class GumballFactory extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  gumballsDeployed(param0: BigInt): Address {
+  gumballs(param0: BigInt): GumballFactory__gumballsResult {
     let result = super.call(
-      "gumballsDeployed",
-      "gumballsDeployed(uint256):(address)",
+      "gumballs",
+      "gumballs(uint256):(address,address,address,bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
-    return result[0].toAddress();
+    return new GumballFactory__gumballsResult(
+      result[0].toAddress(),
+      result[1].toAddress(),
+      result[2].toAddress(),
+      result[3].toBoolean()
+    );
   }
 
-  try_gumballsDeployed(param0: BigInt): ethereum.CallResult<Address> {
+  try_gumballs(
+    param0: BigInt
+  ): ethereum.CallResult<GumballFactory__gumballsResult> {
     let result = super.tryCall(
-      "gumballsDeployed",
-      "gumballsDeployed(uint256):(address)",
+      "gumballs",
+      "gumballs(uint256):(address,address,address,bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  gumbarFactory(): Address {
-    let result = super.call("gumbarFactory", "gumbarFactory():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_gumbarFactory(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "gumbarFactory",
-      "gumbarFactory():(address)",
-      []
+    return ethereum.CallResult.fromValue(
+      new GumballFactory__gumballsResult(
+        value[0].toAddress(),
+        value[1].toAddress(),
+        value[2].toAddress(),
+        value[3].toBoolean()
+      )
     );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   owner(): Address {
@@ -279,52 +428,6 @@ export class GumballFactory extends ethereum.SmartContract {
 
   try_owner(): ethereum.CallResult<Address> {
     let result = super.tryCall("owner", "owner():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  tokenLibraryAddress(): Address {
-    let result = super.call(
-      "tokenLibraryAddress",
-      "tokenLibraryAddress():(address)",
-      []
-    );
-
-    return result[0].toAddress();
-  }
-
-  try_tokenLibraryAddress(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "tokenLibraryAddress",
-      "tokenLibraryAddress():(address)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  tokensDeployed(param0: BigInt): Address {
-    let result = super.call(
-      "tokensDeployed",
-      "tokensDeployed(uint256):(address)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
-
-    return result[0].toAddress();
-  }
-
-  try_tokensDeployed(param0: BigInt): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "tokensDeployed",
-      "tokensDeployed(uint256):(address)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -351,23 +454,19 @@ export class GumballFactory extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  whitelist(param0: BigInt): boolean {
-    let result = super.call("whitelist", "whitelist(uint256):(bool)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
-    ]);
+  treasury(): Address {
+    let result = super.call("treasury", "treasury():(address)", []);
 
-    return result[0].toBoolean();
+    return result[0].toAddress();
   }
 
-  try_whitelist(param0: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall("whitelist", "whitelist(uint256):(bool)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
-    ]);
+  try_treasury(): ethereum.CallResult<Address> {
+    let result = super.tryCall("treasury", "treasury():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 }
 
@@ -388,12 +487,20 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _tokenLibraryAddress(): Address {
+  get _GBTFactory(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _gumbarFactory(): Address {
+  get _GNFTFactory(): Address {
     return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _XGBTFactory(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get _treasury(): Address {
+    return this._call.inputValues[3].value.toAddress();
   }
 }
 
@@ -405,25 +512,63 @@ export class ConstructorCall__Outputs {
   }
 }
 
-export class AddOrRemoveFactoryWhitelistCall extends ethereum.Call {
-  get inputs(): AddOrRemoveFactoryWhitelistCall__Inputs {
-    return new AddOrRemoveFactoryWhitelistCall__Inputs(this);
+export class AddRewardCall extends ethereum.Call {
+  get inputs(): AddRewardCall__Inputs {
+    return new AddRewardCall__Inputs(this);
   }
 
-  get outputs(): AddOrRemoveFactoryWhitelistCall__Outputs {
-    return new AddOrRemoveFactoryWhitelistCall__Outputs(this);
+  get outputs(): AddRewardCall__Outputs {
+    return new AddRewardCall__Outputs(this);
   }
 }
 
-export class AddOrRemoveFactoryWhitelistCall__Inputs {
-  _call: AddOrRemoveFactoryWhitelistCall;
+export class AddRewardCall__Inputs {
+  _call: AddRewardCall;
 
-  constructor(call: AddOrRemoveFactoryWhitelistCall) {
+  constructor(call: AddRewardCall) {
     this._call = call;
   }
 
-  get _addr(): Address {
+  get _gumbarAddr(): Address {
     return this._call.inputValues[0].value.toAddress();
+  }
+
+  get _rewardsToken(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _rewardsDistributor(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+}
+
+export class AddRewardCall__Outputs {
+  _call: AddRewardCall;
+
+  constructor(call: AddRewardCall) {
+    this._call = call;
+  }
+}
+
+export class AllowExistingCall extends ethereum.Call {
+  get inputs(): AllowExistingCall__Inputs {
+    return new AllowExistingCall__Inputs(this);
+  }
+
+  get outputs(): AllowExistingCall__Outputs {
+    return new AllowExistingCall__Outputs(this);
+  }
+}
+
+export class AllowExistingCall__Inputs {
+  _call: AllowExistingCall;
+
+  constructor(call: AllowExistingCall) {
+    this._call = call;
+  }
+
+  get _index(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
   }
 
   get _bool(): boolean {
@@ -431,36 +576,36 @@ export class AddOrRemoveFactoryWhitelistCall__Inputs {
   }
 }
 
-export class AddOrRemoveFactoryWhitelistCall__Outputs {
-  _call: AddOrRemoveFactoryWhitelistCall;
+export class AllowExistingCall__Outputs {
+  _call: AllowExistingCall;
 
-  constructor(call: AddOrRemoveFactoryWhitelistCall) {
+  constructor(call: AllowExistingCall) {
     this._call = call;
   }
 }
 
-export class DeployProxiesCall extends ethereum.Call {
-  get inputs(): DeployProxiesCall__Inputs {
-    return new DeployProxiesCall__Inputs(this);
+export class DeployGumBallCall extends ethereum.Call {
+  get inputs(): DeployGumBallCall__Inputs {
+    return new DeployGumBallCall__Inputs(this);
   }
 
-  get outputs(): DeployProxiesCall__Outputs {
-    return new DeployProxiesCall__Outputs(this);
+  get outputs(): DeployGumBallCall__Outputs {
+    return new DeployGumBallCall__Outputs(this);
   }
 }
 
-export class DeployProxiesCall__Inputs {
-  _call: DeployProxiesCall;
+export class DeployGumBallCall__Inputs {
+  _call: DeployGumBallCall;
 
-  constructor(call: DeployProxiesCall) {
+  constructor(call: DeployGumBallCall) {
     this._call = call;
   }
 
-  get name(): string {
+  get _name(): string {
     return this._call.inputValues[0].value.toString();
   }
 
-  get symbol(): string {
+  get _symbol(): string {
     return this._call.inputValues[1].value.toString();
   }
 
@@ -468,15 +613,15 @@ export class DeployProxiesCall__Inputs {
     return this._call.inputValues[2].value.toStringArray();
   }
 
-  get _supplyCap(): BigInt {
+  get _supplyBASE(): BigInt {
     return this._call.inputValues[3].value.toBigInt();
   }
 
-  get _init_vBase(): BigInt {
+  get _supplyGBT(): BigInt {
     return this._call.inputValues[4].value.toBigInt();
   }
 
-  get _baseToken(): Address {
+  get _base(): Address {
     return this._call.inputValues[5].value.toAddress();
   }
 
@@ -487,12 +632,16 @@ export class DeployProxiesCall__Inputs {
   get _delay(): BigInt {
     return this._call.inputValues[7].value.toBigInt();
   }
+
+  get _bFee(): BigInt {
+    return this._call.inputValues[8].value.toBigInt();
+  }
 }
 
-export class DeployProxiesCall__Outputs {
-  _call: DeployProxiesCall;
+export class DeployGumBallCall__Outputs {
+  _call: DeployGumBallCall;
 
-  constructor(call: DeployProxiesCall) {
+  constructor(call: DeployGumBallCall) {
     this._call = call;
   }
 }
@@ -519,6 +668,164 @@ export class RenounceOwnershipCall__Outputs {
   _call: RenounceOwnershipCall;
 
   constructor(call: RenounceOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class SetGBTFactoryCall extends ethereum.Call {
+  get inputs(): SetGBTFactoryCall__Inputs {
+    return new SetGBTFactoryCall__Inputs(this);
+  }
+
+  get outputs(): SetGBTFactoryCall__Outputs {
+    return new SetGBTFactoryCall__Outputs(this);
+  }
+}
+
+export class SetGBTFactoryCall__Inputs {
+  _call: SetGBTFactoryCall;
+
+  constructor(call: SetGBTFactoryCall) {
+    this._call = call;
+  }
+
+  get _GBTFactory(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetGBTFactoryCall__Outputs {
+  _call: SetGBTFactoryCall;
+
+  constructor(call: SetGBTFactoryCall) {
+    this._call = call;
+  }
+}
+
+export class SetGNFTFactoryCall extends ethereum.Call {
+  get inputs(): SetGNFTFactoryCall__Inputs {
+    return new SetGNFTFactoryCall__Inputs(this);
+  }
+
+  get outputs(): SetGNFTFactoryCall__Outputs {
+    return new SetGNFTFactoryCall__Outputs(this);
+  }
+}
+
+export class SetGNFTFactoryCall__Inputs {
+  _call: SetGNFTFactoryCall;
+
+  constructor(call: SetGNFTFactoryCall) {
+    this._call = call;
+  }
+
+  get _GNFTFactory(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetGNFTFactoryCall__Outputs {
+  _call: SetGNFTFactoryCall;
+
+  constructor(call: SetGNFTFactoryCall) {
+    this._call = call;
+  }
+}
+
+export class SetRewardsDistributorCall extends ethereum.Call {
+  get inputs(): SetRewardsDistributorCall__Inputs {
+    return new SetRewardsDistributorCall__Inputs(this);
+  }
+
+  get outputs(): SetRewardsDistributorCall__Outputs {
+    return new SetRewardsDistributorCall__Outputs(this);
+  }
+}
+
+export class SetRewardsDistributorCall__Inputs {
+  _call: SetRewardsDistributorCall;
+
+  constructor(call: SetRewardsDistributorCall) {
+    this._call = call;
+  }
+
+  get _gumbarAddr(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get _rewardsToken(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _rewardsDistributor(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+}
+
+export class SetRewardsDistributorCall__Outputs {
+  _call: SetRewardsDistributorCall;
+
+  constructor(call: SetRewardsDistributorCall) {
+    this._call = call;
+  }
+}
+
+export class SetTreasuryCall extends ethereum.Call {
+  get inputs(): SetTreasuryCall__Inputs {
+    return new SetTreasuryCall__Inputs(this);
+  }
+
+  get outputs(): SetTreasuryCall__Outputs {
+    return new SetTreasuryCall__Outputs(this);
+  }
+}
+
+export class SetTreasuryCall__Inputs {
+  _call: SetTreasuryCall;
+
+  constructor(call: SetTreasuryCall) {
+    this._call = call;
+  }
+
+  get _treasury(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetTreasuryCall__Outputs {
+  _call: SetTreasuryCall;
+
+  constructor(call: SetTreasuryCall) {
+    this._call = call;
+  }
+}
+
+export class SetXGBTFactoryCall extends ethereum.Call {
+  get inputs(): SetXGBTFactoryCall__Inputs {
+    return new SetXGBTFactoryCall__Inputs(this);
+  }
+
+  get outputs(): SetXGBTFactoryCall__Outputs {
+    return new SetXGBTFactoryCall__Outputs(this);
+  }
+}
+
+export class SetXGBTFactoryCall__Inputs {
+  _call: SetXGBTFactoryCall;
+
+  constructor(call: SetXGBTFactoryCall) {
+    this._call = call;
+  }
+
+  get _XGBTFactory(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetXGBTFactoryCall__Outputs {
+  _call: SetXGBTFactoryCall;
+
+  constructor(call: SetXGBTFactoryCall) {
     this._call = call;
   }
 }
@@ -553,55 +860,25 @@ export class TransferOwnershipCall__Outputs {
   }
 }
 
-export class UpdateTokenLibraryCall extends ethereum.Call {
-  get inputs(): UpdateTokenLibraryCall__Inputs {
-    return new UpdateTokenLibraryCall__Inputs(this);
+export class UpdateFactoryAllowlistCall extends ethereum.Call {
+  get inputs(): UpdateFactoryAllowlistCall__Inputs {
+    return new UpdateFactoryAllowlistCall__Inputs(this);
   }
 
-  get outputs(): UpdateTokenLibraryCall__Outputs {
-    return new UpdateTokenLibraryCall__Outputs(this);
+  get outputs(): UpdateFactoryAllowlistCall__Outputs {
+    return new UpdateFactoryAllowlistCall__Outputs(this);
   }
 }
 
-export class UpdateTokenLibraryCall__Inputs {
-  _call: UpdateTokenLibraryCall;
+export class UpdateFactoryAllowlistCall__Inputs {
+  _call: UpdateFactoryAllowlistCall;
 
-  constructor(call: UpdateTokenLibraryCall) {
+  constructor(call: UpdateFactoryAllowlistCall) {
     this._call = call;
   }
 
-  get _tokenLibraryAddress(): Address {
+  get _addr(): Address {
     return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class UpdateTokenLibraryCall__Outputs {
-  _call: UpdateTokenLibraryCall;
-
-  constructor(call: UpdateTokenLibraryCall) {
-    this._call = call;
-  }
-}
-
-export class WhitelistExistingCall extends ethereum.Call {
-  get inputs(): WhitelistExistingCall__Inputs {
-    return new WhitelistExistingCall__Inputs(this);
-  }
-
-  get outputs(): WhitelistExistingCall__Outputs {
-    return new WhitelistExistingCall__Outputs(this);
-  }
-}
-
-export class WhitelistExistingCall__Inputs {
-  _call: WhitelistExistingCall;
-
-  constructor(call: WhitelistExistingCall) {
-    this._call = call;
-  }
-
-  get _index(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
   }
 
   get _bool(): boolean {
@@ -609,10 +886,48 @@ export class WhitelistExistingCall__Inputs {
   }
 }
 
-export class WhitelistExistingCall__Outputs {
-  _call: WhitelistExistingCall;
+export class UpdateFactoryAllowlistCall__Outputs {
+  _call: UpdateFactoryAllowlistCall;
 
-  constructor(call: WhitelistExistingCall) {
+  constructor(call: UpdateFactoryAllowlistCall) {
+    this._call = call;
+  }
+}
+
+export class UpdateGumBallAllowlistCall extends ethereum.Call {
+  get inputs(): UpdateGumBallAllowlistCall__Inputs {
+    return new UpdateGumBallAllowlistCall__Inputs(this);
+  }
+
+  get outputs(): UpdateGumBallAllowlistCall__Outputs {
+    return new UpdateGumBallAllowlistCall__Outputs(this);
+  }
+}
+
+export class UpdateGumBallAllowlistCall__Inputs {
+  _call: UpdateGumBallAllowlistCall;
+
+  constructor(call: UpdateGumBallAllowlistCall) {
+    this._call = call;
+  }
+
+  get _tokenAddr(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get accounts(): Array<Address> {
+    return this._call.inputValues[1].value.toAddressArray();
+  }
+
+  get _bool(): boolean {
+    return this._call.inputValues[2].value.toBoolean();
+  }
+}
+
+export class UpdateGumBallAllowlistCall__Outputs {
+  _call: UpdateGumBallAllowlistCall;
+
+  constructor(call: UpdateGumBallAllowlistCall) {
     this._call = call;
   }
 }

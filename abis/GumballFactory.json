@@ -3,12 +3,22 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_tokenLibraryAddress",
+				"name": "_GBTFactory",
 				"type": "address"
 			},
 			{
 				"internalType": "address",
-				"name": "_gumbarFactory",
+				"name": "_GNFTFactory",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_XGBTFactory",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_treasury",
 				"type": "address"
 			}
 		],
@@ -20,8 +30,27 @@
 		"inputs": [
 			{
 				"indexed": false,
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "_bool",
+				"type": "bool"
+			}
+		],
+		"name": "AllowExisting",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
 				"internalType": "address",
-				"name": "factory",
+				"name": "_factory",
 				"type": "address"
 			},
 			{
@@ -31,7 +60,7 @@
 				"type": "bool"
 			}
 		],
-		"name": "FactoryWhitelistUpdate",
+		"name": "FactoryAllowlistUpdate",
 		"type": "event"
 	},
 	{
@@ -39,12 +68,50 @@
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint8",
-				"name": "version",
-				"type": "uint8"
+				"internalType": "address",
+				"name": "gbtFactory",
+				"type": "address"
 			}
 		],
-		"name": "Initialized",
+		"name": "GBTFactorySet",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "gnftFactory",
+				"type": "address"
+			}
+		],
+		"name": "GNFTFactorySet",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "gbt",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "gnft",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "xgbt",
+				"type": "address"
+			}
+		],
+		"name": "GumBallDeployed",
 		"type": "event"
 	},
 	{
@@ -72,29 +139,11 @@
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "tokenProxy",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "gumballProxy",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "gumbar",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "tokenLibrary",
+				"name": "_treasury",
 				"type": "address"
 			}
 		],
-		"name": "ProxiesDeployed",
+		"name": "TreasurySet",
 		"type": "event"
 	},
 	{
@@ -103,46 +152,161 @@
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "newLibraryAddress",
+				"name": "xgbtFactory",
 				"type": "address"
 			}
 		],
-		"name": "UpdateTokenLibrary",
+		"name": "XGBTFactorySet",
 		"type": "event"
 	},
 	{
-		"anonymous": false,
+		"inputs": [],
+		"name": "GBTFactory",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GNFTFactory",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "XGBTFactory",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
-				"indexed": false,
+				"internalType": "address",
+				"name": "_gumbarAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_rewardsToken",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_rewardsDistributor",
+				"type": "address"
+			}
+		],
+		"name": "addReward",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
-				"name": "index",
+				"name": "_index",
 				"type": "uint256"
 			},
 			{
-				"indexed": false,
 				"internalType": "bool",
 				"name": "_bool",
 				"type": "bool"
 			}
 		],
-		"name": "WhitelistExisting",
-		"type": "event"
+		"name": "allowExisting",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_addr",
+				"name": "",
 				"type": "address"
-			},
+			}
+		],
+		"name": "allowlist",
+		"outputs": [
 			{
 				"internalType": "bool",
-				"name": "_bool",
+				"name": "",
 				"type": "bool"
 			}
 		],
-		"name": "addOrRemoveFactoryWhitelist",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_symbol",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_URIs",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_supplyBASE",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_supplyGBT",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_base",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_artist",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_delay",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_bFee",
+				"type": "uint256"
+			}
+		],
+		"name": "deployGumBall",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -168,8 +332,13 @@
 				"type": "address"
 			},
 			{
+				"internalType": "address",
+				"name": "gumbar",
+				"type": "address"
+			},
+			{
 				"internalType": "bool",
-				"name": "_whitelist",
+				"name": "_allowed",
 				"type": "bool"
 			}
 		],
@@ -177,56 +346,8 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "symbol",
-				"type": "string"
-			},
-			{
-				"internalType": "string[]",
-				"name": "_URIs",
-				"type": "string[]"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_supplyCap",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_init_vBase",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_baseToken",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_artist",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_delay",
-				"type": "uint256"
-			}
-		],
-		"name": "deployProxies",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
-		"name": "getOwner",
+		"name": "getTreasury",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -245,25 +366,27 @@
 				"type": "uint256"
 			}
 		],
-		"name": "gumballsDeployed",
+		"name": "gumballs",
 		"outputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "GBT",
 				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "gumbarFactory",
-		"outputs": [
+			},
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "GNFT",
 				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "XGBT",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "allowed",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -290,35 +413,78 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "tokenLibraryAddress",
-		"outputs": [
+		"inputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "_GBTFactory",
 				"type": "address"
 			}
 		],
-		"stateMutability": "view",
+		"name": "setGBTFactory",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "tokensDeployed",
-		"outputs": [
-			{
 				"internalType": "address",
-				"name": "",
+				"name": "_GNFTFactory",
 				"type": "address"
 			}
 		],
-		"stateMutability": "view",
+		"name": "setGNFTFactory",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_gumbarAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_rewardsToken",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_rewardsDistributor",
+				"type": "address"
+			}
+		],
+		"name": "setRewardsDistributor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_treasury",
+				"type": "address"
+			}
+		],
+		"name": "setTreasury",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_XGBTFactory",
+				"type": "address"
+			}
+		],
+		"name": "setXGBTFactory",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -348,32 +514,13 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_tokenLibraryAddress",
-				"type": "address"
-			}
-		],
-		"name": "updateTokenLibrary",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "whitelist",
+		"inputs": [],
+		"name": "treasury",
 		"outputs": [
 			{
-				"internalType": "bool",
+				"internalType": "address",
 				"name": "",
-				"type": "bool"
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -382,9 +529,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
 			},
 			{
 				"internalType": "bool",
@@ -392,7 +539,30 @@
 				"type": "bool"
 			}
 		],
-		"name": "whitelistExisting",
+		"name": "updateFactoryAllowlist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tokenAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "address[]",
+				"name": "accounts",
+				"type": "address[]"
+			},
+			{
+				"internalType": "bool",
+				"name": "_bool",
+				"type": "bool"
+			}
+		],
+		"name": "updateGumBallAllowlist",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

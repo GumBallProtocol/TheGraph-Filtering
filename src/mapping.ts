@@ -1,10 +1,9 @@
 import { BigInt, json, ipfs, log } from "@graphprotocol/graph-ts"
 import {
   GumballFactory,
-  Initialized,
   OwnershipTransferred,
-  ProxiesDeployed,
-  WhitelistExisting
+  GumBallDeployed,
+  AllowExisting
 } from "../generated/GumballFactory/GumballFactory"
 import { GumballBondingCurve } from '../generated/templates';
 import { GumballNft } from '../generated/templates';
@@ -20,7 +19,7 @@ import { GumballNft as NFT } from "../generated/templates/GumballNft/GumballNft"
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
 
-export function handleWhitelistExisting(event: WhitelistExisting): void {
+export function handleAllowExisting(event: AllowExisting): void {
   let factory = GumballFactory.bind(event.address);
   let deployInfo = factory.deployInfo(event.params.index);
   
@@ -43,19 +42,19 @@ export function handleWhitelistExisting(event: WhitelistExisting): void {
 //   }
 // }
 
-export function handleproxiesDeployed(event: ProxiesDeployed): void {
+export function handleGumBallDeployed(event: GumBallDeployed): void {
   let factory = GumballFactory.bind(event.address);
   
-  GumballBondingCurve.create(event.params.tokenProxy);
-  GumballNft.create(event.params.gumballProxy);
+  GumballBondingCurve.create(event.params.gbt);
+  GumballNft.create(event.params.gnft);
   // let contract = BondingCurve.bind(event.params.tokenProxy);
   // let currentPrice = contract.currentPrice();
   // let name = contract.name();
   // newTrade.name = name;
   // newTrade.currentPrice = currentPrice;
-  
-  let bondingCurve = BondingCurve.bind(event.params.tokenProxy);
-  let nft = NFT.bind(event.params.gumballProxy);
+  // bondingcurve, nft, gumbar
+  let bondingCurve = BondingCurve.bind(event.params.gbt);
+  let nft = NFT.bind(event.params.gnft);
   let totalDeployed = factory.totalDeployed();
   log.error('INDEX = {}', [BigInt.fromI32(totalDeployed.toI32() - 1).toString()]);
 
@@ -63,26 +62,26 @@ export function handleproxiesDeployed(event: ProxiesDeployed): void {
     BigInt.fromI32(totalDeployed.toI32() - 1)
   );
 
-  let collection = new Collection(event.params.tokenProxy.toHexString());
-  collection.tokenLibrary = event.params.tokenLibrary;
+  let collection = new Collection(event.params.gbt.toHexString());
+  collection.tokenLibrary = event.params.gbt;
   // collection.gumballLibrary = event.params.gumballLibrary;
-  collection.tokenProxy = event.params.tokenProxy;
-  collection.gumballProxy = event.params.gumballProxy;
-  collection.gumbar = event.params.gumbar;
+  collection.tokenProxy = event.params.gbt;
+  collection.gumballProxy = event.params.gnft;
+  collection.gumbar = event.params.xgbt;
   collection.totalSupply = totalDeployed;
   collection.price = BigInt.fromU32(0);
   collection.index = BigInt.fromI32(totalDeployed.toI32() - 1);
-  collection.tokenDeployed = event.params.tokenProxy;
+  collection.tokenDeployed = event.params.gbt;
   collection.factory = event.address;
-  collection.address = event.params.gumballProxy;
+  collection.address = event.params.gnft;
   
   collection.reserveGBT = bondingCurve.reserveGBT();
   collection.supplyCap = bondingCurve.totalSupply();
   collection.name = bondingCurve.name();
   collection.symbol = bondingCurve.symbol();
-  collection.whitelist = deployInfo.value2;
+  collection.whitelist = deployInfo.value3;
   collection.description = "";
-  log.error("DEPLOY INFO {} , {} , {}", [deployInfo.value0.toHexString(), deployInfo.value1.toHexString(), deployInfo.value2 ? 'true' : 'false']);
+  log.error("DEPLOY INFO {} , {} , {}", [deployInfo.value0.toHexString(), deployInfo.value1.toHexString(), deployInfo.value3 ? 'true' : 'false']);
   // collection.whitelist = true;
 
   collection.image = "N/A";
