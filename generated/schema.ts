@@ -219,6 +219,15 @@ export class Collection extends Entity {
   set baseURI(value: string) {
     this.set("baseURI", Value.fromString(value));
   }
+
+  get volume(): BigDecimal {
+    let value = this.get("volume");
+    return value!.toBigDecimal();
+  }
+
+  set volume(value: BigDecimal) {
+    this.set("volume", Value.fromBigDecimal(value));
+  }
 }
 
 export class Trade extends Entity {

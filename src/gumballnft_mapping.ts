@@ -75,7 +75,7 @@ export function handleSetBaseURI(event: SetBaseURI): void{
             // else
             //   collection.image = baseURI.toString() + image.toString();
             let temp_image = image.toString()
-            temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
+            // temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
             collection.image = temp_image
           }
             if(description)
@@ -123,7 +123,7 @@ export function handleSetBaseURI(event: SetBaseURI): void{
                 //   token.imageURI = baseURI + image.toString()
                   // token.imageURI = ipfsHash;
                   let temp_image = image.toString()
-                  temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
+                  // temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
                   token.imageURI = temp_image
               }
       
@@ -196,7 +196,12 @@ export function handleTransfer(event: Transfer): void {
     }
     let metadata = ipfs.cat(ipfsHash);
     if(!metadata){
+      log.error("ERROR METADATA ON MINT: {}", [ipfsHash])
       metadata = ipfs.cat(ipfsHash);
+      if(!metadata){
+        log.error("ERROR METADATA 2ND TRY: {}", [ipfsHash])
+        metadata = ipfs.cat(ipfsHash);
+      }
     }
     if (metadata) {
       const value = json.fromBytes(metadata).toObject()
@@ -214,7 +219,7 @@ export function handleTransfer(event: Transfer): void {
           //   token.imageURI = token.baseURI + image.toString()
             // token.imageURI = ipfsHash;
             let temp_image = image.toString()
-            temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
+            // temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
             token.imageURI = temp_image
         }
 

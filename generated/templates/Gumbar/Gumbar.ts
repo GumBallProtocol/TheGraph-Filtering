@@ -227,14 +227,6 @@ export class Gumbar__balanceOfNFTResult {
     map.set("value1", ethereum.Value.fromUnsignedBigIntArray(this.value1));
     return map;
   }
-
-  getLength(): BigInt {
-    return this.value0;
-  }
-
-  getArr(): Array<BigInt> {
-    return this.value1;
-  }
 }
 
 export class Gumbar__rewardDataResult {
@@ -266,26 +258,6 @@ export class Gumbar__rewardDataResult {
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
     return map;
-  }
-
-  getRewardsDistributor(): Address {
-    return this.value0;
-  }
-
-  getPeriodFinish(): BigInt {
-    return this.value1;
-  }
-
-  getRewardRate(): BigInt {
-    return this.value2;
-  }
-
-  getLastUpdateTime(): BigInt {
-    return this.value3;
-  }
-
-  getRewardPerTokenStored(): BigInt {
-    return this.value4;
   }
 }
 

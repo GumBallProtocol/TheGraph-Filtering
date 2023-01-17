@@ -7,11 +7,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: GumballFactory
-    network: arbitrum-goerli
+    network: arbitrum-one
     source:
       abi: GumballFactory
-      address: "0x03eb3C51800E5eA62b367FacC4B3C940E28A051a"
-      startBlock: 2502188
+      address: "0xf5cfBaF55036264B902D9ae55A114d9A22c42750"
+      startBlock: 51954296
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -56,7 +56,7 @@ templates:
         - event: Sell(indexed address,uint256)
           handler: handleSell
       file: ./src/gumball_mapping.ts
-    network: arbitrum-goerli
+    network: arbitrum-one
   - kind: ethereum
     name: GumballNft
     source:
@@ -85,7 +85,7 @@ templates:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: ./src/gumballnft_mapping.ts
-    network: arbitrum-goerli
+    network: arbitrum-one
   - kind: ethereum
     name: Gumbar
     source:
@@ -106,4 +106,4 @@ templates:
         - event: WithdrawNFT(indexed address,address,uint256[])
           handler: handleWithdrawNFT
       file: ./src/gumbar_mapping.ts
-    network: arbitrum-goerli
+    network: arbitrum-one

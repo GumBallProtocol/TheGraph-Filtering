@@ -1,4 +1,10 @@
 {
+  "arbitrum-one": {
+    "GumballFactory": {
+      "address": "0xf5cfBaF55036264B902D9ae55A114d9A22c42750",
+      "startBlock": 51954296
+    }
+  },
   "arbitrum-goerli": {
     "GumballFactory": {
       "address": "0x03eb3C51800E5eA62b367FacC4B3C940E28A051a",

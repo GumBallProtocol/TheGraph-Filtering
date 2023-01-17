@@ -18,6 +18,7 @@ type Collection @entity {
   description:String!,
   whitelist: Boolean!,
   baseURI:String!,
+  volume:BigDecimal!
 }
 
 type Trade @entity {

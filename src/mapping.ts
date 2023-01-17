@@ -1,4 +1,4 @@
-import { BigInt, json, ipfs, log } from "@graphprotocol/graph-ts"
+import { BigInt, json, ipfs, log, BigDecimal } from "@graphprotocol/graph-ts"
 import {
   GumballFactory,
   OwnershipTransferred,
@@ -74,7 +74,7 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
   collection.tokenDeployed = event.params.gbt;
   collection.factory = event.address;
   collection.address = event.params.gnft;
-  
+  collection.volume = BigDecimal.fromString("0");
   collection.reserveGBT = bondingCurve.reserveGBT();
   collection.supplyCap = bondingCurve.totalSupply();
   collection.name = bondingCurve.name();
@@ -106,6 +106,9 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
       }
     ipfsHash = ipfsHash +"/1"
     let metadata = ipfs.cat(ipfsHash);
+    if(!metadata){
+      metadata = ipfs.cat(ipfsHash)
+    }
     if(metadata){
       const value = json.fromBytes(metadata).toObject()
       if (value){
@@ -117,7 +120,7 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
           // else
           //   collection.image = baseURI.toString() + image.toString();
           let temp_image = image.toString()
-          temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
+          // temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
           collection.image = temp_image
         }
           if(description)
