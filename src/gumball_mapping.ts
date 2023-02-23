@@ -17,6 +17,7 @@ export function handleBuy(event: BuyEvent): void {
   let currentPrice = contract.currentPrice();
   let name = contract.name();
   newTrade.name = name;
+  newTrade.user = event.params.user;
   newTrade.currentPrice = currentPrice;
   newTrade.eventType = 'buy';
   newTrade.collection = event.address;
@@ -48,6 +49,7 @@ export function handleSell(event: SellEvent): void {
   let currentPrice = contract.currentPrice();
   let name = contract.name();
   newTrade.name = name;
+  newTrade.user = event.params.user;
   newTrade.currentPrice = currentPrice;
   newTrade.timestamp = event.block.timestamp;
   newTrade.eventType = 'sell';

@@ -195,6 +195,74 @@ export class GumballNft extends ethereum.SmartContract {
     return new GumballNft("GumballNft", address);
   }
 
+  DIVISOR(): BigInt {
+    let result = super.call("DIVISOR", "DIVISOR():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_DIVISOR(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("DIVISOR", "DIVISOR():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  GBT(): Address {
+    let result = super.call("GBT", "GBT():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_GBT(): ethereum.CallResult<Address> {
+    let result = super.tryCall("GBT", "GBT():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  OPERATOR_FILTER_REGISTRY(): Address {
+    let result = super.call(
+      "OPERATOR_FILTER_REGISTRY",
+      "OPERATOR_FILTER_REGISTRY():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_OPERATOR_FILTER_REGISTRY(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "OPERATOR_FILTER_REGISTRY",
+      "OPERATOR_FILTER_REGISTRY():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  _contractURI(): string {
+    let result = super.call("_contractURI", "_contractURI():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try__contractURI(): ethereum.CallResult<string> {
+    let result = super.tryCall("_contractURI", "_contractURI():(string)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
   bFee(): BigInt {
     let result = super.call("bFee", "bFee():(uint256)", []);
 
@@ -410,6 +478,21 @@ export class GumballNft extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  owner(): Address {
+    let result = super.call("owner", "owner():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_owner(): ethereum.CallResult<Address> {
+    let result = super.tryCall("owner", "owner():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   ownerOf(tokenId: BigInt): Address {
     let result = super.call("ownerOf", "ownerOf(uint256):(address)", [
       ethereum.Value.fromUnsignedBigInt(tokenId)
@@ -503,25 +586,6 @@ export class GumballNft extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  tokenContract(): Address {
-    let result = super.call("tokenContract", "tokenContract():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_tokenContract(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "tokenContract",
-      "tokenContract():(address)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
   tokenOfOwnerByIndex(owner: Address, index: BigInt): BigInt {
     let result = super.call(
       "tokenOfOwnerByIndex",
@@ -589,6 +653,52 @@ export class GumballNft extends ethereum.SmartContract {
   }
 }
 
+export class ConstructorCall extends ethereum.Call {
+  get inputs(): ConstructorCall__Inputs {
+    return new ConstructorCall__Inputs(this);
+  }
+
+  get outputs(): ConstructorCall__Outputs {
+    return new ConstructorCall__Outputs(this);
+  }
+}
+
+export class ConstructorCall__Inputs {
+  _call: ConstructorCall;
+
+  constructor(call: ConstructorCall) {
+    this._call = call;
+  }
+
+  get name(): string {
+    return this._call.inputValues[0].value.toString();
+  }
+
+  get symbol(): string {
+    return this._call.inputValues[1].value.toString();
+  }
+
+  get _URIs(): Array<string> {
+    return this._call.inputValues[2].value.toStringArray();
+  }
+
+  get _GBT(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+
+  get _bFee(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+}
+
+export class ConstructorCall__Outputs {
+  _call: ConstructorCall;
+
+  constructor(call: ConstructorCall) {
+    this._call = call;
+  }
+}
+
 export class ApproveCall extends ethereum.Call {
   get inputs(): ApproveCall__Inputs {
     return new ApproveCall__Inputs(this);
@@ -606,7 +716,7 @@ export class ApproveCall__Inputs {
     this._call = call;
   }
 
-  get to(): Address {
+  get operator(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
@@ -619,48 +729,6 @@ export class ApproveCall__Outputs {
   _call: ApproveCall;
 
   constructor(call: ApproveCall) {
-    this._call = call;
-  }
-}
-
-export class InitializeCall extends ethereum.Call {
-  get inputs(): InitializeCall__Inputs {
-    return new InitializeCall__Inputs(this);
-  }
-
-  get outputs(): InitializeCall__Outputs {
-    return new InitializeCall__Outputs(this);
-  }
-}
-
-export class InitializeCall__Inputs {
-  _call: InitializeCall;
-
-  constructor(call: InitializeCall) {
-    this._call = call;
-  }
-
-  get name(): string {
-    return this._call.inputValues[0].value.toString();
-  }
-
-  get symbol(): string {
-    return this._call.inputValues[1].value.toString();
-  }
-
-  get _URIs(): Array<string> {
-    return this._call.inputValues[2].value.toStringArray();
-  }
-
-  get _tokenContract(): Address {
-    return this._call.inputValues[3].value.toAddress();
-  }
-}
-
-export class InitializeCall__Outputs {
-  _call: InitializeCall;
-
-  constructor(call: InitializeCall) {
     this._call = call;
   }
 }
@@ -762,7 +830,7 @@ export class SafeTransferFrom1Call__Inputs {
     return this._call.inputValues[2].value.toBigInt();
   }
 
-  get _data(): Bytes {
+  get data(): Bytes {
     return this._call.inputValues[3].value.toBytes();
   }
 }

@@ -228,6 +228,24 @@ export class Collection extends Entity {
   set volume(value: BigDecimal) {
     this.set("volume", Value.fromBigDecimal(value));
   }
+
+  get minted(): BigInt {
+    let value = this.get("minted");
+    return value!.toBigInt();
+  }
+
+  set minted(value: BigInt) {
+    this.set("minted", Value.fromBigInt(value));
+  }
+
+  get artist(): Bytes {
+    let value = this.get("artist");
+    return value!.toBytes();
+  }
+
+  set artist(value: Bytes) {
+    this.set("artist", Value.fromBytes(value));
+  }
 }
 
 export class Trade extends Entity {
@@ -322,6 +340,15 @@ export class Trade extends Entity {
   set name(value: string) {
     this.set("name", Value.fromString(value));
   }
+
+  get user(): Bytes {
+    let value = this.get("user");
+    return value!.toBytes();
+  }
+
+  set user(value: Bytes) {
+    this.set("user", Value.fromBytes(value));
+  }
 }
 
 export class Swap extends Entity {
@@ -380,6 +407,15 @@ export class Swap extends Entity {
 
   set eventType(value: string) {
     this.set("eventType", Value.fromString(value));
+  }
+
+  get collection(): Bytes {
+    let value = this.get("collection");
+    return value!.toBytes();
+  }
+
+  set collection(value: Bytes) {
+    this.set("collection", Value.fromBytes(value));
   }
 }
 
@@ -578,5 +614,14 @@ export class Attribute extends Entity {
 
   set collection(value: Bytes) {
     this.set("collection", Value.fromBytes(value));
+  }
+
+  get count(): BigInt {
+    let value = this.get("count");
+    return value!.toBigInt();
+  }
+
+  set count(value: BigInt) {
+    this.set("count", Value.fromBigInt(value));
   }
 }

@@ -1,4 +1,4 @@
-import { BigInt, json, ipfs, log, BigDecimal } from "@graphprotocol/graph-ts"
+import { BigInt, json, ipfs, log, BigDecimal, JSONValueKind } from "@graphprotocol/graph-ts"
 import {
   GumballFactory,
   OwnershipTransferred,
@@ -55,16 +55,18 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
   // bondingcurve, nft, gumbar
   let bondingCurve = BondingCurve.bind(event.params.gbt);
   let nft = NFT.bind(event.params.gnft);
+  
   let totalDeployed = factory.totalDeployed();
   log.error('INDEX = {}', [BigInt.fromI32(totalDeployed.toI32() - 1).toString()]);
 
   let deployInfo = factory.deployInfo(
     BigInt.fromI32(totalDeployed.toI32() - 1)
   );
-
+  
   let collection = new Collection(event.params.gbt.toHexString());
+  collection.artist = bondingCurve.artist();
   collection.tokenLibrary = event.params.gbt;
-  // collection.gumballLibrary = event.params.gumballLibrary;
+  collection.minted = BigInt.fromString("0");
   collection.tokenProxy = event.params.gbt;
   collection.gumballProxy = event.params.gnft;
   collection.gumbar = event.params.xgbt;
@@ -86,7 +88,8 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
 
   collection.image = "N/A";
   let baseURI = nft.baseTokenURI();
-  collection.baseURI = baseURI;
+  collection.baseURI = nft.baseTokenURI();
+  // let baseURI = nft.contractURI();
   let ipfsHash = "";
   if(baseURI){
       if(baseURI.includes("mypinata.cloud/ipfs/")){
@@ -104,6 +107,13 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
         if(ipfsHash.includes("/"))
           ipfsHash = ipfsHash.split("/")[0];
       }
+      else if(baseURI.includes(".ipfs")){
+        ipfsHash = baseURI.split("ttps://")[1];
+        let longest = ipfsHash.split('.');
+        ipfsHash = longest[0];
+      }
+      if (ipfsHash.includes("/"))
+        ipfsHash = ipfsHash.split("/")[0];
     ipfsHash = ipfsHash +"/1"
     let metadata = ipfs.cat(ipfsHash);
     if(!metadata){
@@ -114,16 +124,10 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
       if (value){
         const image = value.get('image')
         const description = value.get('description')
-        if(image){
-          // if(image.toString().includes("https"))
-          //   collection.image = image.toString();
-          // else
-          //   collection.image = baseURI.toString() + image.toString();
-          let temp_image = image.toString()
-          // temp_image = temp_image.replace("ipfs.io", "peach-junior-gibbon-393.mypinata.cloud")
-          collection.image = temp_image
+        if(image && image.kind === JSONValueKind.STRING){
+          collection.image = image.toString()
         }
-          if(description)
+          if(description && description.kind === JSONValueKind.STRING)
             collection.description = description.toString();
       }
     }

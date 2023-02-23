@@ -19,6 +19,8 @@ type Collection @entity {
   whitelist: Boolean!,
   baseURI:String!,
   volume:BigDecimal!
+  minted:BigInt!
+  artist:Bytes!
 }
 
 type Trade @entity {
@@ -29,6 +31,7 @@ type Trade @entity {
   eventType: String!
   collection: Bytes!
   name: String!
+  user: Bytes!
 }
 
 type Swap @entity {
@@ -36,6 +39,7 @@ type Swap @entity {
   sender: Bytes! # address
   amount: BigInt!
   eventType: String!
+  collection: Bytes!
 }
 
 type Token @entity{
@@ -58,6 +62,7 @@ type Attribute @entity {
   value: String!
   tokens: [Token!]! @derivedFrom(field: "attributes")
   collection: Bytes!
+  count: BigInt!
 }
 
 
