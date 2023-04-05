@@ -47,12 +47,7 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
   
   GumballBondingCurve.create(event.params.gbt);
   GumballNft.create(event.params.gnft);
-  // let contract = BondingCurve.bind(event.params.tokenProxy);
-  // let currentPrice = contract.currentPrice();
-  // let name = contract.name();
-  // newTrade.name = name;
-  // newTrade.currentPrice = currentPrice;
-  // bondingcurve, nft, gumbar
+
   let bondingCurve = BondingCurve.bind(event.params.gbt);
   let nft = NFT.bind(event.params.gnft);
   
@@ -84,7 +79,6 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
   collection.whitelist = deployInfo.value3;
   collection.description = "";
   log.error("DEPLOY INFO {} , {} , {}", [deployInfo.value0.toHexString(), deployInfo.value1.toHexString(), deployInfo.value3 ? 'true' : 'false']);
-  // collection.whitelist = true;
 
   collection.image = "N/A";
   let baseURI = nft.baseTokenURI();

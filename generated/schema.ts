@@ -549,6 +549,110 @@ export class Token extends Entity {
   }
 }
 
+export class Interval extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Interval entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Interval must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Interval", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Interval | null {
+    return changetype<Interval | null>(store.get("Interval", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get time_frame(): string {
+    let value = this.get("time_frame");
+    return value!.toString();
+  }
+
+  set time_frame(value: string) {
+    this.set("time_frame", Value.fromString(value));
+  }
+
+  get timestamp(): string {
+    let value = this.get("timestamp");
+    return value!.toString();
+  }
+
+  set timestamp(value: string) {
+    this.set("timestamp", Value.fromString(value));
+  }
+
+  get collection(): Bytes {
+    let value = this.get("collection");
+    return value!.toBytes();
+  }
+
+  set collection(value: Bytes) {
+    this.set("collection", Value.fromBytes(value));
+  }
+
+  get trade_count(): BigInt {
+    let value = this.get("trade_count");
+    return value!.toBigInt();
+  }
+
+  set trade_count(value: BigInt) {
+    this.set("trade_count", Value.fromBigInt(value));
+  }
+
+  get price_sum(): BigInt {
+    let value = this.get("price_sum");
+    return value!.toBigInt();
+  }
+
+  set price_sum(value: BigInt) {
+    this.set("price_sum", Value.fromBigInt(value));
+  }
+
+  get average_price(): BigInt {
+    let value = this.get("average_price");
+    return value!.toBigInt();
+  }
+
+  set average_price(value: BigInt) {
+    this.set("average_price", Value.fromBigInt(value));
+  }
+
+  get buy_events(): BigInt {
+    let value = this.get("buy_events");
+    return value!.toBigInt();
+  }
+
+  set buy_events(value: BigInt) {
+    this.set("buy_events", Value.fromBigInt(value));
+  }
+
+  get sell_events(): BigInt {
+    let value = this.get("sell_events");
+    return value!.toBigInt();
+  }
+
+  set sell_events(value: BigInt) {
+    this.set("sell_events", Value.fromBigInt(value));
+  }
+}
+
 export class Attribute extends Entity {
   constructor(id: string) {
     super();

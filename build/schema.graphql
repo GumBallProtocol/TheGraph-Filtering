@@ -56,6 +56,18 @@ type Token @entity{
   staked: Boolean!
 }
 
+type Interval @entity {
+  id: ID!
+  time_frame: String!
+  timestamp: String!
+  collection: Bytes!
+  trade_count: BigInt!
+  price_sum: BigInt!
+  average_price: BigInt!
+  buy_events: BigInt!
+  sell_events: BigInt!
+}
+
 type Attribute @entity {
   id: ID!
   trait_type: String!
