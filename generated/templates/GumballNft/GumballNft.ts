@@ -342,6 +342,21 @@ export class GumballNft extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  fees(): Address {
+    let result = super.call("fees", "fees():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_fees(): ethereum.CallResult<Address> {
+    let result = super.tryCall("fees", "fees():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   getApproved(tokenId: BigInt): Address {
     let result = super.call("getApproved", "getApproved(uint256):(address)", [
       ethereum.Value.fromUnsignedBigInt(tokenId)
@@ -446,6 +461,21 @@ export class GumballNft extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
+  maxSupply(): BigInt {
+    let result = super.call("maxSupply", "maxSupply():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_maxSupply(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("maxSupply", "maxSupply():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   name(): string {

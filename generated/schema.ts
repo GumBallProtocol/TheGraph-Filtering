@@ -246,6 +246,15 @@ export class Collection extends Entity {
   set artist(value: Bytes) {
     this.set("artist", Value.fromBytes(value));
   }
+
+  get rewards(): BigInt {
+    let value = this.get("rewards");
+    return value!.toBigInt();
+  }
+
+  set rewards(value: BigInt) {
+    this.set("rewards", Value.fromBigInt(value));
+  }
 }
 
 export class Trade extends Entity {

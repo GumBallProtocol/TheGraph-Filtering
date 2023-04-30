@@ -2,6 +2,8 @@ import { BigInt, json, ipfs, log } from "@graphprotocol/graph-ts"
 import {Collection, Token} from '../generated/schema'
 import {
   DepositNFT,
+  Gumbar,
+  RewardPaid,
   WithdrawNFT
 } from '../generated/templates/Gumbar/Gumbar';
 
@@ -21,5 +23,18 @@ export function handleWithdrawNFT(event: WithdrawNFT): void {
     if(token){
         token.staked = false;
         token.save();
+    }
+}
+
+export function handleRewardPaid(event: RewardPaid): void {
+    // call stking token to get gbt address
+    let contract = Gumbar.bind(event.address);
+    let gbt = contract.stakingToken();
+
+    let collection = Collection.load(gbt.toHexString());
+
+    if(collection){
+        collection.rewards = collection.rewards.plus(event.params.reward);
+        collection.save();
     }
 }

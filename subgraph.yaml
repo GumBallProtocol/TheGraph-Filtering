@@ -7,11 +7,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: GumballFactory
-    network: arbitrum-one
+    network: matic
     source:
       abi: GumballFactory
-      address: "0xf5cfBaF55036264B902D9ae55A114d9A22c42750"
-      startBlock: 51954296
+      address: "0x2E58eD6b14996fb421aCB2F0a572d7B045062F4E"
+      startBlock: 41907739
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -26,10 +26,12 @@ dataSources:
           file: ./abis/GumballBondingCurve.json
         - name: GumballNft
           file: ./abis/gumballnft.json
+        - name: Gumbar
+          file: ./abis/Gumbar.json
       eventHandlers:
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: GumBallDeployed(address,address,address)
+        - event: GumBallDeployed(indexed address,indexed address,indexed address)
           handler: handleGumBallDeployed
         - event: AllowExisting(uint256,bool)
           handler: handleAllowExisting
@@ -51,12 +53,12 @@ templates:
         - name: GumballFactory
           file: ./abis/GumballFactory.json
       eventHandlers:
-        - event: Buy(indexed address,uint256)
+        - event: Buy(indexed address,indexed address,uint256,indexed address)
           handler: handleBuy
-        - event: Sell(indexed address,uint256)
+        - event: Sell(indexed address,indexed address,uint256,indexed address)
           handler: handleSell
       file: ./src/gumball_mapping.ts
-    network: arbitrum-one
+    network: matic
   - kind: ethereum
     name: GumballNft
     source:
@@ -85,7 +87,7 @@ templates:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: ./src/gumballnft_mapping.ts
-    network: arbitrum-one
+    network: matic
   - kind: ethereum
     name: Gumbar
     source:
@@ -105,5 +107,7 @@ templates:
           handler: handleDepositNFT
         - event: WithdrawNFT(indexed address,address,uint256[])
           handler: handleWithdrawNFT
+        - event: RewardPaid(indexed address,indexed address,uint256)
+          handler: handleRewardPaid
       file: ./src/gumbar_mapping.ts
-    network: arbitrum-one
+    network: matic

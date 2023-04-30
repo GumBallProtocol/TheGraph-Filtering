@@ -1,8 +1,8 @@
 {
   "arbitrum-one": {
     "GumballFactory": {
-      "address": "0xf5cfBaF55036264B902D9ae55A114d9A22c42750",
-      "startBlock": 51954296
+      "address": "0xA2825FffcFCbfc1a9eEE05EEc87DB8834656D4FD",
+      "startBlock": 83836782
     }
   },
   "arbitrum-goerli": {
@@ -27,6 +27,24 @@
     "GumballFactory":{
       "address":"0x42eEe1E69DeA98dB10e36F01E07cD26778669BF6",
       "startBlock": 15297682
+    }
+  },
+  "bsc":{
+    "GumballFactory":{
+      "address":"0x563361dc87Dd08486A06dDc931Eb0F97A2c4d736",
+      "startBlock":27535939
+    }
+  },
+  "fantom":{
+    "GumballFactory":{
+      "address":"0xD8300AbAF2a86842A8623391b91a31cF9700aba8",
+      "startBlock":60776674
+    }
+  },
+  "matic":{
+    "GumballFactory":{
+      "address":"0x2E58eD6b14996fb421aCB2F0a572d7B045062F4E",
+      "startBlock":41907739
     }
   }
 }

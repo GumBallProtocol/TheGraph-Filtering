@@ -78,6 +78,7 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
   collection.symbol = bondingCurve.symbol();
   collection.whitelist = deployInfo.value3;
   collection.description = "";
+  collection.rewards = BigInt.fromString("0");
   log.error("DEPLOY INFO {} , {} , {}", [deployInfo.value0.toHexString(), deployInfo.value1.toHexString(), deployInfo.value3 ? 'true' : 'false']);
 
   collection.image = "N/A";

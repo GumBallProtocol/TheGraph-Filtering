@@ -1,5 +1,94 @@
 [
 	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_symbol",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_baseToken",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_initialVirtualBASE",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_supplyGBT",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_artist",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_factory",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_delay",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "affiliate",
+				"type": "address"
+			}
+		],
+		"name": "AffiliateSet",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address[]",
+				"name": "accounts",
+				"type": "address[]"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "AllowListUpdated",
+		"type": "event"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -47,22 +136,15 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "Burn",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
 				"indexed": true,
 				"internalType": "address",
 				"name": "user",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
 				"type": "address"
 			},
 			{
@@ -70,6 +152,12 @@
 				"internalType": "uint256",
 				"name": "amount",
 				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "affiliate",
+				"type": "address"
 			}
 		],
 		"name": "Buy",
@@ -80,12 +168,38 @@
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint8",
-				"name": "version",
-				"type": "uint8"
+				"internalType": "address",
+				"name": "newArtist",
+				"type": "address"
 			}
 		],
-		"name": "Initialized",
+		"name": "ChangeArtist",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "newArtistTreasury",
+				"type": "address"
+			}
+		],
+		"name": "ChangeArtistTreasury",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "MarketOpened",
 		"type": "event"
 	},
 	{
@@ -117,26 +231,25 @@
 				"type": "address"
 			},
 			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
 				"indexed": false,
 				"internalType": "uint256",
 				"name": "amount",
 				"type": "uint256"
-			}
-		],
-		"name": "Sell",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
+			},
 			{
 				"indexed": true,
 				"internalType": "address",
-				"name": "user",
+				"name": "affiliate",
 				"type": "address"
 			}
 		],
-		"name": "Skim",
+		"name": "Sell",
 		"type": "event"
 	},
 	{
@@ -168,14 +281,27 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"internalType": "address",
-				"name": "newOwner",
+				"name": "_XGBT",
 				"type": "address"
 			}
 		],
-		"name": "UpdateOwnership",
+		"name": "XGBTSet",
 		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "AFFILIATE",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"inputs": [],
@@ -192,7 +318,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "INITIAL_VIRTUAL_BASE",
+		"name": "DIVISOR",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -204,21 +330,16 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "XGBT",
+		"outputs": [
 			{
-				"internalType": "address[]",
-				"name": "accounts",
-				"type": "address[]"
-			},
-			{
-				"internalType": "bool",
-				"name": "_bool",
-				"type": "bool"
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
-		"name": "_whitelist",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -235,6 +356,25 @@
 			}
 		],
 		"name": "allowance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "allowlist",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -272,6 +412,19 @@
 	{
 		"inputs": [],
 		"name": "artist",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "artistTreasury",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -389,19 +542,6 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "burn",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
 				"name": "_amountBASE",
 				"type": "uint256"
 			},
@@ -414,6 +554,16 @@
 				"internalType": "uint256",
 				"name": "expireTimestamp",
 				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "affiliate",
+				"type": "address"
 			}
 		],
 		"name": "buy",
@@ -492,7 +642,46 @@
 	},
 	{
 		"inputs": [],
+		"name": "delay",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "factory",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "fee",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "fees",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -531,7 +720,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getGumball",
+		"name": "getArtist",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -544,7 +733,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getProtocol",
+		"name": "getFactory",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -557,7 +746,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "gumball",
+		"name": "getFees",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -570,7 +759,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "gumbar",
+		"name": "getXGBT",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -634,78 +823,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "__name",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "__symbol",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "_baseToken",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_initialVirtualBASE",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_supplyGBT",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_gumball",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_gumbar",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_artist",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_delay",
-				"type": "uint256"
-			}
-		],
-		"name": "initialize",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "limit",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "account",
 				"type": "address"
@@ -737,7 +854,33 @@
 	},
 	{
 		"inputs": [],
-		"name": "protocol",
+		"name": "open",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "openMarket",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "referrals",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -823,6 +966,11 @@
 				"internalType": "uint256",
 				"name": "expireTimestamp",
 				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
 			}
 		],
 		"name": "sell",
@@ -831,8 +979,47 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_artist",
+				"type": "address"
+			}
+		],
+		"name": "setArtist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_artistTreasury",
+				"type": "address"
+			}
+		],
+		"name": "setArtistTreasury",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_XGBT",
+				"type": "address"
+			}
+		],
+		"name": "setXGBT",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
-		"name": "skimReward",
+		"name": "start",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -923,62 +1110,21 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "treasuryBASE",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "treasuryGBT",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "treasurySkim",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "updateOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "whitelist",
-		"outputs": [
+				"internalType": "address[]",
+				"name": "accounts",
+				"type": "address[]"
+			},
 			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "updateAllowlist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
