@@ -11,6 +11,7 @@ import { Trade, Collection, Interval } from '../generated/schema';
 import { convertTokenToDecimal } from './helpers';
 
 export function handleBuy(event: BuyEvent): void {
+  log.warning("BUY EVENT: {}", [event.params.amount.toString()])
   let newTrade = new Trade(event.transaction.hash.toHexString());
   newTrade.amount = event.params.amount;
   let contract = GumballBondingCurve.bind(event.address);

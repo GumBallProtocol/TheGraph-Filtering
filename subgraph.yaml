@@ -7,11 +7,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: GumballFactory
-    network: matic
+    network: arbitrum-one
     source:
       abi: GumballFactory
-      address: "0x2E58eD6b14996fb421aCB2F0a572d7B045062F4E"
-      startBlock: 41907739
+      address: "0xA2825FffcFCbfc1a9eEE05EEc87DB8834656D4FD"
+      startBlock: 83836782
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -53,12 +53,12 @@ templates:
         - name: GumballFactory
           file: ./abis/GumballFactory.json
       eventHandlers:
-        - event: Buy(indexed address,indexed address,uint256,indexed address)
+        - event: Buy(indexed address,uint256)
           handler: handleBuy
-        - event: Sell(indexed address,indexed address,uint256,indexed address)
+        - event: Sell(indexed address,uint256)
           handler: handleSell
       file: ./src/gumball_mapping.ts
-    network: matic
+    network: arbitrum-one
   - kind: ethereum
     name: GumballNft
     source:
@@ -87,7 +87,7 @@ templates:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: ./src/gumballnft_mapping.ts
-    network: matic
+    network: arbitrum-one
   - kind: ethereum
     name: Gumbar
     source:
@@ -110,4 +110,4 @@ templates:
         - event: RewardPaid(indexed address,indexed address,uint256)
           handler: handleRewardPaid
       file: ./src/gumbar_mapping.ts
-    network: matic
+    network: arbitrum-one
