@@ -58,7 +58,9 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
     BigInt.fromI32(totalDeployed.toI32() - 1)
   );
   
-  let collection = new Collection(event.params.gbt.toHexString());
+  let collection = Collection.load(event.params.gbt.toHexString());
+  if(!collection){ 
+  collection = new Collection(event.params.gbt.toHexString());
   collection.artist = bondingCurve.artist();
   collection.tokenLibrary = event.params.gbt;
   collection.minted = BigInt.fromString("0");
@@ -127,5 +129,6 @@ export function handleGumBallDeployed(event: GumBallDeployed): void {
       }
     }
   }
+}
   collection.save();
 }

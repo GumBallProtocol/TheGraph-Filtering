@@ -21,7 +21,7 @@ type Collection @entity {
   volume:BigDecimal!
   minted:BigInt!
   artist:Bytes!
-  rewards: BigInt!
+  rewards: BigInt
 }
 
 type Trade @entity {
