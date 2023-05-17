@@ -34,7 +34,12 @@ export function handleRewardPaid(event: RewardPaid): void {
     let collection = Collection.load(gbt.toHexString());
 
     if(collection){
-        collection.rewards = collection.rewards.plus(event.params.reward);
+        if(collection.rewards[event.params.rewardsToken.toString()]){
+            collection.rewards[event.params.rewardsToken.toString()].plus(event.params.reward)
+        }else{
+            collection.rewards[event.params.rewardsToken.toString()] = event.params.reward
+        }
+        //collection.rewards = collection.rewards.plus(event.params.reward);
         collection.save();
     }
 }
