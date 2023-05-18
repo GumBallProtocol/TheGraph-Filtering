@@ -6,7 +6,7 @@ features:
 schema:
   file: ./schema.graphql
 graft:
-  base: QmQXoBQDe62JQSD32mmDvxNM1o8AYn57u7wzNrYTebWtX1
+  base: QmTBXgTkv3RNvHCtFJM1JVDUc4irmUPFD8oT44cnbc8CBc
   block: 83836781
 dataSources:
   - kind: ethereum
@@ -101,6 +101,7 @@ templates:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
+        - RewardPaid
         - DepositNFT
         - WithdrawNFT
       abis:

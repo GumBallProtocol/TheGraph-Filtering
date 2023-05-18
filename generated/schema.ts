@@ -247,13 +247,21 @@ export class Collection extends Entity {
     this.set("artist", Value.fromBytes(value));
   }
 
-  get rewards(): BigInt {
+  get rewards(): Array<string> | null {
     let value = this.get("rewards");
-    return value!.toBigInt();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
   }
 
-  set rewards(value: BigInt) {
-    this.set("rewards", Value.fromBigInt(value));
+  set rewards(value: Array<string> | null) {
+    if (!value) {
+      this.unset("rewards");
+    } else {
+      this.set("rewards", Value.fromStringArray(<Array<string>>value));
+    }
   }
 }
 
@@ -659,6 +667,56 @@ export class Interval extends Entity {
 
   set sell_events(value: BigInt) {
     this.set("sell_events", Value.fromBigInt(value));
+  }
+}
+
+export class Reward extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Reward entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Reward must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Reward", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Reward | null {
+    return changetype<Reward | null>(store.get("Reward", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get total(): BigInt {
+    let value = this.get("total");
+    return value!.toBigInt();
+  }
+
+  set total(value: BigInt) {
+    this.set("total", Value.fromBigInt(value));
+  }
+
+  get tokenAddress(): Bytes {
+    let value = this.get("tokenAddress");
+    return value!.toBytes();
+  }
+
+  set tokenAddress(value: Bytes) {
+    this.set("tokenAddress", Value.fromBytes(value));
   }
 }
 

@@ -21,7 +21,7 @@ type Collection @entity {
   volume:BigDecimal!
   minted:BigInt!
   artist:Bytes!
-  rewards: [Reward!]!
+  rewards: [Reward!]
 }
 
 type Trade @entity {
@@ -71,7 +71,8 @@ type Interval @entity {
 
 type Reward @entity {
   id: ID!
-  reward: BigInt
+  total: BigInt!
+  tokenAddress: Bytes!
 }
 
 type Attribute @entity {
