@@ -2,20 +2,16 @@ specVersion: 0.0.4
 features:
   - ipfsOnEthereumContracts
   - fullTextSearch
-  - grafting
 schema:
   file: ./schema.graphql
-graft:
-  base: QmTBXgTkv3RNvHCtFJM1JVDUc4irmUPFD8oT44cnbc8CBc
-  block: 83836781
 dataSources:
   - kind: ethereum
     name: GumballFactory
-    network: arbitrum-one
+    network: optimism
     source:
       abi: GumballFactory
-      address: "0xA2825FffcFCbfc1a9eEE05EEc87DB8834656D4FD"
-      startBlock: 83836782
+      address: "0x473a6539F7E6995B1BeD3121116001DaCBCDBfdA"
+      startBlock: 108967684
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -57,12 +53,12 @@ templates:
         - name: GumballFactory
           file: ./abis/GumballFactory.json
       eventHandlers:
-        - event: Buy(indexed address,uint256)
+        - event: Buy(indexed address,indexed address,uint256,indexed address)
           handler: handleBuy
-        - event: Sell(indexed address,uint256)
+        - event: Sell(indexed address,indexed address,uint256,indexed address)
           handler: handleSell
       file: ./src/gumball_mapping.ts
-    network: arbitrum-one
+    network: optimism
   - kind: ethereum
     name: GumballNft
     source:
@@ -91,7 +87,7 @@ templates:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: ./src/gumballnft_mapping.ts
-    network: arbitrum-one
+    network: optimism
   - kind: ethereum
     name: Gumbar
     source:
@@ -115,4 +111,4 @@ templates:
         - event: RewardPaid(indexed address,indexed address,uint256)
           handler: handleRewardPaid
       file: ./src/gumbar_mapping.ts
-    network: arbitrum-one
+    network: optimism
