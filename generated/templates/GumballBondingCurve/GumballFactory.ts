@@ -90,32 +90,6 @@ export class GNFTFactorySet__Params {
   }
 }
 
-export class GumBallAdded extends ethereum.Event {
-  get params(): GumBallAdded__Params {
-    return new GumBallAdded__Params(this);
-  }
-}
-
-export class GumBallAdded__Params {
-  _event: GumBallAdded;
-
-  constructor(event: GumBallAdded) {
-    this._event = event;
-  }
-
-  get _gbt(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _gnft(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get _xgbt(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-}
-
 export class GumBallDeployed extends ethereum.Event {
   get params(): GumBallDeployed__Params {
     return new GumBallDeployed__Params(this);
@@ -226,6 +200,22 @@ export class GumballFactory__deployInfoResult {
     map.set("value3", ethereum.Value.fromBoolean(this.value3));
     return map;
   }
+
+  getToken(): Address {
+    return this.value0;
+  }
+
+  getNft(): Address {
+    return this.value1;
+  }
+
+  getGumbar(): Address {
+    return this.value2;
+  }
+
+  get_allowed(): boolean {
+    return this.value3;
+  }
 }
 
 export class GumballFactory__gumballsResult {
@@ -253,6 +243,22 @@ export class GumballFactory__gumballsResult {
     map.set("value2", ethereum.Value.fromAddress(this.value2));
     map.set("value3", ethereum.Value.fromBoolean(this.value3));
     return map;
+  }
+
+  getGBT(): Address {
+    return this.value0;
+  }
+
+  getGNFT(): Address {
+    return this.value1;
+  }
+
+  getXGBT(): Address {
+    return this.value2;
+  }
+
+  getAllowed(): boolean {
+    return this.value3;
   }
 }
 
@@ -414,25 +420,6 @@ export class GumballFactory extends ethereum.SmartContract {
     );
   }
 
-  indexes(param0: Address): BigInt {
-    let result = super.call("indexes", "indexes(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_indexes(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("indexes", "indexes(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
   owner(): Address {
     let result = super.call("owner", "owner():(address)", []);
 
@@ -525,44 +512,6 @@ export class ConstructorCall__Outputs {
   }
 }
 
-export class AddExistingGumBallCall extends ethereum.Call {
-  get inputs(): AddExistingGumBallCall__Inputs {
-    return new AddExistingGumBallCall__Inputs(this);
-  }
-
-  get outputs(): AddExistingGumBallCall__Outputs {
-    return new AddExistingGumBallCall__Outputs(this);
-  }
-}
-
-export class AddExistingGumBallCall__Inputs {
-  _call: AddExistingGumBallCall;
-
-  constructor(call: AddExistingGumBallCall) {
-    this._call = call;
-  }
-
-  get _gbt(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get _xgbt(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get _gnft(): Address {
-    return this._call.inputValues[2].value.toAddress();
-  }
-}
-
-export class AddExistingGumBallCall__Outputs {
-  _call: AddExistingGumBallCall;
-
-  constructor(call: AddExistingGumBallCall) {
-    this._call = call;
-  }
-}
-
 export class AddRewardCall extends ethereum.Call {
   get inputs(): AddRewardCall__Inputs {
     return new AddRewardCall__Inputs(this);
@@ -586,6 +535,10 @@ export class AddRewardCall__Inputs {
 
   get _rewardsToken(): Address {
     return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _rewardsDistributor(): Address {
+    return this._call.inputValues[2].value.toAddress();
   }
 }
 
@@ -680,8 +633,8 @@ export class DeployGumBallCall__Inputs {
     return this._call.inputValues[7].value.toBigInt();
   }
 
-  get _fees(): Array<BigInt> {
-    return this._call.inputValues[8].value.toBigIntArray();
+  get _bFee(): BigInt {
+    return this._call.inputValues[8].value.toBigInt();
   }
 }
 
@@ -775,6 +728,44 @@ export class SetGNFTFactoryCall__Outputs {
   _call: SetGNFTFactoryCall;
 
   constructor(call: SetGNFTFactoryCall) {
+    this._call = call;
+  }
+}
+
+export class SetRewardsDistributorCall extends ethereum.Call {
+  get inputs(): SetRewardsDistributorCall__Inputs {
+    return new SetRewardsDistributorCall__Inputs(this);
+  }
+
+  get outputs(): SetRewardsDistributorCall__Outputs {
+    return new SetRewardsDistributorCall__Outputs(this);
+  }
+}
+
+export class SetRewardsDistributorCall__Inputs {
+  _call: SetRewardsDistributorCall;
+
+  constructor(call: SetRewardsDistributorCall) {
+    this._call = call;
+  }
+
+  get _gumbarAddr(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get _rewardsToken(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _rewardsDistributor(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+}
+
+export class SetRewardsDistributorCall__Outputs {
+  _call: SetRewardsDistributorCall;
+
+  constructor(call: SetRewardsDistributorCall) {
     this._call = call;
   }
 }
@@ -924,12 +915,12 @@ export class UpdateGumBallAllowlistCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _accounts(): Array<Address> {
+  get accounts(): Array<Address> {
     return this._call.inputValues[1].value.toAddressArray();
   }
 
-  get _amount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
+  get _bool(): boolean {
+    return this._call.inputValues[2].value.toBoolean();
   }
 }
 

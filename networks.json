@@ -1,8 +1,8 @@
 {
   "arbitrum-one": {
     "GumballFactory": {
-      "address": "0xA2825FffcFCbfc1a9eEE05EEc87DB8834656D4FD",
-      "startBlock": 83836782
+      "address": "0xf5cfBaF55036264B902D9ae55A114d9A22c42750",
+      "startBlock": 51954296
     }
   },
   "arbitrum-goerli": {

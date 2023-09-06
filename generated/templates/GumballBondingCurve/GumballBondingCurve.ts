@@ -10,28 +10,6 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class AffiliateSet extends ethereum.Event {
-  get params(): AffiliateSet__Params {
-    return new AffiliateSet__Params(this);
-  }
-}
-
-export class AffiliateSet__Params {
-  _event: AffiliateSet;
-
-  constructor(event: AffiliateSet) {
-    this._event = event;
-  }
-
-  get account(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get affiliate(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-}
-
 export class AllowListUpdated extends ethereum.Event {
   get params(): AllowListUpdated__Params {
     return new AllowListUpdated__Params(this);
@@ -49,8 +27,8 @@ export class AllowListUpdated__Params {
     return this._event.parameters[0].value.toAddressArray();
   }
 
-  get amount(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
+  get flag(): boolean {
+    return this._event.parameters[1].value.toBoolean();
   }
 }
 
@@ -142,42 +120,6 @@ export class ChangeArtist__Params {
   }
 }
 
-export class ChangeArtistTreasury extends ethereum.Event {
-  get params(): ChangeArtistTreasury__Params {
-    return new ChangeArtistTreasury__Params(this);
-  }
-}
-
-export class ChangeArtistTreasury__Params {
-  _event: ChangeArtistTreasury;
-
-  constructor(event: ChangeArtistTreasury) {
-    this._event = event;
-  }
-
-  get newArtistTreasury(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-}
-
-export class MarketOpened extends ethereum.Event {
-  get params(): MarketOpened__Params {
-    return new MarketOpened__Params(this);
-  }
-}
-
-export class MarketOpened__Params {
-  _event: MarketOpened;
-
-  constructor(event: MarketOpened) {
-    this._event = event;
-  }
-
-  get _timestamp(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-}
-
 export class Repay extends ethereum.Event {
   get params(): Repay__Params {
     return new Repay__Params(this);
@@ -219,6 +161,24 @@ export class Sell__Params {
 
   get amount(): BigInt {
     return this._event.parameters[1].value.toBigInt();
+  }
+}
+
+export class Skim extends ethereum.Event {
+  get params(): Skim__Params {
+    return new Skim__Params(this);
+  }
+}
+
+export class Skim__Params {
+  _event: Skim;
+
+  constructor(event: Skim) {
+    this._event = event;
+  }
+
+  get user(): Address {
+    return this._event.parameters[0].value.toAddress();
   }
 }
 
@@ -271,14 +231,14 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return new GumballBondingCurve("GumballBondingCurve", address);
   }
 
-  AFFILIATE(): BigInt {
-    let result = super.call("AFFILIATE", "AFFILIATE():(uint256)", []);
+  ARTIST(): BigInt {
+    let result = super.call("ARTIST", "ARTIST():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_AFFILIATE(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("AFFILIATE", "AFFILIATE():(uint256)", []);
+  try_ARTIST(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("ARTIST", "ARTIST():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -309,6 +269,51 @@ export class GumballBondingCurve extends ethereum.SmartContract {
 
   try_DIVISOR(): ethereum.CallResult<BigInt> {
     let result = super.tryCall("DIVISOR", "DIVISOR():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  GUMBAR(): BigInt {
+    let result = super.call("GUMBAR", "GUMBAR():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_GUMBAR(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("GUMBAR", "GUMBAR():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  PROTOCOL(): BigInt {
+    let result = super.call("PROTOCOL", "PROTOCOL():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_PROTOCOL(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("PROTOCOL", "PROTOCOL():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  TREASURY(): BigInt {
+    let result = super.call("TREASURY", "TREASURY():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_TREASURY(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("TREASURY", "TREASURY():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -354,23 +359,23 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  allowlist(param0: Address): BigInt {
-    let result = super.call("allowlist", "allowlist(address):(uint256)", [
+  allowlist(param0: Address): boolean {
+    let result = super.call("allowlist", "allowlist(address):(bool)", [
       ethereum.Value.fromAddress(param0)
     ]);
 
-    return result[0].toBigInt();
+    return result[0].toBoolean();
   }
 
-  try_allowlist(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("allowlist", "allowlist(address):(uint256)", [
+  try_allowlist(param0: Address): ethereum.CallResult<boolean> {
+    let result = super.tryCall("allowlist", "allowlist(address):(bool)", [
       ethereum.Value.fromAddress(param0)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   approve(spender: Address, amount: BigInt): boolean {
@@ -402,25 +407,6 @@ export class GumballBondingCurve extends ethereum.SmartContract {
 
   try_artist(): ethereum.CallResult<Address> {
     let result = super.tryCall("artist", "artist():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  artistTreasury(): Address {
-    let result = super.call("artistTreasury", "artistTreasury():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_artistTreasury(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "artistTreasury",
-      "artistTreasury():(address)",
-      []
-    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -638,36 +624,6 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  fee(): BigInt {
-    let result = super.call("fee", "fee():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_fee(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("fee", "fee():(uint256)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  fees(): Address {
-    let result = super.call("fees", "fees():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_fees(): ethereum.CallResult<Address> {
-    let result = super.tryCall("fees", "fees():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
   floorPrice(): BigInt {
     let result = super.call("floorPrice", "floorPrice():(uint256)", []);
 
@@ -698,21 +654,6 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getArtist(): Address {
-    let result = super.call("getArtist", "getArtist():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_getArtist(): ethereum.CallResult<Address> {
-    let result = super.tryCall("getArtist", "getArtist():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
   getFactory(): Address {
     let result = super.call("getFactory", "getFactory():(address)", []);
 
@@ -721,36 +662,6 @@ export class GumballBondingCurve extends ethereum.SmartContract {
 
   try_getFactory(): ethereum.CallResult<Address> {
     let result = super.tryCall("getFactory", "getFactory():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  getFees(): Address {
-    let result = super.call("getFees", "getFees():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_getFees(): ethereum.CallResult<Address> {
-    let result = super.tryCall("getFees", "getFees():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  getXGBT(): Address {
-    let result = super.call("getXGBT", "getXGBT():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_getXGBT(): ethereum.CallResult<Address> {
-    let result = super.tryCall("getXGBT", "getXGBT():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -828,6 +739,25 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  limit(param0: Address): BigInt {
+    let result = super.call("limit", "limit(address):(uint256)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_limit(param0: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("limit", "limit(address):(uint256)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   mustStayGBT(account: Address): BigInt {
     let result = super.call("mustStayGBT", "mustStayGBT(address):(uint256)", [
       ethereum.Value.fromAddress(account)
@@ -862,40 +792,6 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
-  }
-
-  open(): boolean {
-    let result = super.call("open", "open():(bool)", []);
-
-    return result[0].toBoolean();
-  }
-
-  try_open(): ethereum.CallResult<boolean> {
-    let result = super.tryCall("open", "open():(bool)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
-  referrals(param0: Address): Address {
-    let result = super.call("referrals", "referrals(address):(address)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-
-    return result[0].toAddress();
-  }
-
-  try_referrals(param0: Address): ethereum.CallResult<Address> {
-    let result = super.tryCall("referrals", "referrals(address):(address)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   reserveGBT(): BigInt {
@@ -952,6 +848,21 @@ export class GumballBondingCurve extends ethereum.SmartContract {
       "reserveVirtualBASE():(uint256)",
       []
     );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  skimReward(): BigInt {
+    let result = super.call("skimReward", "skimReward():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_skimReward(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("skimReward", "skimReward():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1059,6 +970,36 @@ export class GumballBondingCurve extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
+
+  treasuryBASE(): BigInt {
+    let result = super.call("treasuryBASE", "treasuryBASE():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_treasuryBASE(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("treasuryBASE", "treasuryBASE():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  treasuryGBT(): BigInt {
+    let result = super.call("treasuryGBT", "treasuryGBT():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_treasuryGBT(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("treasuryGBT", "treasuryGBT():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
 }
 
 export class ConstructorCall extends ethereum.Call {
@@ -1108,10 +1049,6 @@ export class ConstructorCall__Inputs {
 
   get _delay(): BigInt {
     return this._call.inputValues[7].value.toBigInt();
-  }
-
-  get _fee(): BigInt {
-    return this._call.inputValues[8].value.toBigInt();
   }
 }
 
@@ -1245,14 +1182,6 @@ export class BuyCall__Inputs {
   get expireTimestamp(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
-
-  get to(): Address {
-    return this._call.inputValues[3].value.toAddress();
-  }
-
-  get affiliate(): Address {
-    return this._call.inputValues[4].value.toAddress();
-  }
 }
 
 export class BuyCall__Outputs {
@@ -1336,32 +1265,6 @@ export class IncreaseAllowanceCall__Outputs {
 
   get value0(): boolean {
     return this._call.outputValues[0].value.toBoolean();
-  }
-}
-
-export class OpenMarketCall extends ethereum.Call {
-  get inputs(): OpenMarketCall__Inputs {
-    return new OpenMarketCall__Inputs(this);
-  }
-
-  get outputs(): OpenMarketCall__Outputs {
-    return new OpenMarketCall__Outputs(this);
-  }
-}
-
-export class OpenMarketCall__Inputs {
-  _call: OpenMarketCall;
-
-  constructor(call: OpenMarketCall) {
-    this._call = call;
-  }
-}
-
-export class OpenMarketCall__Outputs {
-  _call: OpenMarketCall;
-
-  constructor(call: OpenMarketCall) {
-    this._call = call;
   }
 }
 
@@ -1449,10 +1352,6 @@ export class SellCall__Inputs {
   get expireTimestamp(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
-
-  get to(): Address {
-    return this._call.inputValues[3].value.toAddress();
-  }
 }
 
 export class SellCall__Outputs {
@@ -1489,36 +1388,6 @@ export class SetArtistCall__Outputs {
   _call: SetArtistCall;
 
   constructor(call: SetArtistCall) {
-    this._call = call;
-  }
-}
-
-export class SetArtistTreasuryCall extends ethereum.Call {
-  get inputs(): SetArtistTreasuryCall__Inputs {
-    return new SetArtistTreasuryCall__Inputs(this);
-  }
-
-  get outputs(): SetArtistTreasuryCall__Outputs {
-    return new SetArtistTreasuryCall__Outputs(this);
-  }
-}
-
-export class SetArtistTreasuryCall__Inputs {
-  _call: SetArtistTreasuryCall;
-
-  constructor(call: SetArtistTreasuryCall) {
-    this._call = call;
-  }
-
-  get _artistTreasury(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class SetArtistTreasuryCall__Outputs {
-  _call: SetArtistTreasuryCall;
-
-  constructor(call: SetArtistTreasuryCall) {
     this._call = call;
   }
 }
@@ -1633,6 +1502,32 @@ export class TransferFromCall__Outputs {
   }
 }
 
+export class TreasurySkimCall extends ethereum.Call {
+  get inputs(): TreasurySkimCall__Inputs {
+    return new TreasurySkimCall__Inputs(this);
+  }
+
+  get outputs(): TreasurySkimCall__Outputs {
+    return new TreasurySkimCall__Outputs(this);
+  }
+}
+
+export class TreasurySkimCall__Inputs {
+  _call: TreasurySkimCall;
+
+  constructor(call: TreasurySkimCall) {
+    this._call = call;
+  }
+}
+
+export class TreasurySkimCall__Outputs {
+  _call: TreasurySkimCall;
+
+  constructor(call: TreasurySkimCall) {
+    this._call = call;
+  }
+}
+
 export class UpdateAllowlistCall extends ethereum.Call {
   get inputs(): UpdateAllowlistCall__Inputs {
     return new UpdateAllowlistCall__Inputs(this);
@@ -1654,8 +1549,8 @@ export class UpdateAllowlistCall__Inputs {
     return this._call.inputValues[0].value.toAddressArray();
   }
 
-  get amount(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
+  get _bool(): boolean {
+    return this._call.inputValues[1].value.toBoolean();
   }
 }
 

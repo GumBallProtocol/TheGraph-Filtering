@@ -2,20 +2,16 @@ specVersion: 0.0.4
 features:
   - ipfsOnEthereumContracts
   - fullTextSearch
-  - grafting
 schema:
   file: schema.graphql
-graft:
-  base: QmTBXgTkv3RNvHCtFJM1JVDUc4irmUPFD8oT44cnbc8CBc
-  block: 83836781
 dataSources:
   - kind: ethereum
     name: GumballFactory
     network: arbitrum-one
     source:
       abi: GumballFactory
-      address: "0xA2825FffcFCbfc1a9eEE05EEc87DB8834656D4FD"
-      startBlock: 83836782
+      address: "0xf5cfBaF55036264B902D9ae55A114d9A22c42750"
+      startBlock: 51954296
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -35,7 +31,7 @@ dataSources:
       eventHandlers:
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: GumBallDeployed(indexed address,indexed address,indexed address)
+        - event: GumBallDeployed(address,address,address)
           handler: handleGumBallDeployed
         - event: AllowExisting(uint256,bool)
           handler: handleAllowExisting
