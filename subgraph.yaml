@@ -6,16 +6,16 @@ features:
 schema:
   file: ./schema.graphql
 graft:
-  base: QmTBXgTkv3RNvHCtFJM1JVDUc4irmUPFD8oT44cnbc8CBc
-  block: 83836781
+  base: Qmacwh3rc6jc8WYHwuab6NBhuZUhGkzoziowkzzb8RxNr2
+  block: 126876521
 dataSources:
   - kind: ethereum
     name: GumballFactory
     network: arbitrum-one
     source:
       abi: GumballFactory
-      address: "0xA2825FffcFCbfc1a9eEE05EEc87DB8834656D4FD"
-      startBlock: 83836782
+      address: "0xfa469482108bDEd1FE3CEb58fC440EF58708EE20"
+      startBlock: 126876522
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -57,9 +57,9 @@ templates:
         - name: GumballFactory
           file: ./abis/GumballFactory.json
       eventHandlers:
-        - event: Buy(indexed address,uint256)
+        - event: Buy(indexed address,indexed address,uint256,indexed address)
           handler: handleBuy
-        - event: Sell(indexed address,uint256)
+        - event: Sell(indexed address,indexed address,uint256,indexed address)
           handler: handleSell
       file: ./src/gumball_mapping.ts
     network: arbitrum-one

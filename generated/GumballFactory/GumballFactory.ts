@@ -226,6 +226,22 @@ export class GumballFactory__deployInfoResult {
     map.set("value3", ethereum.Value.fromBoolean(this.value3));
     return map;
   }
+
+  getToken(): Address {
+    return this.value0;
+  }
+
+  getNft(): Address {
+    return this.value1;
+  }
+
+  getGumbar(): Address {
+    return this.value2;
+  }
+
+  get_allowed(): boolean {
+    return this.value3;
+  }
 }
 
 export class GumballFactory__gumballsResult {
@@ -253,6 +269,22 @@ export class GumballFactory__gumballsResult {
     map.set("value2", ethereum.Value.fromAddress(this.value2));
     map.set("value3", ethereum.Value.fromBoolean(this.value3));
     return map;
+  }
+
+  getGBT(): Address {
+    return this.value0;
+  }
+
+  getGNFT(): Address {
+    return this.value1;
+  }
+
+  getXGBT(): Address {
+    return this.value2;
+  }
+
+  getAllowed(): boolean {
+    return this.value3;
   }
 }
 
