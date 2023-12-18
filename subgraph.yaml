@@ -53,9 +53,9 @@ templates:
         - name: GumballFactory
           file: ./abis/GumballFactory.json
       eventHandlers:
-        - event: Buy(indexed address,uint256)
+        - event: Buy(indexed address,indexed address,uint256,indexed address)
           handler: handleBuy
-        - event: Sell(indexed address,uint256)
+        - event: Sell(indexed address,indexed address,uint256,indexed address)
           handler: handleSell
       file: ./src/gumball_mapping.ts
     network: arbitrum-one
