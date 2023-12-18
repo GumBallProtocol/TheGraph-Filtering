@@ -93,44 +93,19 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "_gbt",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "_gnft",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "_xgbt",
-				"type": "address"
-			}
-		],
-		"name": "GumBallAdded",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
+				"indexed": false,
 				"internalType": "address",
 				"name": "gbt",
 				"type": "address"
 			},
 			{
-				"indexed": true,
+				"indexed": false,
 				"internalType": "address",
 				"name": "gnft",
 				"type": "address"
 			},
 			{
-				"indexed": true,
+				"indexed": false,
 				"internalType": "address",
 				"name": "xgbt",
 				"type": "address"
@@ -227,35 +202,17 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_gbt",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_xgbt",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_gnft",
-				"type": "address"
-			}
-		],
-		"name": "addExistingGumBall",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
 				"name": "_gumbarAddr",
 				"type": "address"
 			},
 			{
 				"internalType": "address",
 				"name": "_rewardsToken",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_rewardsDistributor",
 				"type": "address"
 			}
 		],
@@ -344,9 +301,9 @@
 				"type": "uint256"
 			},
 			{
-				"internalType": "uint256[]",
-				"name": "_fees",
-				"type": "uint256[]"
+				"internalType": "uint256",
+				"name": "_bFee",
+				"type": "uint256"
 			}
 		],
 		"name": "deployGumBall",
@@ -436,25 +393,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "indexes",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -496,6 +434,29 @@
 			}
 		],
 		"name": "setGNFTFactory",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_gumbarAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_rewardsToken",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_rewardsDistributor",
+				"type": "address"
+			}
+		],
+		"name": "setRewardsDistributor",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -592,13 +553,13 @@
 			},
 			{
 				"internalType": "address[]",
-				"name": "_accounts",
+				"name": "accounts",
 				"type": "address[]"
 			},
 			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
+				"internalType": "bool",
+				"name": "_bool",
+				"type": "bool"
 			}
 		],
 		"name": "updateGumBallAllowlist",
