@@ -167,6 +167,25 @@
 		"anonymous": false,
 		"inputs": [
 			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Buy",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
 				"indexed": false,
 				"internalType": "address",
 				"name": "newArtist",
@@ -247,6 +266,25 @@
 				"internalType": "address",
 				"name": "affiliate",
 				"type": "address"
+			}
+		],
+		"name": "Sell",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
 			}
 		],
 		"name": "Sell",
@@ -564,6 +602,29 @@
 				"internalType": "address",
 				"name": "affiliate",
 				"type": "address"
+			}
+		],
+		"name": "buy",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amountBASE",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_minGBT",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "expireTimestamp",
+				"type": "uint256"
 			}
 		],
 		"name": "buy",
@@ -971,6 +1032,29 @@
 				"internalType": "address",
 				"name": "zapSender",
 				"type": "address"
+			}
+		],
+		"name": "sell",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amountGBT",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_minETH",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "expireTimestamp",
+				"type": "uint256"
 			}
 		],
 		"name": "sell",

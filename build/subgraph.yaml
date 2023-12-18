@@ -57,8 +57,12 @@ templates:
         - name: GumballFactory
           file: GumballBondingCurve\abis\GumballFactory.json
       eventHandlers:
+        - event: Buy(indexed address,uint256)
+          handler: handleBuy2
         - event: Buy(indexed address,indexed address,uint256,indexed address)
           handler: handleBuy
+        - event: Sell(indexed address,uint256)
+          handler: handleSell2
         - event: Sell(indexed address,indexed address,uint256,indexed address)
           handler: handleSell
       file: templates\GumballBondingCurve\GumballBondingCurve.wasm

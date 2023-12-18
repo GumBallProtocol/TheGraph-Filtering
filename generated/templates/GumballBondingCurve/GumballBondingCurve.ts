@@ -132,6 +132,28 @@ export class Buy__Params {
   }
 }
 
+export class Buy1 extends ethereum.Event {
+  get params(): Buy1__Params {
+    return new Buy1__Params(this);
+  }
+}
+
+export class Buy1__Params {
+  _event: Buy1;
+
+  constructor(event: Buy1) {
+    this._event = event;
+  }
+
+  get user(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
 export class ChangeArtist extends ethereum.Event {
   get params(): ChangeArtist__Params {
     return new ChangeArtist__Params(this);
@@ -235,6 +257,28 @@ export class Sell__Params {
 
   get affiliate(): Address {
     return this._event.parameters[3].value.toAddress();
+  }
+}
+
+export class Sell1 extends ethereum.Event {
+  get params(): Sell1__Params {
+    return new Sell1__Params(this);
+  }
+}
+
+export class Sell1__Params {
+  _event: Sell1;
+
+  constructor(event: Sell1) {
+    this._event = event;
+  }
+
+  get user(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
   }
 }
 
@@ -1279,6 +1323,44 @@ export class BuyCall__Outputs {
   }
 }
 
+export class Buy1Call extends ethereum.Call {
+  get inputs(): Buy1Call__Inputs {
+    return new Buy1Call__Inputs(this);
+  }
+
+  get outputs(): Buy1Call__Outputs {
+    return new Buy1Call__Outputs(this);
+  }
+}
+
+export class Buy1Call__Inputs {
+  _call: Buy1Call;
+
+  constructor(call: Buy1Call) {
+    this._call = call;
+  }
+
+  get _amountBASE(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _minGBT(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get expireTimestamp(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class Buy1Call__Outputs {
+  _call: Buy1Call;
+
+  constructor(call: Buy1Call) {
+    this._call = call;
+  }
+}
+
 export class DecreaseAllowanceCall extends ethereum.Call {
   get inputs(): DecreaseAllowanceCall__Inputs {
     return new DecreaseAllowanceCall__Inputs(this);
@@ -1475,6 +1557,44 @@ export class SellCall__Outputs {
   _call: SellCall;
 
   constructor(call: SellCall) {
+    this._call = call;
+  }
+}
+
+export class Sell1Call extends ethereum.Call {
+  get inputs(): Sell1Call__Inputs {
+    return new Sell1Call__Inputs(this);
+  }
+
+  get outputs(): Sell1Call__Outputs {
+    return new Sell1Call__Outputs(this);
+  }
+}
+
+export class Sell1Call__Inputs {
+  _call: Sell1Call;
+
+  constructor(call: Sell1Call) {
+    this._call = call;
+  }
+
+  get _amountGBT(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _minETH(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get expireTimestamp(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class Sell1Call__Outputs {
+  _call: Sell1Call;
+
+  constructor(call: Sell1Call) {
     this._call = call;
   }
 }
