@@ -11,11 +11,19 @@ graft:
 dataSources:
   - kind: ethereum
     name: GumballFactory
+<<<<<<< Updated upstream
     network: arbitrum-one
     source:
       abi: GumballFactory
       address: "0xfa469482108bDEd1FE3CEb58fC440EF58708EE20"
       startBlock: 126876522
+=======
+    network: berachain
+    source:
+      abi: GumballFactory
+      address: "0x177Bf5dcD4492E7921F8e97Aa0c507042B6BD4ca"
+      startBlock: 828849
+>>>>>>> Stashed changes
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -62,7 +70,11 @@ templates:
         - event: Sell(indexed address,indexed address,uint256,indexed address)
           handler: handleSell
       file: templates\GumballBondingCurve\GumballBondingCurve.wasm
+<<<<<<< Updated upstream
     network: arbitrum-one
+=======
+    network: berachain
+>>>>>>> Stashed changes
   - kind: ethereum
     name: GumballNft
     source:
@@ -91,7 +103,11 @@ templates:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: templates\GumballNft\GumballNft.wasm
+<<<<<<< Updated upstream
     network: arbitrum-one
+=======
+    network: berachain
+>>>>>>> Stashed changes
   - kind: ethereum
     name: Gumbar
     source:
@@ -115,4 +131,8 @@ templates:
         - event: RewardPaid(indexed address,indexed address,uint256)
           handler: handleRewardPaid
       file: templates\Gumbar\Gumbar.wasm
+<<<<<<< Updated upstream
     network: arbitrum-one
+=======
+    network: berachain
+>>>>>>> Stashed changes
