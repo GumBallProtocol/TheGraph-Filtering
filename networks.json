@@ -46,8 +46,6 @@
       "address":"0x2E58eD6b14996fb421aCB2F0a572d7B045062F4E",
       "startBlock":41907739
     }
-<<<<<<< Updated upstream
-=======
   },
   "optimism":{
     "GumballFactory":{
@@ -60,6 +58,5 @@
     "address":"0x177Bf5dcD4492E7921F8e97Aa0c507042B6BD4ca",
     "startBlock":828849
   }
->>>>>>> Stashed changes
   }
 }
