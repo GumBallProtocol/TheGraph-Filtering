@@ -2,12 +2,10 @@ specVersion: 0.0.4
 features:
   - ipfsOnEthereumContracts
   - fullTextSearch
-  - grafting
+
 schema:
   file: schema.graphql
-graft:
-  base: Qmacwh3rc6jc8WYHwuab6NBhuZUhGkzoziowkzzb8RxNr2
-  block: 126876521
+  
 dataSources:
   - kind: ethereum
     name: GumballFactory
