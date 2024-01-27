@@ -1,58 +1,5 @@
 {
-  "arbitrum-one": {
-    "GumballFactory": {
-      "address": "0xfa469482108bDEd1FE3CEb58fC440EF58708EE20",
-      "startBlock": 126876522
-    }
-  },
-  "arbitrum-goerli": {
-    "GumballFactory": {
-      "address": "0x03eb3C51800E5eA62b367FacC4B3C940E28A051a",
-      "startBlock": 2502188
-    }
-  },
-  "goerli": {
-    "GumballFactory": {
-      "address": "0xCD923f5529671E4797E0902ABde43490871197A0",
-      "startBlock": 7787885
-    }
-  },
-  "rinkeby": {
-    "GumballFactory": {
-      "address": "0x1d3928feB43B8CC0AFEa41DB1aE59315F232Ba8B",
-      "startBlock": 11346926
-    }
-  },
-  "arbitrum-rinkeby":{
-    "GumballFactory":{
-      "address":"0x42eEe1E69DeA98dB10e36F01E07cD26778669BF6",
-      "startBlock": 15297682
-    }
-  },
-  "bsc":{
-    "GumballFactory":{
-      "address":"0x563361dc87Dd08486A06dDc931Eb0F97A2c4d736",
-      "startBlock":27535939
-    }
-  },
-  "fantom":{
-    "GumballFactory":{
-      "address":"0xD8300AbAF2a86842A8623391b91a31cF9700aba8",
-      "startBlock":60776674
-    }
-  },
-  "matic":{
-    "GumballFactory":{
-      "address":"0x2E58eD6b14996fb421aCB2F0a572d7B045062F4E",
-      "startBlock":41907739
-    }
-  },
-  "optimism":{
-    "GumballFactory":{
-      "address":"0x473a6539F7E6995B1BeD3121116001DaCBCDBfdA",
-      "startBlock":108967684
-    }
-  },
+  
   "berachain":{
   "GumballFactory":{
     "address":"0x177Bf5dcD4492E7921F8e97Aa0c507042B6BD4ca",
