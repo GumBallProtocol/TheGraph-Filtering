@@ -1,21 +1,16 @@
 specVersion: 0.0.4
 features:
-  - ipfsOnEthereumContracts
   - fullTextSearch
-  - grafting
 schema:
   file: schema.graphql
-graft:
-  base: Qmacwh3rc6jc8WYHwuab6NBhuZUhGkzoziowkzzb8RxNr2
-  block: 126876521
 dataSources:
   - kind: ethereum
     name: GumballFactory
     network: arbitrum-one
     source:
       abi: GumballFactory
-      address: "0xfa469482108bDEd1FE3CEb58fC440EF58708EE20"
-      startBlock: 126876522
+      address: "0xf5cfBaF55036264B902D9ae55A114d9A22c42750"
+      startBlock: 51954296
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -32,6 +27,37 @@ dataSources:
           file: GumballFactory\abis\gumballnft.json
         - name: Gumbar
           file: GumballFactory\abis\Gumbar.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: GumBallDeployed(address,address,address)
+          handler: handleGumBallDeployedv1
+        - event: AllowExisting(uint256,bool)
+          handler: handleAllowExisting
+      file: GumballFactory\GumballFactory.wasm
+  - kind: ethereum
+    name: GumballFactoryv2
+    network: arbitrum-one
+    source:
+      abi: GumballFactory
+      address: "0xfa469482108bDEd1FE3CEb58fC440EF58708EE20"
+      startBlock: 126876522
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - GumBallDeployed
+      abis:
+        - name: GumballFactory
+          file: GumballFactoryv2\abis\GumballFactory.json
+        - name: GumballBondingCurve
+          file: GumballFactoryv2\abis\GumballBondingCurve.json
+        - name: GumballNft
+          file: GumballFactoryv2\abis\gumballnft.json
+        - name: Gumbar
+          file: GumballFactoryv2\abis\Gumbar.json
       eventHandlers:
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
@@ -116,3 +142,29 @@ templates:
           handler: handleRewardPaid
       file: templates\Gumbar\Gumbar.wasm
     network: arbitrum-one
+  - kind: file/ipfs
+    name: CollectionMetadata
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CollectionMeta
+      abis:
+        - name: GumballFactory
+          file: CollectionMetadata\abis\GumballFactory.json
+      handler: handleCollectionMetadata
+      file: templates\CollectionMetadata\CollectionMetadata.wasm
+  - kind: file/ipfs
+    name: TokenMetadata
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - TokenAttribute
+      abis:
+        - name: GumballFactory
+          file: TokenMetadata\abis\GumballFactory.json
+      handler: handleTokenMetadata
+      file: templates\CollectionMetadata\CollectionMetadata.wasm

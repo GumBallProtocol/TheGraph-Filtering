@@ -43,3 +43,23 @@ export class Gumbar extends DataSourceTemplate {
     DataSourceTemplate.createWithContext("Gumbar", [address.toHex()], context);
   }
 }
+
+export class CollectionMetadata extends DataSourceTemplate {
+  static create(cid: string): void {
+    DataSourceTemplate.create("CollectionMetadata", [cid]);
+  }
+
+  static createWithContext(cid: string, context: DataSourceContext): void {
+    DataSourceTemplate.createWithContext("CollectionMetadata", [cid], context);
+  }
+}
+
+export class TokenMetadata extends DataSourceTemplate {
+  static create(cid: string): void {
+    DataSourceTemplate.create("TokenMetadata", [cid]);
+  }
+
+  static createWithContext(cid: string, context: DataSourceContext): void {
+    DataSourceTemplate.createWithContext("TokenMetadata", [cid], context);
+  }
+}
