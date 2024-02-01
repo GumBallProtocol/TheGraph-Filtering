@@ -214,19 +214,6 @@ export class Collection extends Entity {
     this.set("gumbar", Value.fromBytes(value));
   }
 
-  get image(): string {
-    let value = this.get("image");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set image(value: string) {
-    this.set("image", Value.fromString(value));
-  }
-
   get factory(): Bytes {
     let value = this.get("factory");
     if (!value || value.kind == ValueKind.NULL) {
@@ -251,19 +238,6 @@ export class Collection extends Entity {
 
   set address(value: Bytes) {
     this.set("address", Value.fromBytes(value));
-  }
-
-  get description(): string {
-    let value = this.get("description");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set description(value: string) {
-    this.set("description", Value.fromString(value));
   }
 
   get whitelist(): boolean {
@@ -345,6 +319,40 @@ export class Collection extends Entity {
       this.unset("rewards");
     } else {
       this.set("rewards", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get collectionMeta(): string | null {
+    let value = this.get("collectionMeta");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set collectionMeta(value: string | null) {
+    if (!value) {
+      this.unset("collectionMeta");
+    } else {
+      this.set("collectionMeta", Value.fromString(<string>value));
+    }
+  }
+
+  get ipfsHash(): string | null {
+    let value = this.get("ipfsHash");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set ipfsHash(value: string | null) {
+    if (!value) {
+      this.unset("ipfsHash");
+    } else {
+      this.set("ipfsHash", Value.fromString(<string>value));
     }
   }
 }
@@ -706,17 +714,12 @@ export class Token extends Entity {
     this.set("owner", Value.fromBytes(value));
   }
 
-  get attributes(): Array<string> {
-    let value = this.get("attributes");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toStringArray();
-    }
-  }
-
-  set attributes(value: Array<string>) {
-    this.set("attributes", Value.fromStringArray(value));
+  get attributes(): TokenAttributeLoader {
+    return new TokenAttributeLoader(
+      "Token",
+      this.get("id")!.toString(),
+      "attributes"
+    );
   }
 
   get baseURI(): string | null {
@@ -747,6 +750,19 @@ export class Token extends Entity {
 
   set staked(value: boolean) {
     this.set("staked", Value.fromBoolean(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
 
@@ -960,7 +976,7 @@ export class Reward extends Entity {
   }
 }
 
-export class Attribute extends Entity {
+export class CollectionMeta extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -968,22 +984,24 @@ export class Attribute extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Attribute entity without an ID");
+    assert(id != null, "Cannot save CollectionMeta entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Attribute must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type CollectionMeta must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Attribute", id.toString(), this);
+      store.set("CollectionMeta", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: string): Attribute | null {
-    return changetype<Attribute | null>(store.get_in_block("Attribute", id));
+  static loadInBlock(id: string): CollectionMeta | null {
+    return changetype<CollectionMeta | null>(
+      store.get_in_block("CollectionMeta", id)
+    );
   }
 
-  static load(id: string): Attribute | null {
-    return changetype<Attribute | null>(store.get("Attribute", id));
+  static load(id: string): CollectionMeta | null {
+    return changetype<CollectionMeta | null>(store.get("CollectionMeta", id));
   }
 
   get id(): string {
@@ -999,64 +1017,178 @@ export class Attribute extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get trait_type(): string {
-    let value = this.get("trait_type");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set trait_type(value: string) {
-    this.set("trait_type", Value.fromString(value));
-  }
-
-  get value(): string {
-    let value = this.get("value");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set value(value: string) {
-    this.set("value", Value.fromString(value));
-  }
-
-  get tokens(): TokenLoader {
-    return new TokenLoader("Attribute", this.get("id")!.toString(), "tokens");
-  }
-
-  get collection(): Bytes {
+  get collection(): string {
     let value = this.get("collection");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set collection(value: Bytes) {
-    this.set("collection", Value.fromBytes(value));
+  set collection(value: string) {
+    this.set("collection", Value.fromString(value));
   }
 
-  get count(): BigInt {
-    let value = this.get("count");
+  get image(): string | null {
+    let value = this.get("image");
     if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+      return null;
     } else {
-      return value.toBigInt();
+      return value.toString();
     }
   }
 
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
+  set image(value: string | null) {
+    if (!value) {
+      this.unset("image");
+    } else {
+      this.set("image", Value.fromString(<string>value));
+    }
+  }
+
+  get name(): string | null {
+    let value = this.get("name");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set name(value: string | null) {
+    if (!value) {
+      this.unset("name");
+    } else {
+      this.set("name", Value.fromString(<string>value));
+    }
+  }
+
+  get description(): string | null {
+    let value = this.get("description");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set description(value: string | null) {
+    if (!value) {
+      this.unset("description");
+    } else {
+      this.set("description", Value.fromString(<string>value));
+    }
+  }
+
+  get content(): string | null {
+    let value = this.get("content");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set content(value: string | null) {
+    if (!value) {
+      this.unset("content");
+    } else {
+      this.set("content", Value.fromString(<string>value));
+    }
   }
 }
 
-export class TokenLoader extends Entity {
+export class TokenAttribute extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save TokenAttribute entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type TokenAttribute must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("TokenAttribute", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): TokenAttribute | null {
+    return changetype<TokenAttribute | null>(
+      store.get_in_block("TokenAttribute", id)
+    );
+  }
+
+  static load(id: string): TokenAttribute | null {
+    return changetype<TokenAttribute | null>(store.get("TokenAttribute", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get token(): string {
+    let value = this.get("token");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set token(value: string) {
+    this.set("token", Value.fromString(value));
+  }
+
+  get attribute(): string | null {
+    let value = this.get("attribute");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set attribute(value: string | null) {
+    if (!value) {
+      this.unset("attribute");
+    } else {
+      this.set("attribute", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): string | null {
+    let value = this.get("value");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set value(value: string | null) {
+    if (!value) {
+      this.unset("value");
+    } else {
+      this.set("value", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class TokenAttributeLoader extends Entity {
   _entity: string;
   _field: string;
   _id: string;
@@ -1068,8 +1200,8 @@ export class TokenLoader extends Entity {
     this._field = field;
   }
 
-  load(): Token[] {
+  load(): TokenAttribute[] {
     let value = store.loadRelated(this._entity, this._id, this._field);
-    return changetype<Token[]>(value);
+    return changetype<TokenAttribute[]>(value);
   }
 }

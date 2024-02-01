@@ -1,16 +1,43 @@
 specVersion: 0.0.4
 features:
-  - ipfsOnEthereumContracts
+  #- ipfsOnEthereumContracts
   - fullTextSearch
-  - grafting
 schema:
   file: ./schema.graphql
-graft:
-  base: Qmacwh3rc6jc8WYHwuab6NBhuZUhGkzoziowkzzb8RxNr2
-  block: 126876521
 dataSources:
   - kind: ethereum
     name: GumballFactory
+    network: arbitrum-one
+    source:
+      abi: GumballFactory
+      address: "0xf5cfBaF55036264B902D9ae55A114d9A22c42750"
+      startBlock: 51954296
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - GumBallDeployed
+      abis:
+        - name: GumballFactory
+          file: ./abis/GumballFactory.json
+        - name: GumballBondingCurve
+          file: ./abis/GumballBondingCurve.json
+        - name: GumballNft
+          file: ./abis/gumballnft.json
+        - name: Gumbar
+          file: ./abis/Gumbar.json
+      eventHandlers:
+        - event: "OwnershipTransferred(indexed address,indexed address)"
+          handler: handleOwnershipTransferred
+        - event: "GumBallDeployed(address,address,address)"
+          handler: handleGumBallDeployedv1
+        - event: "AllowExisting(uint256,bool)"
+          handler: handleAllowExisting
+      file: ./src/mapping.ts
+  - kind: ethereum
+    name: GumballFactoryv2
     network: arbitrum-one
     source:
       abi: GumballFactory
@@ -116,3 +143,29 @@ templates:
           handler: handleRewardPaid
       file: ./src/gumbar_mapping.ts
     network: arbitrum-one
+  - kind: file/ipfs
+    name: CollectionMetadata
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CollectionMeta
+      abis:
+        - name: GumballFactory
+          file: ./abis/GumballFactory.json
+      handler: handleCollectionMetadata
+      file: ./src/nft_metadata.ts
+  - kind: file/ipfs
+    name: TokenMetadata
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - TokenAttribute
+      abis:
+        - name: GumballFactory
+          file: ./abis/GumballFactory.json
+      handler: handleTokenMetadata
+      file: ./src/nft_metadata.ts

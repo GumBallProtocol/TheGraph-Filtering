@@ -2,26 +2,26 @@ type Collection @entity {
   id: ID!
   tokenLibrary: Bytes!
   tokenProxy: Bytes!
-  gumballProxy: Bytes!,
-  tokenDeployed: Bytes!,
-  name: String,
-  symbol: String,
+  gumballProxy: Bytes!
+  tokenDeployed: Bytes!
+  name: String
+  symbol: String
   price: BigInt!
-  index: BigInt!,
-  totalSupply: BigInt!,
-  supplyCap: BigInt!,
-  reserveGBT:BigInt!,
-  gumbar: Bytes!,
-  image: String!,
-  factory: Bytes!,
-  address:Bytes!,
-  description:String!,
-  whitelist: Boolean!,
-  baseURI:String!,
-  volume:BigDecimal!
-  minted:BigInt!
-  artist:Bytes!
+  index: BigInt!
+  totalSupply: BigInt!
+  supplyCap: BigInt!
+  reserveGBT: BigInt!
+  gumbar: Bytes!
+  factory: Bytes!
+  address: Bytes!
+  whitelist: Boolean!
+  baseURI: String!
+  volume: BigDecimal!
+  minted: BigInt!
+  artist: Bytes!
   rewards: [Reward!]
+  collectionMeta: CollectionMeta
+  ipfsHash: String
 }
 
 type Trade @entity {
@@ -43,18 +43,19 @@ type Swap @entity {
   collection: Bytes!
 }
 
-type Token @entity{
+type Token @entity {
   id: ID!
   tokenId: BigInt!
   tokenURI: String!
   collection: Bytes!
-  imageURI:String!
-  name:String!
+  imageURI: String!
+  name: String!
   available: Boolean!
-  owner:Bytes!
-  attributes:[Attribute!]!
+  owner: Bytes!
+  attributes: [TokenAttribute!]! @derivedFrom(field: "token")
   baseURI: String
   staked: Boolean!
+  timestamp: BigInt!
 }
 
 type Interval @entity {
@@ -75,13 +76,20 @@ type Reward @entity {
   tokenAddress: Bytes!
 }
 
-type Attribute @entity {
+type CollectionMeta @entity {
   id: ID!
-  trait_type: String!
-  value: String!
-  tokens: [Token!]! @derivedFrom(field: "attributes")
-  collection: Bytes!
-  count: BigInt!
+  collection: Collection!
+  image: String
+  name: String
+  description: String
+  content: String
+}
+
+type TokenAttribute @entity {
+  id: ID!
+  token: Token!
+  attribute: String
+  value: String
 }
 
 type _Schema_
@@ -89,10 +97,5 @@ type _Schema_
     name: "collectionSearch"
     language: en
     algorithm: proximityRank
-    include: [
-      {
-        entity: "Collection"
-        fields: [{ name: "name" }]
-      }
-    ]
+    include: [{ entity: "Collection", fields: [{ name: "name" }] }]
   )

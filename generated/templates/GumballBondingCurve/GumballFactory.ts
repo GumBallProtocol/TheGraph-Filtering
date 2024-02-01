@@ -142,6 +142,32 @@ export class GumBallDeployed__Params {
   }
 }
 
+export class GumBallDeployed1 extends ethereum.Event {
+  get params(): GumBallDeployed1__Params {
+    return new GumBallDeployed1__Params(this);
+  }
+}
+
+export class GumBallDeployed1__Params {
+  _event: GumBallDeployed1;
+
+  constructor(event: GumBallDeployed1) {
+    this._event = event;
+  }
+
+  get gbt(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get gnft(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get xgbt(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+}
+
 export class OwnershipTransferred extends ethereum.Event {
   get params(): OwnershipTransferred__Params {
     return new OwnershipTransferred__Params(this);
