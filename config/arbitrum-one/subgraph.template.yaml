@@ -7,11 +7,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: GumballFactory
-    network: matic
+    network: {{network}}
     source:
       abi: GumballFactory
-      address: "0x473a6539F7E6995B1BeD3121116001DaCBCDBfdA"
-      startBlock: 47427252
+      address: {{GumBallFactory}}
+      startBlock: {{startblock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -31,9 +31,40 @@ dataSources:
       eventHandlers:
         - event: "OwnershipTransferred(indexed address,indexed address)"
           handler: handleOwnershipTransferred
-        - event: "GumBallDeployed(indexed address,indexed address,indexed address)"
+        - event: "GumBallDeployed(address,address,address)"
           handler: handleGumBallDeployedv1
         - event: "AllowExisting(uint256,bool)"
+          handler: handleAllowExisting
+      file: ./src/mapping.ts
+  - kind: ethereum
+    name: GumballFactoryv2
+    network: {{network}}
+    source:
+      abi: GumballFactory
+      address: {{GumBallFactory}}
+      startBlock: {{startblock2}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - GumBallDeployed
+      abis:
+        - name: GumballFactory
+          file: ./abis/GumballFactory.json
+        - name: GumballBondingCurve
+          file: ./abis/GumballBondingCurve.json
+        - name: GumballNft
+          file: ./abis/gumballnft.json
+        - name: Gumbar
+          file: ./abis/Gumbar.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: GumBallDeployed(indexed address,indexed address,indexed address)
+          handler: handleGumBallDeployed
+        - event: AllowExisting(uint256,bool)
           handler: handleAllowExisting
       file: ./src/mapping.ts
 templates:

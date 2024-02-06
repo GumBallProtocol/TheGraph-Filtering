@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class AllowExisting extends ethereum.Event {
@@ -236,7 +236,7 @@ export class GumballFactory__deployInfoResult {
     value0: Address,
     value1: Address,
     value2: Address,
-    value3: boolean
+    value3: boolean,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -280,7 +280,7 @@ export class GumballFactory__gumballsResult {
     value0: Address,
     value1: Address,
     value2: Address,
-    value3: boolean
+    value3: boolean,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -366,7 +366,7 @@ export class GumballFactory extends ethereum.SmartContract {
 
   allowlist(param0: Address): boolean {
     let result = super.call("allowlist", "allowlist(address):(bool)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBoolean();
@@ -374,7 +374,7 @@ export class GumballFactory extends ethereum.SmartContract {
 
   try_allowlist(param0: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("allowlist", "allowlist(address):(bool)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -387,24 +387,24 @@ export class GumballFactory extends ethereum.SmartContract {
     let result = super.call(
       "deployInfo",
       "deployInfo(uint256):(address,address,address,bool)",
-      [ethereum.Value.fromUnsignedBigInt(id)]
+      [ethereum.Value.fromUnsignedBigInt(id)],
     );
 
     return new GumballFactory__deployInfoResult(
       result[0].toAddress(),
       result[1].toAddress(),
       result[2].toAddress(),
-      result[3].toBoolean()
+      result[3].toBoolean(),
     );
   }
 
   try_deployInfo(
-    id: BigInt
+    id: BigInt,
   ): ethereum.CallResult<GumballFactory__deployInfoResult> {
     let result = super.tryCall(
       "deployInfo",
       "deployInfo(uint256):(address,address,address,bool)",
-      [ethereum.Value.fromUnsignedBigInt(id)]
+      [ethereum.Value.fromUnsignedBigInt(id)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -415,8 +415,8 @@ export class GumballFactory extends ethereum.SmartContract {
         value[0].toAddress(),
         value[1].toAddress(),
         value[2].toAddress(),
-        value[3].toBoolean()
-      )
+        value[3].toBoolean(),
+      ),
     );
   }
 
@@ -439,24 +439,24 @@ export class GumballFactory extends ethereum.SmartContract {
     let result = super.call(
       "gumballs",
       "gumballs(uint256):(address,address,address,bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return new GumballFactory__gumballsResult(
       result[0].toAddress(),
       result[1].toAddress(),
       result[2].toAddress(),
-      result[3].toBoolean()
+      result[3].toBoolean(),
     );
   }
 
   try_gumballs(
-    param0: BigInt
+    param0: BigInt,
   ): ethereum.CallResult<GumballFactory__gumballsResult> {
     let result = super.tryCall(
       "gumballs",
       "gumballs(uint256):(address,address,address,bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -467,14 +467,14 @@ export class GumballFactory extends ethereum.SmartContract {
         value[0].toAddress(),
         value[1].toAddress(),
         value[2].toAddress(),
-        value[3].toBoolean()
-      )
+        value[3].toBoolean(),
+      ),
     );
   }
 
   indexes(param0: Address): BigInt {
     let result = super.call("indexes", "indexes(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBigInt();
@@ -482,7 +482,7 @@ export class GumballFactory extends ethereum.SmartContract {
 
   try_indexes(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("indexes", "indexes(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -516,7 +516,7 @@ export class GumballFactory extends ethereum.SmartContract {
     let result = super.tryCall(
       "totalDeployed",
       "totalDeployed():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

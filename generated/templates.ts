@@ -3,7 +3,7 @@
 import {
   Address,
   DataSourceTemplate,
-  DataSourceContext
+  DataSourceContext,
 } from "@graphprotocol/graph-ts";
 
 export class GumballBondingCurve extends DataSourceTemplate {
@@ -15,7 +15,7 @@ export class GumballBondingCurve extends DataSourceTemplate {
     DataSourceTemplate.createWithContext(
       "GumballBondingCurve",
       [address.toHex()],
-      context
+      context,
     );
   }
 }
@@ -29,7 +29,7 @@ export class GumballNft extends DataSourceTemplate {
     DataSourceTemplate.createWithContext(
       "GumballNft",
       [address.toHex()],
-      context
+      context,
     );
   }
 }

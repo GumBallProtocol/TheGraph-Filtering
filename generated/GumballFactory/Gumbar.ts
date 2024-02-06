@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class DepositNFT extends ethereum.Event {
@@ -258,8 +258,8 @@ export class Gumbar extends ethereum.SmartContract {
       "balanceNFT(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
+        ethereum.Value.fromUnsignedBigInt(param1),
+      ],
     );
 
     return result[0].toBigInt();
@@ -271,8 +271,8 @@ export class Gumbar extends ethereum.SmartContract {
       "balanceNFT(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
+        ethereum.Value.fromUnsignedBigInt(param1),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -283,7 +283,7 @@ export class Gumbar extends ethereum.SmartContract {
 
   balanceOf(account: Address): BigInt {
     let result = super.call("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
 
     return result[0].toBigInt();
@@ -291,7 +291,7 @@ export class Gumbar extends ethereum.SmartContract {
 
   try_balanceOf(account: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -304,22 +304,22 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.call(
       "balanceOfNFT",
       "balanceOfNFT(address):(uint256,uint256[])",
-      [ethereum.Value.fromAddress(user)]
+      [ethereum.Value.fromAddress(user)],
     );
 
     return new Gumbar__balanceOfNFTResult(
       result[0].toBigInt(),
-      result[1].toBigIntArray()
+      result[1].toBigIntArray(),
     );
   }
 
   try_balanceOfNFT(
-    user: Address
+    user: Address,
   ): ethereum.CallResult<Gumbar__balanceOfNFTResult> {
     let result = super.tryCall(
       "balanceOfNFT",
       "balanceOfNFT(address):(uint256,uint256[])",
-      [ethereum.Value.fromAddress(user)]
+      [ethereum.Value.fromAddress(user)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -328,14 +328,14 @@ export class Gumbar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new Gumbar__balanceOfNFTResult(
         value[0].toBigInt(),
-        value[1].toBigIntArray()
-      )
+        value[1].toBigIntArray(),
+      ),
     );
   }
 
   balanceToken(param0: Address): BigInt {
     let result = super.call("balanceToken", "balanceToken(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBigInt();
@@ -345,7 +345,7 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.tryCall(
       "balanceToken",
       "balanceToken(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -357,7 +357,7 @@ export class Gumbar extends ethereum.SmartContract {
   earned(account: Address, _rewardsToken: Address): BigInt {
     let result = super.call("earned", "earned(address,address):(uint256)", [
       ethereum.Value.fromAddress(account),
-      ethereum.Value.fromAddress(_rewardsToken)
+      ethereum.Value.fromAddress(_rewardsToken),
     ]);
 
     return result[0].toBigInt();
@@ -365,11 +365,11 @@ export class Gumbar extends ethereum.SmartContract {
 
   try_earned(
     account: Address,
-    _rewardsToken: Address
+    _rewardsToken: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall("earned", "earned(address,address):(uint256)", [
       ethereum.Value.fromAddress(account),
-      ethereum.Value.fromAddress(_rewardsToken)
+      ethereum.Value.fromAddress(_rewardsToken),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -397,19 +397,19 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.call(
       "getRewardForDuration",
       "getRewardForDuration(address):(uint256)",
-      [ethereum.Value.fromAddress(_rewardsToken)]
+      [ethereum.Value.fromAddress(_rewardsToken)],
     );
 
     return result[0].toBigInt();
   }
 
   try_getRewardForDuration(
-    _rewardsToken: Address
+    _rewardsToken: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "getRewardForDuration",
       "getRewardForDuration(address):(uint256)",
-      [ethereum.Value.fromAddress(_rewardsToken)]
+      [ethereum.Value.fromAddress(_rewardsToken)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -422,7 +422,7 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.call(
       "getRewardTokens",
       "getRewardTokens():(address[])",
-      []
+      [],
     );
 
     return result[0].toAddressArray();
@@ -432,7 +432,7 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.tryCall(
       "getRewardTokens",
       "getRewardTokens():(address[])",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -443,7 +443,7 @@ export class Gumbar extends ethereum.SmartContract {
 
   isRewardToken(param0: Address): boolean {
     let result = super.call("isRewardToken", "isRewardToken(address):(bool)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBoolean();
@@ -453,7 +453,7 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.tryCall(
       "isRewardToken",
       "isRewardToken(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -466,19 +466,19 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.call(
       "lastTimeRewardApplicable",
       "lastTimeRewardApplicable(address):(uint256)",
-      [ethereum.Value.fromAddress(_rewardsToken)]
+      [ethereum.Value.fromAddress(_rewardsToken)],
     );
 
     return result[0].toBigInt();
   }
 
   try_lastTimeRewardApplicable(
-    _rewardsToken: Address
+    _rewardsToken: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "lastTimeRewardApplicable",
       "lastTimeRewardApplicable(address):(uint256)",
-      [ethereum.Value.fromAddress(_rewardsToken)]
+      [ethereum.Value.fromAddress(_rewardsToken)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -491,7 +491,7 @@ export class Gumbar extends ethereum.SmartContract {
     operator: Address,
     from: Address,
     tokenId: BigInt,
-    data: Bytes
+    data: Bytes,
   ): Bytes {
     let result = super.call(
       "onERC721Received",
@@ -500,8 +500,8 @@ export class Gumbar extends ethereum.SmartContract {
         ethereum.Value.fromAddress(operator),
         ethereum.Value.fromAddress(from),
         ethereum.Value.fromUnsignedBigInt(tokenId),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
 
     return result[0].toBytes();
@@ -511,7 +511,7 @@ export class Gumbar extends ethereum.SmartContract {
     operator: Address,
     from: Address,
     tokenId: BigInt,
-    data: Bytes
+    data: Bytes,
   ): ethereum.CallResult<Bytes> {
     let result = super.tryCall(
       "onERC721Received",
@@ -520,8 +520,8 @@ export class Gumbar extends ethereum.SmartContract {
         ethereum.Value.fromAddress(operator),
         ethereum.Value.fromAddress(from),
         ethereum.Value.fromUnsignedBigInt(tokenId),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -534,24 +534,24 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.call(
       "rewardData",
       "rewardData(address):(uint256,uint256,uint256,uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return new Gumbar__rewardDataResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
-      result[3].toBigInt()
+      result[3].toBigInt(),
     );
   }
 
   try_rewardData(
-    param0: Address
+    param0: Address,
   ): ethereum.CallResult<Gumbar__rewardDataResult> {
     let result = super.tryCall(
       "rewardData",
       "rewardData(address):(uint256,uint256,uint256,uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -562,8 +562,8 @@ export class Gumbar extends ethereum.SmartContract {
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),
-        value[3].toBigInt()
-      )
+        value[3].toBigInt(),
+      ),
     );
   }
 
@@ -571,7 +571,7 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.call(
       "rewardPerToken",
       "rewardPerToken(address):(uint256)",
-      [ethereum.Value.fromAddress(_rewardsToken)]
+      [ethereum.Value.fromAddress(_rewardsToken)],
     );
 
     return result[0].toBigInt();
@@ -581,7 +581,7 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.tryCall(
       "rewardPerToken",
       "rewardPerToken(address):(uint256)",
-      [ethereum.Value.fromAddress(_rewardsToken)]
+      [ethereum.Value.fromAddress(_rewardsToken)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -592,7 +592,7 @@ export class Gumbar extends ethereum.SmartContract {
 
   rewardTokens(param0: BigInt): Address {
     let result = super.call("rewardTokens", "rewardTokens(uint256):(address)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
+      ethereum.Value.fromUnsignedBigInt(param0),
     ]);
 
     return result[0].toAddress();
@@ -602,7 +602,7 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.tryCall(
       "rewardTokens",
       "rewardTokens(uint256):(address)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -614,7 +614,7 @@ export class Gumbar extends ethereum.SmartContract {
   rewards(param0: Address, param1: Address): BigInt {
     let result = super.call("rewards", "rewards(address,address):(uint256)", [
       ethereum.Value.fromAddress(param0),
-      ethereum.Value.fromAddress(param1)
+      ethereum.Value.fromAddress(param1),
     ]);
 
     return result[0].toBigInt();
@@ -624,7 +624,7 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.tryCall(
       "rewards",
       "rewards(address,address):(uint256)",
-      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)]
+      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -682,7 +682,7 @@ export class Gumbar extends ethereum.SmartContract {
     let result = super.call(
       "userRewardPerTokenPaid",
       "userRewardPerTokenPaid(address,address):(uint256)",
-      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)]
+      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)],
     );
 
     return result[0].toBigInt();
@@ -690,12 +690,12 @@ export class Gumbar extends ethereum.SmartContract {
 
   try_userRewardPerTokenPaid(
     param0: Address,
-    param1: Address
+    param1: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "userRewardPerTokenPaid",
       "userRewardPerTokenPaid(address,address):(uint256)",
-      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)]
+      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

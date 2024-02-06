@@ -7,11 +7,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: GumballFactory
-    network: matic
+    network: {{network}}
     source:
       abi: GumballFactory
-      address: "0x473a6539F7E6995B1BeD3121116001DaCBCDBfdA"
-      startBlock: 47427252
+      address: {{GumballFactory}}
+      startBlock: {{startblock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -31,7 +31,7 @@ dataSources:
       eventHandlers:
         - event: "OwnershipTransferred(indexed address,indexed address)"
           handler: handleOwnershipTransferred
-        - event: "GumBallDeployed(indexed address,indexed address,indexed address)"
+        - event: "GumBallDeployed(address,address,address)"
           handler: handleGumBallDeployedv1
         - event: "AllowExisting(uint256,bool)"
           handler: handleAllowExisting

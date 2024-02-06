@@ -1,5 +1,5 @@
 {
-  "name": "Gumballfiltering",
+  "name": "gumballfiltering",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
@@ -9,7 +9,13 @@
     "remove-local": "graph remove --node http://localhost:8020/ gorayaa66/Gumballfiltering",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gorayaa66/Gumballfiltering",
     "arslan-goerli-deploy": "graph deploy --product hosted-service gorayaa66/gumballgeorli",
-    "arslan-arbitrumgoerli-deploy": "graph deploy --product hosted-service gorayaa66/gumballarbitrumgoerli"
+    "arslan-arbitrumgoerli-deploy": "graph deploy --product hosted-service gorayaa66/gumballarbitrumgoerli",
+    "prepare-config:arbi": "cross-env ts-node ./script/prepareNetwork.ts arbitrum-one",
+    "prepare-config:optimism": "cross-env ts-node ./script/prepareNetwork.ts mainnet",
+    "prepare-config:polygon": "cross-env ts-node ./script/prepareNetwork.ts llama",
+    "prepare:arbi": "cross-env mustache config/arbitrum-one/arbitrum-one.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:optimism": "cross-env ts-node ./script/prepareNetwork.ts optimism && cross-env mustache config/optimism/config.json subgraph.template.yaml > subgraph.yaml",
+    "build:polygon": "cross-env yarn prepare-config:polygon && yarn prepare:polygon && yarn codegen && yarn build"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.29.2",

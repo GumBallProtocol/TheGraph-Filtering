@@ -8,7 +8,7 @@ import {
   store,
   Bytes,
   BigInt,
-  BigDecimal
+  BigDecimal,
 } from "@graphprotocol/graph-ts";
 
 export class Collection extends Entity {
@@ -23,7 +23,7 @@ export class Collection extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Collection must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Collection must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("Collection", id.toString(), this);
     }
@@ -369,7 +369,7 @@ export class Trade extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Trade must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Trade must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("Trade", id.toString(), this);
     }
@@ -504,7 +504,7 @@ export class Swap extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Swap must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Swap must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("Swap", id.toString(), this);
     }
@@ -596,7 +596,7 @@ export class Token extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Token must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Token must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("Token", id.toString(), this);
     }
@@ -718,7 +718,7 @@ export class Token extends Entity {
     return new TokenAttributeLoader(
       "Token",
       this.get("id")!.toString(),
-      "attributes"
+      "attributes",
     );
   }
 
@@ -778,7 +778,7 @@ export class Interval extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Interval must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Interval must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("Interval", id.toString(), this);
     }
@@ -922,7 +922,7 @@ export class Reward extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Reward must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Reward must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("Reward", id.toString(), this);
     }
@@ -988,7 +988,7 @@ export class CollectionMeta extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type CollectionMeta must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type CollectionMeta must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("CollectionMeta", id.toString(), this);
     }
@@ -996,7 +996,7 @@ export class CollectionMeta extends Entity {
 
   static loadInBlock(id: string): CollectionMeta | null {
     return changetype<CollectionMeta | null>(
-      store.get_in_block("CollectionMeta", id)
+      store.get_in_block("CollectionMeta", id),
     );
   }
 
@@ -1111,7 +1111,7 @@ export class TokenAttribute extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type TokenAttribute must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type TokenAttribute must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("TokenAttribute", id.toString(), this);
     }
@@ -1119,7 +1119,7 @@ export class TokenAttribute extends Entity {
 
   static loadInBlock(id: string): TokenAttribute | null {
     return changetype<TokenAttribute | null>(
-      store.get_in_block("TokenAttribute", id)
+      store.get_in_block("TokenAttribute", id),
     );
   }
 
