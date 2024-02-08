@@ -1,4 +1,4 @@
-specVersion: 0.0.4
+specVersion: 0.0.8
 features:
   #- ipfsOnEthereumContracts
   - fullTextSearch
@@ -14,7 +14,7 @@ dataSources:
       startBlock: {{startblock}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - OwnershipTransferred
@@ -43,7 +43,7 @@ templates:
       abi: GumballBondingCurve
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Trade
@@ -65,7 +65,7 @@ templates:
       abi: GumballNft
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - ExactSwap
@@ -94,7 +94,7 @@ templates:
       abi: Gumbar
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - RewardPaid
@@ -116,7 +116,7 @@ templates:
     name: CollectionMetadata
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - CollectionMeta
@@ -129,7 +129,7 @@ templates:
     name: TokenMetadata
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - TokenAttribute

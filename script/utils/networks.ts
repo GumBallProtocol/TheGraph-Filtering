@@ -14,17 +14,17 @@ export const networks: NetworkConfigs = {
   "arbitrum-one": {
     studioEndpoint: "",
     hostedEndpoint: "",
-    lastV: "v0.0.1",
+    lastV: "v0.0.21",
   },
   polygon: {
     studioEndpoint: "",
     hostedEndpoint: "",
-    lastV: "v0.0.1",
+    lastV: "v0.0.4",
   },
   optimism: {
     studioEndpoint: "",
     hostedEndpoint: "",
-    lastV: "v0.0.1",
+    lastV: "v0.0.5",
   },
 };
 
