@@ -1,4 +1,9 @@
 node_modules
 yarn.lock
 build
-generated
+generated/
+subgraph.template.yaml
+subgraph.yaml
+package-lock.json
+.vscode
+.DS_STORE
