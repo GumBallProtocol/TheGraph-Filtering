@@ -10,7 +10,7 @@ dataSources:
     network: {{network}}
     source:
       abi: GumballFactory
-      address: {{GumBallFactory}}
+      address: '{{GumBallFactory}}'
       startBlock: {{startblock}}
     mapping:
       kind: ethereum/events
@@ -41,7 +41,7 @@ dataSources:
     network: {{network}}
     source:
       abi: GumballFactory
-      address: {{GumBallFactory}}
+      address: '{{GumBallFactory}}'
       startBlock: {{startblock2}}
     mapping:
       kind: ethereum/events

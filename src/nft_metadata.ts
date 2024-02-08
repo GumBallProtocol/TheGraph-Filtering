@@ -45,6 +45,7 @@ export function handleCollectionMetadata(content: Bytes): void {
   let collectionMeta = new CollectionMeta(collectionId + "-" + ipfsHash);
 
   let value = json.fromBytes(content).toObject();
+
   let description = value.get("description");
   let image = value.get("image");
   let name = value.get("name");
@@ -90,6 +91,7 @@ export function handleTokenMetadata(content: Bytes): void {
   log.debug("log number 3", []);
 
   let value = json.fromBytes(content).toObject();
+
   let traitType = "";
   let traitValue = "";
   log.debug("log number 4", [content.toHexString()]);

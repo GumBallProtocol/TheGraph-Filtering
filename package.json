@@ -10,15 +10,29 @@
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gorayaa66/Gumballfiltering",
     "arslan-goerli-deploy": "graph deploy --product hosted-service gorayaa66/gumballgeorli",
     "arslan-arbitrumgoerli-deploy": "graph deploy --product hosted-service gorayaa66/gumballarbitrumgoerli",
-    "prepare-config:arbi": "cross-env ts-node ./script/prepareNetwork.ts arbitrum-one",
-    "prepare-config:optimism": "cross-env ts-node ./script/prepareNetwork.ts mainnet",
-    "prepare-config:polygon": "cross-env ts-node ./script/prepareNetwork.ts llama",
-    "prepare:arbi": "cross-env mustache config/arbitrum-one/arbitrum-one.json subgraph.template.yaml > subgraph.yaml",
-    "prepare:optimism": "cross-env ts-node ./script/prepareNetwork.ts optimism && cross-env mustache config/optimism/config.json subgraph.template.yaml > subgraph.yaml",
-    "build:polygon": "cross-env yarn prepare-config:polygon && yarn prepare:polygon && yarn codegen && yarn build"
+    "deploy-hosted": "graph build && graph deploy --product hosted-service ",
+    "deploy-studio": "graph build && graph deploy --studio ",
+    "prepare-build": "cross-env ts-node ./script/build",
+    "deploy-all-studio": "cross-env ts-node ./script/deploy-studio",
+    "deploy-all-hosted": "cross-env ts-node ./script/deploy-hosted",
+    "deploy-single": "cross-env ts-node ./script/deploy-single",
+    "deploy-single-hosted": "cross-env ts-node ./script/deploy-single-hosted"
   },
-  "dependencies": {
-    "@graphprotocol/graph-cli": "0.29.2",
-    "@graphprotocol/graph-ts": "0.26.0"
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.67.4",
+    "@graphprotocol/graph-ts": "^0.32.0",
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "fs-extra": "^11.1.0",
+    "mustache": "^3.1.0",
+    "prettier": "^1.18.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
+    "yargs": "17.7.2"
   }
 }
