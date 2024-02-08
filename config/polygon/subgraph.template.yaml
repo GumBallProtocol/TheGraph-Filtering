@@ -1,4 +1,4 @@
-specVersion: 0.0.4
+specVersion: 0.0.8
 features:
   #- ipfsOnEthereumContracts
   - fullTextSearch
@@ -7,14 +7,14 @@ schema:
 dataSources:
   - kind: ethereum
     name: GumballFactory
-    network: arbitrum-one
+    network: {{network}}
     source:
       abi: GumballFactory
-      address: "0xf5cfBaF55036264B902D9ae55A114d9A22c42750"
-      startBlock: 51954296
+      address: {{GumballFactory}}
+      startBlock: {{startblock}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - OwnershipTransferred
@@ -36,37 +36,6 @@ dataSources:
         - event: "AllowExisting(uint256,bool)"
           handler: handleAllowExisting
       file: ./src/mapping.ts
-  - kind: ethereum
-    name: GumballFactoryv2
-    network: arbitrum-one
-    source:
-      abi: GumballFactory
-      address: "0xfa469482108bDEd1FE3CEb58fC440EF58708EE20"
-      startBlock: 126876522
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - OwnershipTransferred
-        - GumBallDeployed
-      abis:
-        - name: GumballFactory
-          file: ./abis/GumballFactory.json
-        - name: GumballBondingCurve
-          file: ./abis/GumballBondingCurve.json
-        - name: GumballNft
-          file: ./abis/gumballnft.json
-        - name: Gumbar
-          file: ./abis/Gumbar.json
-      eventHandlers:
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: GumBallDeployed(indexed address,indexed address,indexed address)
-          handler: handleGumBallDeployed
-        - event: AllowExisting(uint256,bool)
-          handler: handleAllowExisting
-      file: ./src/mapping.ts
 templates:
   - kind: ethereum
     name: GumballBondingCurve
@@ -74,7 +43,7 @@ templates:
       abi: GumballBondingCurve
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Trade
@@ -96,7 +65,7 @@ templates:
       abi: GumballNft
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - ExactSwap
@@ -125,7 +94,7 @@ templates:
       abi: Gumbar
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - RewardPaid
@@ -147,7 +116,7 @@ templates:
     name: CollectionMetadata
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - CollectionMeta
@@ -160,7 +129,7 @@ templates:
     name: TokenMetadata
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - TokenAttribute

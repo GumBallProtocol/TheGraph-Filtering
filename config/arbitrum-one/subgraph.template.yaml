@@ -1,0 +1,171 @@
+specVersion: 0.0.8
+features:
+  #- ipfsOnEthereumContracts
+  - fullTextSearch
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: GumballFactory
+    network: {{network}}
+    source:
+      abi: GumballFactory
+      address: '{{GumBallFactory}}'
+      startBlock: {{startblock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - GumBallDeployed
+      abis:
+        - name: GumballFactory
+          file: ./abis/GumballFactory.json
+        - name: GumballBondingCurve
+          file: ./abis/GumballBondingCurve.json
+        - name: GumballNft
+          file: ./abis/gumballnft.json
+        - name: Gumbar
+          file: ./abis/Gumbar.json
+      eventHandlers:
+        - event: "OwnershipTransferred(indexed address,indexed address)"
+          handler: handleOwnershipTransferred
+        - event: "GumBallDeployed(address,address,address)"
+          handler: handleGumBallDeployedv1
+        - event: "AllowExisting(uint256,bool)"
+          handler: handleAllowExisting
+      file: ./src/mapping.ts
+  - kind: ethereum
+    name: GumballFactoryv2
+    network: {{network}}
+    source:
+      abi: GumballFactory
+      address: '{{GumBallFactory}}'
+      startBlock: {{startblock2}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - GumBallDeployed
+      abis:
+        - name: GumballFactory
+          file: ./abis/GumballFactory.json
+        - name: GumballBondingCurve
+          file: ./abis/GumballBondingCurve.json
+        - name: GumballNft
+          file: ./abis/gumballnft.json
+        - name: Gumbar
+          file: ./abis/Gumbar.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: GumBallDeployed(indexed address,indexed address,indexed address)
+          handler: handleGumBallDeployed
+        - event: AllowExisting(uint256,bool)
+          handler: handleAllowExisting
+      file: ./src/mapping.ts
+templates:
+  - kind: ethereum
+    name: GumballBondingCurve
+    source:
+      abi: GumballBondingCurve
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Trade
+      abis:
+        - name: GumballBondingCurve
+          file: ./abis/GumballBondingCurve.json
+        - name: GumballFactory
+          file: ./abis/GumballFactory.json
+      eventHandlers:
+        - event: Buy(indexed address,indexed address,uint256,indexed address)
+          handler: handleBuy
+        - event: Sell(indexed address,indexed address,uint256,indexed address)
+          handler: handleSell
+      file: ./src/gumball_mapping.ts
+    network: arbitrum-one
+  - kind: ethereum
+    name: GumballNft
+    source:
+      abi: GumballNft
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ExactSwap
+        - Redeem
+        - Swap
+        - Transfer
+      abis:
+        - name: GumballNft
+          file: ./abis/GumballNft.json
+      eventHandlers:
+        - event: SetBaseURI(string)
+          handler: handleSetBaseURI
+        - event: ExactSwap(indexed address,uint256[])
+          handler: handleExactSwap
+        - event: Redeem(indexed address,uint256[])
+          handler: handleRedeem
+        - event: Swap(indexed address,uint256)
+          handler: handleSwap
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/gumballnft_mapping.ts
+    network: arbitrum-one
+  - kind: ethereum
+    name: Gumbar
+    source:
+      abi: Gumbar
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - RewardPaid
+        - DepositNFT
+        - WithdrawNFT
+      abis:
+        - name: Gumbar
+          file: ./abis/Gumbar.json
+      eventHandlers:
+        - event: DepositNFT(indexed address,address,uint256[])
+          handler: handleDepositNFT
+        - event: WithdrawNFT(indexed address,address,uint256[])
+          handler: handleWithdrawNFT
+        - event: RewardPaid(indexed address,indexed address,uint256)
+          handler: handleRewardPaid
+      file: ./src/gumbar_mapping.ts
+    network: arbitrum-one
+  - kind: file/ipfs
+    name: CollectionMetadata
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CollectionMeta
+      abis:
+        - name: GumballFactory
+          file: ./abis/GumballFactory.json
+      handler: handleCollectionMetadata
+      file: ./src/nft_metadata.ts
+  - kind: file/ipfs
+    name: TokenMetadata
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenAttribute
+      abis:
+        - name: GumballFactory
+          file: ./abis/GumballFactory.json
+      handler: handleTokenMetadata
+      file: ./src/nft_metadata.ts
